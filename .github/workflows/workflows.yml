@@ -1,0 +1,33 @@
+name: build and test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install clang-format
+        run: sudo apt-get install -y clang-format
+
+      - name: Run clang-format
+        run: clang-format --style=LLVM --dry-run --Werror **/*.c **/*.h
+
+      - name: Report result
+        if: failure()
+        run: echo "Code format is incorrect. Please run clang-format on your code."
+
+      - name: Build with make
+        run: make
+
+      - name: Verify compilation
+        run: valgrind --leak-check=full --show-leak-kinds=all ./minishell
+
+      - name: Run tests
+        run: ./tests.sh

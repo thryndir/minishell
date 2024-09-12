@@ -1,38 +1,35 @@
 NAME := minishell
-HEADER := -Ilib/libft/include -Iinclude
+HEADER := -ILibft/include -Iinclude
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -g
 RM := rm -rf
-LIB := lib/libft/libft.a
+LIB := Libft/libft.a
 
-FILES := executing/main parsing/main
+FILES := main
 
 SRC_DIR := src/
 OBJ_DIR := obj/
 
-SRCS := $(addprefix src/, $(addsuffix .c, $(FILES)))
-OBJS := $(addprefix obj/, $(addsuffix .o, $(FILES)))
+OBJS = $(addsuffix .o, $(addprefix $(OBJ_DIR), $(FILES)))
 
 all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(LIB) $(OBJS)
-	$(CC) $(CFLAGS) $(HEADER) $(LIB) -o $@
-
-$(OBJ_DIR):
-	@mkdir -p $@
+$(NAME): $(LIB) $(OBJS)
+	$(CC) $(CFLAGS) $(HEADER) -o $@ $^
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(LIB):
-	make -C lib/libft
+	make -C Libft
 
 clean:
 	$(RM) $(OBJS)
 
 fclean: clean
 	$(RM) $(NAME)
-	make fclean -C lib/libft
+	make fclean -C Libft
 
 re: fclean all
 
