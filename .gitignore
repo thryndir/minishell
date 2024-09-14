@@ -1,5 +1,5 @@
 # Fichiers objets, binaires et de compilation
 *.o
 *.out
-tasks.txt
+minishell
 .vscode/

@@ -3,6 +3,8 @@
 
 int	main(void)
 {
-	ft_printf("test");
+	t_test test;
+	test.a = 0;
+	printf("%d\n", test.a);
 	return (0);
 }
