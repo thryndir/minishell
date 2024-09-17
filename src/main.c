@@ -1,10 +1,9 @@
 #include "minishell.h"
 #include "libft.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	t_test test;
-	test.a = 0;
-	printf("%d\n", test.a);
-	return (0);
+	(void)argc;
+	// printf("test");
+	ft_echo(argv + 2);
 }
