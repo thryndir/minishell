@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 16:14:25 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/17 12:52:00 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:02:09 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	free_all(t_pipex *pipex, int which)
 		close_pipe(pipex->pipe_fd, pipex->cmd_nbr);
 	if (which >= 4 && pipex->pipe_fd != NULL)
 		free(pipex->pipe_fd);
-	if (which >= 5 && pipex->cmd != NULL)
-		double_array_free(pipex->cmd);
+	if (which >= 5 && pipex->cmds != NULL)
+		double_array_free(pipex->cmds);
 	if (which >= 6 && pipex->path != NULL)
 		free(pipex->path);
 	if (which >= 7 && pipex->lst != NULL)

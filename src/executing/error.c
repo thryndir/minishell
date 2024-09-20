@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 00:33:39 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/16 18:30:43 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:58:56 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
 
 void	ft_error(char *message, t_pipex *pipex, int which, int status)
 {

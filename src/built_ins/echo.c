@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 14:28:55 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/17 15:05:46 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:08:00 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// #TODO faire un exec built-ins qui prend le nom de la fonction, les args et le env
 
-void	ft_echo(char **argv)
+int	echo_builtin(char **argv)
 {
 	int		start;
 	int		i;
@@ -37,5 +36,5 @@ void	ft_echo(char **argv)
 	}
 	if (newline)
 		write(1, "\n", 1);
-	return;
+	return 0;
 }

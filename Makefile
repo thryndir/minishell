@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+         #
+#    By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 12:34:33 by lgalloux          #+#    #+#              #
-#    Updated: 2024/09/17 15:47:24 by lgalloux         ###   ########.fr        #
+#    Updated: 2024/09/20 17:54:56 by thryndir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ RM := rm -rf
 LIB := libft/libft.a 
 
 FILES := main executing/init executing/init_exec executing/exec\
-executing/utils executing/error built_ins/echo
+executing/utils executing/error built_ins/echo built_ins/exec_builtins\
+built_ins/cd built_ins/env built_ins/exit built_ins/export built_ins/pwd\
+built_ins/unset
 
 SRC_DIR := src/
 OBJ_DIR := obj/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:48:48 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/17 12:51:55 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:01:54 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	first_child(int current, t_pipex pipex, int (*pipe_fd)[2])
 	dup2(pipe_fd[current][1], 1);
 	close_pipe(pipe_fd, pipex.cmd_nbr);
 	if (pipex.path != NULL)
-		execve(pipex.path, pipex.cmd, pipex.env);
-	ft_dprintf(2, "pipex: command not found: %s\n", pipex.cmd[0]);
+		execve(pipex.path, pipex.cmds, pipex.env);
+	ft_dprintf(2, "pipex: command not found: %s\n", pipex.cmds[0]);
 	free_all(&pipex, FREE_LST);
 	exit(127);
 }
@@ -81,8 +81,8 @@ void	middle_child(int current, t_pipex pipex, int (*pipe_fd)[2])
 	dup2(pipe_fd[current][1], 1);
 	close_pipe(pipe_fd, pipex.cmd_nbr);
 	if (pipex.path != NULL)
-		execve(pipex.path, pipex.cmd, pipex.env);
-	ft_dprintf(2, "pipex: command not found: %s\n", pipex.cmd[0]);
+		execve(pipex.path, pipex.cmds, pipex.env);
+	ft_dprintf(2, "pipex: command not found: %s\n", pipex.cmds[0]);
 	free_all(&pipex, FREE_LST);
 	exit(127);
 }
@@ -97,8 +97,8 @@ void	last_child(int current, t_pipex pipex, int (*pipe_fd)[2])
 	dup2(pipe_fd[current - 1][0], 0);
 	close_pipe(pipe_fd, pipex.cmd_nbr);
 	if (pipex.path != NULL)
-		execve(pipex.path, pipex.cmd, pipex.env);
-	ft_dprintf(2, "pipex: command not found: %s\n", pipex.cmd[0]);
+		execve(pipex.path, pipex.cmds, pipex.env);
+	ft_dprintf(2, "pipex: command not found: %s\n", pipex.cmds[0]);
 	free_all(&pipex, FREE_LST);
 	exit(127);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 20:32:45 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/17 12:51:57 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:02:18 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	struct_init(t_pipex *pipex, char **argv, int argc, char **env)
 {
-	pipex->cmd = NULL;
+	pipex->cmds = NULL;
 	pipex->path = NULL;
 	pipex->p_path = search_in_env(env);
 	if (pipex->p_path == NULL)
