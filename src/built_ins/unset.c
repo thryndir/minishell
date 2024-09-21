@@ -6,7 +6,7 @@
 /*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:49:21 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/20 19:08:30 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:25:38 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int unset_builtin(char **cmd)
 {
 	(void)cmd;
-	ft_printf("unset");
-	return (0);
+	ft_dprintf(2, "unset");
+	exit(0);
 }

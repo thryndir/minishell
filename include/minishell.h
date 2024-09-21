@@ -6,7 +6,7 @@
 /*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:34:36 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/20 19:07:41 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:33:53 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,12 @@ int			read_or_write(char *file, int read_or_write, t_pipex pipex);
 void		here_doc_verif(t_pipex *pipex, int argc, char **argv);
 void		hold_on(t_list *lst, int *status);
 t_builtin	*htable_get(const char *str, size_t len);
-int			echo_builtin(char **argv);
-int			cd_builtin(char **cmd);
-int			env_builtin(char **cmd);
-int			exit_builtin(char **cmd);
-int			export_builtin(char **cmd);
-int			pwd_builtin(char **cmd);
-int			unset_builtin(char **cmd);
+int			echo_builtin(char **cmds);
+int			cd_builtin(char **cmds);
+int			env_builtin(char **cmds);
+int			exit_builtin(char **cmds);
+int			export_builtin(char **cmds);
+int			pwd_builtin(char **cmds);
+int			unset_builtin(char **cmds);
 
 #endif

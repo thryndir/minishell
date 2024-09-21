@@ -6,7 +6,7 @@
 /*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 22:34:37 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/20 19:04:41 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:15:09 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,11 @@ char	*this_is_the_path(t_pipex *pipex, char **p_path, char **cmd)
 
 void	init_exec(t_pipex *pipex, char *cmd)
 {
-	t_builtin	*builtin;
-
 	if (pipex->cmds != NULL)
 		double_array_free(pipex->cmds);
 	pipex->cmds = ft_split(cmd, ' ');
 	if (pipex->cmds == NULL)
 		ft_error("problem with the first split\n", pipex, -FREE_PIPE, 1);
-	if ((builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]))))
-		builtin->builtin_func(pipex->cmds);
 	if (pipex->path != NULL)
 		free(pipex->path);
 	pipex->path = this_is_the_path(pipex, pipex->p_path, pipex->cmds);

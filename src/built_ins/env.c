@@ -6,7 +6,7 @@
 /*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:48:01 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/20 19:08:12 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:25:12 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int env_builtin(char **cmd)
 {
 	(void)cmd;
-	ft_printf("env");
-	return (0);
+	ft_dprintf(2, "env");
+	exit(0);
 }

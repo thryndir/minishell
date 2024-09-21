@@ -6,7 +6,7 @@
 /*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:48:29 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/20 19:08:22 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:25:21 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int exit_builtin(char **cmd)
 {
 	(void)cmd;
-	ft_printf("exit");
-	return (0);
+	ft_dprintf(2, "exit");
+	exit(0);
 }
