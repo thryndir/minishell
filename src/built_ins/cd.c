@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:44:08 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/21 18:24:21 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:23:53 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int cd_builtin(char **cmd)
+int cd_builtin(t_pipex pipex)
 {
-	(void)cmd;
+	(void)pipex;
 	ft_dprintf(2, "cd");
 	exit(0);
 }

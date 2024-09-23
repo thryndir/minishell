@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 16:14:25 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/20 19:02:09 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:42:42 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,18 @@ void	free_lst(t_list *lst)
 
 void	free_all(t_pipex *pipex, int which)
 {
-	if (which >= 2 && pipex->p_path != NULL)
+	if (which >= 2 && pipex->env != NULL)
+		double_array_free(pipex->env);
+	if (which >= 3 && pipex->p_path != NULL)
 		double_array_free(pipex->p_path);
-	if (which >= 3)
+	if (which >= 4)
 		close_pipe(pipex->pipe_fd, pipex->cmd_nbr);
-	if (which >= 4 && pipex->pipe_fd != NULL)
+	if (which >= 5 && pipex->pipe_fd != NULL)
 		free(pipex->pipe_fd);
-	if (which >= 5 && pipex->cmds != NULL)
+	if (which >= 6 && pipex->cmds != NULL)
 		double_array_free(pipex->cmds);
-	if (which >= 6 && pipex->path != NULL)
+	if (which >= 7 && pipex->path != NULL)
 		free(pipex->path);
-	if (which >= 7 && pipex->lst != NULL)
+	if (which >= 8 && pipex->lst != NULL)
 		free_lst(pipex->lst);
 }

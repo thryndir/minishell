@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:48:44 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/21 18:25:28 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:24:26 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int export_builtin(char **cmd)
+int export_builtin(t_pipex pipex)
 {
-	(void)cmd;
+	(void)pipex;
 	ft_dprintf(2, "export");
 	exit(0);
 }

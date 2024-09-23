@@ -3,14 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 20:32:45 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/20 19:02:18 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:33:21 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char **ft_strsdup(char **env)
+{
+	int	i;
+	char **strs;
+	int	len;
+
+	i = 0;
+	len = 0;
+	if (env == NULL)
+		return (NULL);
+	while (env[len])
+		len++;
+	strs = malloc(sizeof(char *) * len + 1);
+	while (env[i])
+	{
+		strs[i] = ft_strdup(env[i]);
+		i++;
+	}
+	strs[len] = NULL;
+	return (strs);
+}
 
 void	struct_init(t_pipex *pipex, char **argv, int argc, char **env)
 {
@@ -30,7 +52,7 @@ void	struct_init(t_pipex *pipex, char **argv, int argc, char **env)
 		pipex->cmd_nbr = argc - 3;
 		pipex->infile = argv[1];
 	}
-	pipex->env = env;
+	pipex->env = ft_strsdup(env);
 	pipex->lst = NULL;
 }
 

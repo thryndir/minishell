@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:34:36 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/21 18:33:53 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:34:31 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ typedef enum e_read_or_write
 typedef enum e_error
 {
 	WRITE_MSG = 1,
-	FREE_P_PATH = 2,
-	CLOSE_PIPE = 3,
-	FREE_PIPE = 4,
-	FREE_CMD = 5,
-	FREE_PATH = 6,
-	FREE_LST = 7
+	FREE_ENV = 2,
+	FREE_P_PATH = 3,
+	CLOSE_PIPE = 4,
+	FREE_PIPE = 5,
+	FREE_CMD = 6,
+	FREE_PATH = 7,
+	FREE_LST = 8
 }	t_error;
 
 typedef enum e_child
@@ -98,21 +99,21 @@ void		runner(int current, t_pipex *pipex, int which);
 void		fork_init(t_pipex *pipex);
 void		init_pipe_fds(t_pipex *pipex);
 void		struct_init(t_pipex *pipex, char **argv, int argc, char **env);
-void		last_child(int current, t_pipex pipex, int (*pipe_fd)[2]);
-void		first_child(int current, t_pipex pipex, int (*pipe_fd)[2]);
-void		middle_child(int current, t_pipex pipex, int (*pipe_fd)[2]);
+void		last_child(int current, t_pipex *pipex, int (*pipe_fd)[2]);
+void		first_child(int current, t_pipex *pipex, int (*pipe_fd)[2]);
+void		middle_child(int current, t_pipex *pipex, int (*pipe_fd)[2]);
 void		close_pipe(int (*pipe_fd)[2], int cmd_nbr);
 void		here_doc(t_pipex *pipex, char *lim);
 int			read_or_write(char *file, int read_or_write, t_pipex pipex);
 void		here_doc_verif(t_pipex *pipex, int argc, char **argv);
 void		hold_on(t_list *lst, int *status);
 t_builtin	*htable_get(const char *str, size_t len);
-int			echo_builtin(char **cmds);
-int			cd_builtin(char **cmds);
-int			env_builtin(char **cmds);
-int			exit_builtin(char **cmds);
-int			export_builtin(char **cmds);
-int			pwd_builtin(char **cmds);
-int			unset_builtin(char **cmds);
+int			echo_builtin(t_pipex pipex);
+int			cd_builtin(t_pipex pipex);
+int			env_builtin(t_pipex pipex);
+int			exit_builtin(t_pipex pipex);
+int			export_builtin(t_pipex pipex);
+int			pwd_builtin(t_pipex pipex);
+int			unset_builtin(t_pipex *pipex);
 
 #endif
