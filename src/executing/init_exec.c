@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 22:34:37 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/21 18:15:09 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:40:35 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ void	fork_init(t_pipex *pipex)
 	ft_lstlast(pipex->lst)->data = fork();
 	if (ft_lstlast(pipex->lst)->data == -1)
 		ft_error("problem with the fork: ", pipex, FREE_LST, 1);
+}
+
+void	no_pipe_init(t_pipex *pipex, char **argv, int argc)
+{
+	pipex->cmd_nbr = argc - 1;
+	no_pipe_parent(argv, argc - 1, pipex);
 }
 
 char	*this_is_the_path(t_pipex *pipex, char **p_path, char **cmd)
