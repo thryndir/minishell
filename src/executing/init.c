@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 20:32:45 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/23 17:33:21 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:37:45 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ void	struct_init(t_pipex *pipex, char **argv, int argc, char **env)
 {
 	pipex->cmds = NULL;
 	pipex->path = NULL;
+	pipex->pipe = 0;
 	pipex->p_path = search_in_env(env);
 	if (pipex->p_path == NULL)
 		ft_error("problem when searching in the env\n", pipex, -WRITE_MSG, 1);
 	pipex->outfile = argv[argc - 1];
-	if (pipex->here_doc)
+	if (!pipex->pipe)
+		pipex->cmd_nbr = argc - 1;
+	else if (pipex->here_doc)
 	{
 		pipex->cmd_nbr = argc - 4;
 		pipex->infile = "/tmp/temp";
