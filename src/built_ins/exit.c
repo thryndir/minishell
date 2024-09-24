@@ -6,13 +6,13 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:48:29 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/23 12:24:16 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:17:32 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int exit_builtin(t_pipex pipex)
+int exit_builtin(t_pipex *pipex)
 {
 	(void)pipex;
 	ft_dprintf(2, "exit");

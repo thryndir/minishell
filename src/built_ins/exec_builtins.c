@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:30 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/21 17:40:20 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:14:49 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ t_builtin *htable_get(const char *str, size_t len)
 	static t_builtin wordlist[] = 
 	{
 		{"", NULL}, {"", NULL},
-		{"cd", (void *)cd_builtin},
-		{"env", (void *)env_builtin},
-		{"exit", (void *)exit_builtin},
-		{"unset", (void *)unset_builtin},
-		{"export", (void *)export_builtin},
+		{"cd", cd_builtin},
+		{"env", env_builtin},
+		{"exit", exit_builtin},
+		{"unset", unset_builtin},
+		{"export", export_builtin},
 		{"", NULL},
-		{"pwd", (void *)pwd_builtin},
-		{"echo", (void *)echo_builtin}
+		{"pwd", pwd_builtin},
+		{"echo", echo_builtin}
 	};
 	if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
 		{
