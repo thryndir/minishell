@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 16:14:25 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/23 14:42:42 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:56:06 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	free_lst(t_list *lst)
 void	free_all(t_pipex *pipex, int which)
 {
 	if (which >= 2 && pipex->env != NULL)
-		double_array_free(pipex->env);
+		free_env(pipex->env);
 	if (which >= 3 && pipex->p_path != NULL)
 		double_array_free(pipex->p_path);
 	if (which >= 4)

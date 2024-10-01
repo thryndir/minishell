@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:34:36 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/24 18:41:53 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:54:20 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ typedef enum e_read_or_write
 typedef enum e_error
 {
 	WRITE_MSG = 1,
-	FREE_ENV = 2,
-	FREE_P_PATH = 3,
-	CLOSE_PIPE = 4,
-	FREE_PIPE = 5,
-	FREE_CMD = 6,
-	FREE_PATH = 7,
-	FREE_LST = 8
+	FREE_ENV,
+	FREE_P_PATH,
+	CLOSE_PIPE,
+	FREE_PIPE,
+	FREE_CMD,
+	FREE_PATH,
+	FREE_LST,
 }	t_error;
 
 typedef enum e_child
@@ -63,10 +63,13 @@ typedef struct s_flags
 	uint8_t _f : 1;
 }	t_flags;
 
-typedef	struct	s_test
+typedef struct s_env
 {
-	int	a;
-}	t_test;
+	struct s_env 	*next;
+	struct s_env 	*previous;
+	char			*name;
+	char			*value;
+}	t_env;
 
 typedef struct s_pipex
 {
@@ -78,8 +81,9 @@ typedef struct s_pipex
 	char		*outfile;
 	int			cmd_nbr;
 	bool		pipe;
+	t_env		*env;
 	t_list		*lst;
-	char		**env;
+	char		**envp;
 	bool		here_doc;
 	int			status;
 }	t_pipex;
@@ -121,5 +125,6 @@ int			exit_builtin(t_pipex *pipex);
 int			export_builtin(t_pipex *pipex);
 int			pwd_builtin(t_pipex *pipex);
 int			unset_builtin(t_pipex *pipex);
+void		free_env(t_env *env);
 
 #endif
