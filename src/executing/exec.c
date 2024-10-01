@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:48:48 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/24 18:41:58 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:29:32 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	runner(int current, t_pipex *pipex, int which_child)
 {
 	if (which_child == NO_PIPE_CHILD)
 	{
+		wait(0);
 		fork_init(pipex);
 		if (ft_lstlast(pipex->lst)->data == 0)
 			no_pipe_child(pipex);
@@ -28,7 +29,6 @@ void	runner(int current, t_pipex *pipex, int which_child)
 	}
 	else if (which_child == MIDDLE_CHILD)
 	{
-	wait(0);
 		fork_init(pipex);
 		if (ft_lstlast(pipex->lst)->data == 0)
 			middle_child(current, pipex, pipex->pipe_fd);
@@ -89,7 +89,7 @@ void	no_pipe_child(t_pipex *pipex)
 	if ((builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]))))
 		builtin->builtin_func(pipex);
 	else if (pipex->path != NULL)
-		execve(pipex->path, pipex->cmds, pipex->env);
+		execve(pipex->path, pipex->cmds, pipex->envp);
 	ft_dprintf(2, "pipex: command not found: %s\n", pipex->cmds[0]);
 	free_all(pipex, FREE_LST);
 	exit(127);
@@ -108,7 +108,7 @@ void	first_child(int current, t_pipex *pipex, int (*pipe_fd)[2])
 	if ((builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]))))
 		builtin->builtin_func(pipex);
 	else if (pipex->path != NULL)
-		execve(pipex->path, pipex->cmds, pipex->env);
+		execve(pipex->path, pipex->cmds, pipex->envp);
 	ft_dprintf(2, "pipex: command not found: %s\n", pipex->cmds[0]);
 	free_all(pipex, FREE_LST);
 	exit(127);
@@ -124,7 +124,7 @@ void	middle_child(int current, t_pipex *pipex, int (*pipe_fd)[2])
 	if ((builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]))))
 		builtin->builtin_func(pipex);
 	else if (pipex->path != NULL)
-		execve(pipex->path, pipex->cmds, pipex->env);
+		execve(pipex->path, pipex->cmds, pipex->envp);
 	ft_dprintf(2, "pipex: command not found: %s\n", pipex->cmds[0]);
 	free_all(pipex, FREE_LST);
 	exit(127);
@@ -143,7 +143,7 @@ void	last_child(int current, t_pipex *pipex, int (*pipe_fd)[2])
 	if ((builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]))))
 		builtin->builtin_func(pipex);
 	else if (pipex->path != NULL)
-		execve(pipex->path, pipex->cmds, pipex->env);
+		execve(pipex->path, pipex->cmds, pipex->envp);
 	ft_dprintf(2, "pipex: command not found: %s\n", pipex->cmds[0]);
 	free_all(pipex, FREE_LST);
 	exit(127);
