@@ -1,5 +1,4 @@
 
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -47,11 +46,14 @@ typedef enum e_child
 	LAST_CHILD
 }	t_child;
 
-typedef struct s_flags
+typedef struct s_cmd
 {
-	uint8_t _d : 1;
-	uint8_t _f : 1;
-}	t_flags;
+	struct s_io		*input;
+	struct s_io		*output;
+	struct s_word	*tokens;
+	struct s_cmd	*pipe;
+	struct s_cmd	*previous;
+}	t_cmd;
 
 typedef struct s_env
 {
