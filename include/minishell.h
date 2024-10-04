@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:34:36 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/01 14:54:20 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:33:08 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,14 @@ typedef enum e_child
 	LAST_CHILD
 }	t_child;
 
-typedef struct s_flags
+typedef struct s_cmd
 {
-	uint8_t _d : 1;
-	uint8_t _f : 1;
-}	t_flags;
+	struct s_io		*input;
+	struct s_io		*output;
+	struct s_word	*tokens;
+	struct s_cmd	*pipe;
+	struct s_cmd	*previous;
+}	t_cmd;
 
 typedef struct s_env
 {
