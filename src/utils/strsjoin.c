@@ -6,7 +6,7 @@
 /*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:46:13 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/03 11:55:14 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:43:09 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ int		size_and_convert(char **strs, int str_nbr, va_list arg)
 	int	i;
 
 	i = 0;
+	result = 0;
 	while (i < str_nbr)
 	{
 		strs[i] = va_arg(arg, char *);
 		result += ft_strlen(strs[i]);
 		i++;
 	}
+	return (result);
 }
 
 char 	*ft_strsjoin(int str_nbr, ...)
@@ -37,13 +39,13 @@ char 	*ft_strsjoin(int str_nbr, ...)
 	strs = (char **)malloc(str_nbr * sizeof(char *) + 1);
 	i = 0;
 	va_start(arg, str_nbr);
-	total_len = size_and_convert(strs, str_nbr, arg);
+	total_len = size_and_convert(strs, str_nbr, arg) + 1;
 	result = (char *)ft_calloc(sizeof(char), total_len + 1);
-	ft_strlcpy(result, strs[i], total_len);
 	while (i < str_nbr)
 	{
 		ft_strlcat(result, strs[i], total_len);
 		i++;
 	}
 	free(strs);
+	return (result);
 }
