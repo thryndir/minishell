@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:34:36 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/04 13:33:08 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:52:01 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,10 @@ int			export_builtin(t_pipex *pipex);
 int			pwd_builtin(t_pipex *pipex);
 int			unset_builtin(t_pipex *pipex);
 void		free_env(t_env *env);
+void		env_init(char **envp, t_pipex *pipex);
+int			pos_in_str(char *str, char to_search);
+void		del_in_env(t_env *env, t_env *to_delete, char *name);
+void		ft_envadd_back(t_env **env, t_env *new);
+t_env		*ft_envnew(char *var);
 
 #endif
