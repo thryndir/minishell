@@ -1,4 +1,5 @@
 
+
 #include "minishell.h"
 
 void	print_lst(t_env *env)
@@ -13,14 +14,14 @@ void	print_lst(t_env *env)
 	}
 }
 
-int	ft_strscmp(char **strs, char *str)
+int	ft_strscmp(char **cmds, char *name, int cmd_nbr)
 {
 	int	i;
 
 	i = 0;
-	while (strs)
+	while (cmds && i < cmd_nbr)
 	{
-		if (!ft_strcmp(strs[i], str))
+		if (!ft_strcmp(cmds[i], name))
 			return(0);
 		i++;
 	}
@@ -36,21 +37,9 @@ int unset_builtin(t_pipex *pipex)
 	while (curr)
 	{
 		next = curr->next;
-		if (!ft_strscmp(pipex->cmds, curr->name))
-		{
-			if (curr->next && curr->previous)
-			{
-				next->previous = curr->previous;
-				curr->previous->next = next;
-			}
-			free(curr->name);
-			free(curr->value);
-			free(curr);
-			curr = NULL;
-		}
+		if (!ft_strscmp(pipex->cmds, curr->name, pipex->cmd_nbr))
+			del_in_env(pipex->env, curr, curr->name);
 		curr = next;
-		print_lst(pipex->env);
 	}
-	print_lst(pipex->env);
 	exit(0);
 }
