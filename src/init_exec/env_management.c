@@ -6,12 +6,11 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:27 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/10/02 16:57:18 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:26:24 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-##TODO 
 
 void	ft_envadd_back(t_env **env, t_env *new)
 {
@@ -27,7 +26,21 @@ void	ft_envadd_back(t_env **env, t_env *new)
 	}
 }
 
-void	del_in_env(t_env *env, t_env *to_delete, char *name)
+void	del_env(t_env *env)
+{
+	t_env *temp;
+
+	while (env)
+	{
+		temp = env->next;
+		free(env->name);
+		free(env->value);
+		free(env);
+		env = temp;
+	}
+}
+
+void	del_in_env(t_env *env, t_env *to_delete)
 {
 	if (to_delete->next && !(to_delete->previous))
 		env = env->next;
@@ -45,12 +58,12 @@ void	del_in_env(t_env *env, t_env *to_delete, char *name)
 void	add_in_env(t_env *env, char *name, char *value)
 {
 	t_env 	*current;
-	char	*cat;
+	char	*var;
 
 	current = env;
 	while (current)
 	{
-		if (!ft_strcmp(current->name, name) && !ft_strcmp(current->value, value))
+		if (!ft_strcmp(current->name, name) && ft_strcmp(current->value, value))
 		{
 			free(current->value);
 			current->value = ft_calloc(ft_strlen(value), sizeof(char));
@@ -59,6 +72,20 @@ void	add_in_env(t_env *env, char *name, char *value)
 		}
 		current = current->next;
 	}
-	cat = calloc(ft_strlen(name) + ft_strlen(value) +)
-	ft_envadd_back(&env, ft_envnew())
+	var = ft_strsjoin(3, name, "=", value);
+	ft_envadd_back(&env, ft_envnew(var));
+}
+
+char	*get_value(t_env *env, char *name)
+{
+	t_env	*current;
+
+	current = env;
+	while (current)
+	{
+		if (!ft_strcmp(current->name, name))
+			return (current->value);
+		current = current->next;
+	}
+	return (NULL);
 }

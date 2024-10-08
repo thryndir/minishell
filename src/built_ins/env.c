@@ -4,9 +4,6 @@
 
 int env_builtin(t_pipex *pipex)
 {
-	int	i;
-
-	i = 0;
 	while (pipex->env)
 	{
 		ft_dprintf(2, "%s", pipex->env->name);

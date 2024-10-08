@@ -1,4 +1,5 @@
 
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -120,8 +121,14 @@ int			unset_builtin(t_pipex *pipex);
 void		free_env(t_env *env);
 void		env_init(char **envp, t_pipex *pipex);
 int			pos_in_str(char *str, char to_search);
-void		del_in_env(t_env *env, t_env *to_delete, char *name);
+void		del_in_env(t_env *env, t_env *to_delete);
+void		add_in_env(t_env *env, char *name, char *value);
 void		ft_envadd_back(t_env **env, t_env *new);
 t_env		*ft_envnew(char *var);
+t_env		*ft_envlast(t_env *env);
+void		print_lst(t_env *env);
+char 		*ft_strsjoin(int str_nbr, ...);
+void		name_and_value(char *var, t_env *env);
+void		del_env(t_env *env);
 
 #endif
