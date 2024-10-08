@@ -2,7 +2,7 @@
 
 #include <minishell.h>
 
-static unsigned int hash(register const char *str, register size_t len)
+static unsigned int hash(const char *str, size_t len)
 {
 	static unsigned char asso_values[] =
 		{
@@ -20,6 +20,7 @@ static unsigned int hash(register const char *str, register size_t len)
 		10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,
 		10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10
 		};
+		printf("%ld", len + asso_values[(unsigned char)str[1]]);
 	return len + asso_values[(unsigned char)str[1]];
 }
 

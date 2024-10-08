@@ -16,10 +16,8 @@ t_env	*ft_envlast(t_env *env)
 int		pos_in_str(char *str, char to_search)
 {
 	int	i;
-	bool find;
 
 	i = 0;
-	find = 0;
 	while (str[i] && str[i] != to_search)
 		i++;
 	if (str[i] == to_search)

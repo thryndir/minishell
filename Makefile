@@ -6,7 +6,7 @@
 #    By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 12:34:33 by lgalloux          #+#    #+#              #
-#    Updated: 2024/10/02 14:51:35 by lgalloux         ###   ########.fr        #
+#    Updated: 2024/10/07 14:29:47 by lgalloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ LIB := libft/libft.a
 FILES := main executing/init executing/init_exec executing/exec\
 executing/utils executing/error built_ins/echo built_ins/exec_builtins\
 built_ins/cd built_ins/env built_ins/exit built_ins/export built_ins/pwd\
-built_ins/unset init_exec/env_init init_exec/env_management
+built_ins/unset init_exec/env_init init_exec/env_management utils/strsjoin\
+
 
 SRC_DIR := src/
 OBJ_DIR := obj/
