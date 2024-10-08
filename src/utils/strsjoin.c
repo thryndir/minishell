@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strsjoin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:46:13 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/04 12:43:09 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/10/08 12:30:13 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		size_and_convert(char **strs, int str_nbr, va_list arg)
 	return (result);
 }
 
-char 	*ft_strsjoin(int str_nbr, ...)
+char	*ft_strsjoin(int str_nbr, ...)
 {
 	va_list arg;
 	int		total_len;

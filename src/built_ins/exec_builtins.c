@@ -6,13 +6,13 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:38:30 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/24 13:14:49 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:46:27 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static unsigned int hash(register const char *str, register size_t len)
+static unsigned int hash(const char *str, size_t len)
 {
 	static unsigned char asso_values[] =
 		{
@@ -30,6 +30,7 @@ static unsigned int hash(register const char *str, register size_t len)
 		10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,
 		10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10
 		};
+		printf("%ld", len + asso_values[(unsigned char)str[1]]);
 	return len + asso_values[(unsigned char)str[1]];
 }
 

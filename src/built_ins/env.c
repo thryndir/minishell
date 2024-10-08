@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:48:01 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/26 17:19:07 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:27:41 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int env_builtin(t_pipex *pipex)
 {
-	int	i;
-
-	i = 0;
 	while (pipex->env)
 	{
 		ft_dprintf(2, "%s", pipex->env->name);

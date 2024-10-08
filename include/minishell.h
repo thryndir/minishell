@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:34:36 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/07 14:07:41 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:26:34 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,14 @@ int			unset_builtin(t_pipex *pipex);
 void		free_env(t_env *env);
 void		env_init(char **envp, t_pipex *pipex);
 int			pos_in_str(char *str, char to_search);
-void		del_in_env(t_env *env, t_env *to_delete, char *name);
+void		del_in_env(t_env *env, t_env *to_delete);
+void		add_in_env(t_env *env, char *name, char *value);
 void		ft_envadd_back(t_env **env, t_env *new);
 t_env		*ft_envnew(char *var);
+t_env		*ft_envlast(t_env *env);
+void		print_lst(t_env *env);
+char 		*ft_strsjoin(int str_nbr, ...);
+void		name_and_value(char *var, t_env *env);
+void		del_env(t_env *env);
 
 #endif

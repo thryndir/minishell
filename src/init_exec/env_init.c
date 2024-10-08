@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:27:18 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/10/02 16:28:56 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:28:27 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ t_env	*ft_envlast(t_env *env)
 int		pos_in_str(char *str, char to_search)
 {
 	int	i;
-	bool find;
 
 	i = 0;
-	find = 0;
 	while (str[i] && str[i] != to_search)
 		i++;
 	if (str[i] == to_search)
