@@ -20,7 +20,6 @@ static unsigned int hash(const char *str, size_t len)
 			10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,
 			10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10
 		};
-		printf("%ld", len + asso_values[(unsigned char)str[1]]);
 	return len + asso_values[(unsigned char)str[1]];
 }
 

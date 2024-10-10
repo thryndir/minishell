@@ -69,5 +69,5 @@ int	export_builtin(t_pipex *pipex)
 	}
 	del_env(temp);
 	del_env(copy);
-	return (0);
+	exit (0);
 }
