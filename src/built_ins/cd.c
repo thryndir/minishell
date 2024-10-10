@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:44:08 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/24 13:17:16 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/10 12:24:22 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,4 @@ int cd_builtin(t_pipex *pipex)
 	(void)pipex;
 	ft_dprintf(2, "cd");
 	exit(0);
-}
+} 

@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:49:21 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/08 14:27:54 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:02:58 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int unset_builtin(t_pipex *pipex)
 	{
 		next = curr->next;
 		if (!ft_strscmp(pipex->cmds, curr->name, pipex->cmd_nbr))
-			del_in_env(pipex->env, curr);
+			del_in_env(&(pipex->env), curr);
 		curr = next;
 	}
 	exit(0);

@@ -6,38 +6,62 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:48:44 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/08 18:04:47 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:18:00 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sort_env(t_env **env)
-{
-	t_env	**current;
-	t_env	*last;
-	t_env	*temp;
+// void	sort_env(t_env **env)
+// {
+// 	t_env	**current;
+// 	t_env	*last;
+// 	t_env	*temp;
 	
-	last = NULL;
-	while (*env != last)
+// 	last = NULL;
+// 	while (*env != last)
+// 	{
+// 		current = env;
+// 		while ((*current)->next != last)
+// 		{
+// 			if (ft_strcmp((*current)->name, (*current)->next->name) > 0)
+// 			{
+// 				temp = (*current)->next;
+// 				if (temp->next)
+// 				(*current)->next = temp->next;
+// 				temp->next = *current;
+// 				(*current) = temp;
+// 			}
+// 			current = &(*current)->next;
+// 		}
+// 		last = *current;
+// 	}
+// }
+
+void	sort_env(t_env *env)
+{
+	t_env	*i;
+	t_env	*j;
+	char *tmp;
+
+	i = env;
+	while (i->next)
 	{
-		current = env;
-		while ((*current)->next != last)
+		j = i->next;
+		while (j->next)
 		{
-			if (ft_strcmp((*current)->name, (*current)->next->name) > 0)
+			if (ft_strcmp(i->name, j->name) > 0)
 			{
-				temp = (*current)->next;
-				if (temp->next)
-					temp->next->previous = *current;
-				temp->previous = (*current)->previous;
-				(*current)->previous = temp;
-				(*current)->next = temp->next;
-				temp->next = *current;
-				(*current) = temp;
+				tmp = i->name;
+				i->name = j->name;
+				j->name = tmp;
+				tmp = i->value;
+				i->value = j->value;
+				j->value = tmp;
 			}
-			current = &(*current)->next;
+			j = j->next;
 		}
-		last = *current;
+		i = i->next;
 	}
 }
 
@@ -66,7 +90,7 @@ int	export_builtin(t_pipex *pipex)
 	copy = env_copy(pipex->env);
 	if (pipex->cmds[1] == NULL)
 	{
-		sort_env(&copy);
+		sort_env(copy);
 		print_lst(copy);
 	}
 	else
@@ -75,5 +99,5 @@ int	export_builtin(t_pipex *pipex)
 		add_in_env(pipex->env, temp->name, temp->value);
 	}
 	del_env(copy);
-	return (0);
+	exit (0);
 }

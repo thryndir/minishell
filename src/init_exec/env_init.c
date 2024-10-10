@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:27:18 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/10/08 14:28:27 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:13:46 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ t_env	*ft_envnew(char *var)
 		return (NULL);
 	name_and_value(var, env);
 	env->next = NULL;
-	env->previous = NULL;
 	return (env);
 }
 

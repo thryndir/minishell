@@ -6,14 +6,14 @@
 #    By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 12:34:33 by lgalloux          #+#    #+#              #
-#    Updated: 2024/10/07 14:29:47 by lgalloux         ###   ########.fr        #
+#    Updated: 2024/10/09 15:12:24 by lgalloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
 HEADER := -Ilibft/include -Iinclude 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -g
+CFLAGS += -Wall -Wextra -Werror -g
 RM := rm -rf
 LIB := libft/libft.a 
 
