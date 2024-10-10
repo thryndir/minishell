@@ -38,7 +38,7 @@ int unset_builtin(t_pipex *pipex)
 	{
 		next = curr->next;
 		if (!ft_strscmp(pipex->cmds, curr->name, pipex->cmd_nbr))
-			del_in_env(pipex->env, curr);
+			del_in_env(&(pipex->env), curr);
 		curr = next;
 	}
 	exit(0);

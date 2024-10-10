@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:27 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/10/08 14:26:24 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:54:36 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_envadd_back(t_env **env, t_env *new)
 	{
 		temp = ft_envlast(*env);
 		temp->next = new;
-		new->previous = temp;
 	}
 }
 
@@ -40,19 +39,20 @@ void	del_env(t_env *env)
 	}
 }
 
-void	del_in_env(t_env *env, t_env *to_delete)
+void	del_in_env(t_env **env, t_env *to_delete)
 {
-	if (to_delete->next && !(to_delete->previous))
-		env = env->next;
-	else if (to_delete->next && to_delete->previous)
-	{
-		to_delete->next->previous = to_delete->previous;
-		to_delete->previous->next = to_delete->next;
-	}
+	t_env *current;
+
+	current = *env;
+	while (current && current->next != to_delete && current != to_delete)
+		current = current->next;
+	if (*env == to_delete)
+		*env =(*env)->next;
+	else
+		current->next = to_delete->next;
 	free(to_delete->name);
 	free(to_delete->value);
 	free(to_delete);
-	to_delete = NULL;
 }
 
 void	add_in_env(t_env *env, char *name, char *value)

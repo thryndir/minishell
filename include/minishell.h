@@ -47,19 +47,10 @@ typedef enum e_child
 	LAST_CHILD
 }	t_child;
 
-typedef struct s_cmd
-{
-	struct s_io		*input;
-	struct s_io		*output;
-	struct s_word	*tokens;
-	struct s_cmd	*pipe;
-	struct s_cmd	*previous;
-}	t_cmd;
 
 typedef struct s_env
 {
 	struct s_env 	*next;
-	struct s_env 	*previous;
 	char			*name;
 	char			*value;
 }	t_env;
@@ -121,7 +112,7 @@ int			unset_builtin(t_pipex *pipex);
 void		free_env(t_env *env);
 void		env_init(char **envp, t_pipex *pipex);
 int			pos_in_str(char *str, char to_search);
-void		del_in_env(t_env *env, t_env *to_delete);
+void		del_in_env(t_env **env, t_env *to_delete);
 void		add_in_env(t_env *env, char *name, char *value);
 void		ft_envadd_back(t_env **env, t_env *new);
 t_env		*ft_envnew(char *var);
