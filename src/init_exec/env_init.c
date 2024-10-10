@@ -59,7 +59,6 @@ t_env	*ft_envnew(char *var)
 		return (NULL);
 	name_and_value(var, env);
 	env->next = NULL;
-	env->previous = NULL;
 	return (env);
 }
 
