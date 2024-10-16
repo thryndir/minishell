@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:54:06 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/15 22:59:58 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/10/16 22:34:46 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	**ft_str_to_array(char **strs, const char *str)
 /**
  * Modified version of ft_split to help me tokenize the input string.
 */
-char	**ft_split(char const *str)
+char	**ft_mini_split(char const *str)
 {
 	char	**strs;
 	int		word_count;
