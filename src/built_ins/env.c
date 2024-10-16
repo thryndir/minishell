@@ -12,5 +12,5 @@ int env_builtin(t_pipex *pipex)
 		write(2, "\n", 1);
 		pipex->env = pipex->env->next;
 	}
-	exit(0);
+	return(0);
 }

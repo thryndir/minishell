@@ -59,14 +59,16 @@ t_env	*env_copy(t_env *env)
 {
 	t_env	*current;
 	t_env	*new;
+	char	*var;
 
 	current = env;
 	new = ft_envnew(ft_strsjoin(3, current->name, "=", current->value));
 	current = current->next;
 	while (current)
 	{
-		ft_envadd_back(&new, ft_envnew(ft_strsjoin(3, current->name, "=",
-		current->value)));
+		var = ft_strsjoin(3, current->name, "=", current->value);
+		ft_envadd_back(&new, ft_envnew(var));
+		free(var);
 		current = current->next;
 	}
 	return (new);
@@ -89,5 +91,5 @@ int	export_builtin(t_pipex *pipex)
 		add_in_env(pipex->env, temp->name, temp->value);
 	}
 	del_env(copy);
-	exit (0);
+	return (0);
 }
