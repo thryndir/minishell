@@ -4,12 +4,15 @@
 
 void	print_lst(t_env *env)
 {
-	t_env *curr;
+	t_env	*curr;
+	char	*var;
 	
 	curr = env;
 	while (curr)
 	{
-		ft_dprintf(2, "%s\n", curr->name);
+		var = ft_strsjoin(3, curr->name, "=", curr->value);
+		ft_dprintf(2, "%s\n", var);
+		free(var);
 		curr = curr->next;
 	}
 }
