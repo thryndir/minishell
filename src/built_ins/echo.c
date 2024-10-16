@@ -6,24 +6,35 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 14:28:55 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/09/24 18:48:20 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:45:40 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	is_only_c(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != c)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	echo_builtin(t_pipex *pipex)
 {
-	int		start;
 	int		i;
 	bool	newline;
 
-	start = 0;
 	i = 1;
 	newline = 1;
-	while (pipex->cmds[0][start] && pipex->cmds[0][start] != '-')
-		start++;
-	if (pipex->cmds[0][start + 1] == 'n')
+
+	if (is_only_c(pipex->cmds[1] + 1, 'n'))
 	{
 		newline = 0;
 		i = 2;
@@ -31,10 +42,10 @@ int	echo_builtin(t_pipex *pipex)
 	while (pipex->cmds[i])
 	{
 		ft_printf("%s ", pipex->cmds[i++]);
-		if (pipex->cmds[i + 1] == NULL)
+		if (pipex->cmds[i] && pipex->cmds[i + 1] == NULL)
 			ft_printf("%s", pipex->cmds[i++]);
 	}
 	if (newline)
 		write(1, "\n", 1);
-	exit(0);
+	return(0);
 }

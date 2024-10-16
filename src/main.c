@@ -6,11 +6,21 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:03:23 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/10/07 14:43:03 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:34:03 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// void	which_exec(t_cmd *cmd)
+// {
+// 	if (premier token est un systeme)
+// 		execute_system(...);
+// 	else
+// 		execute_others(...);
+// 	if (cmd->pipe)
+// 		execute(cmd->pipe);
+// }
 
 int	main(int argc, char **argv, char **env)
 {

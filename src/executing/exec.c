@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:48:48 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/10/01 12:29:32 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:36:31 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ void	runner(int current, t_pipex *pipex, int which_child)
 	if (which_child == NO_PIPE_CHILD)
 	{
 		wait(0);
-		fork_init(pipex);
-		if (ft_lstlast(pipex->lst)->data == 0)
-			no_pipe_child(pipex);
+		no_pipe_child(pipex);
 	}
 	else if (which_child == FIRST_CHILD)
 	{
@@ -93,7 +91,7 @@ void	no_pipe_child(t_pipex *pipex)
 	ft_dprintf(2, "pipex: command not found: %s\n", pipex->cmds[0]);
 	free_all(pipex, FREE_LST);
 	exit(127);
-}
+}	
 
 void	first_child(int current, t_pipex *pipex, int (*pipe_fd)[2])
 {
