@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:27 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/10/10 15:54:36 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:31:09 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,7 @@ void	add_in_env(t_env *env, char *name, char *value)
 	{
 		if (!ft_strcmp(current->name, name) && ft_strcmp(current->value, value))
 		{
-			free(current->value);
-			current->value = ft_calloc(ft_strlen(value), sizeof(char));
-			ft_strlcpy(current->value, value, ft_strlen(value));
+			current->value = ft_strdup(value);
 			return;
 		}
 		current = current->next;

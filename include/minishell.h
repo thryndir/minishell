@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:34:36 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/10 15:49:30 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:32:13 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,6 @@ void		print_lst(t_env *env);
 char 		*ft_strsjoin(int str_nbr, ...);
 void		name_and_value(char *var, t_env *env);
 void		del_env(t_env *env);
+char		*get_value(t_env *env, char *name);
 
 #endif

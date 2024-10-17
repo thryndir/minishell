@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:49:05 by thryndir          #+#    #+#             */
-/*   Updated: 2024/09/24 13:17:40 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:04:26 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int pwd_builtin(t_pipex *pipex)
 {
-	(void)pipex;
-	char *str;
-	str = NULL;
-	ft_dprintf(2, "%s\n", getcwd(str, 0));
-	exit(0);
+	ft_dprintf(2, "%s\n", get_value(pipex->env, "PWD"));
+	return (0);
 }
