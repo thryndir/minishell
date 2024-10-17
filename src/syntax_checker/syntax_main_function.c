@@ -6,11 +6,11 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:44:35 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/16 22:45:41 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:52:08 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 /**
  * This function check is an operator is misplaced and
@@ -19,8 +19,8 @@
 bool	misplaced_operators(const char *input)
 {
 	int	command;
-	int	simple_q;
-	int	double_q;
+	int	*simple_q;
+	int	*double_q;
 
 	simple_q = 0;
 	double_q = 0;
@@ -29,8 +29,8 @@ bool	misplaced_operators(const char *input)
 		return (true);
 	while (*input)
 	{
-		quote_count(*input, &simple_q, &double_q);
-		if (*input == '|' && !(simple_q % 2) && !(double_q % 2))
+		quote_count(*input, simple_q, double_q);
+		if (*input == '|' && !(*(simple_q) % 2) && !(*(double_q) % 2))
 		{
 			if (command)
 				return (true);
@@ -88,9 +88,9 @@ bool	invalid_operators(const char *input)
 	{
 		quote_count(*input, &simple_q, &double_q);
 		if (!(double_q % 2) && !(simple_q % 2)
-			&& ((*input == '&' && *(input + 1) == '&')
-				|| (*input == '|' && *(input + 1) == '|'))
-			|| *input == ';' || *input == '\\')
+			&& (((*input == '&' && *(input + 1) == '&')
+					|| (*input == '|' && *(input + 1) == '|'))
+				|| *input == ';' || *input == '\\'))
 			return (true);
 		input++;
 	}
@@ -115,7 +115,7 @@ bool	unclosed_quotes(const char *input)
 			else if (quote == 0)
 				quote = *input;
 		}
-		*input++;
+		input++;
 	}
 	if (quote == 0)
 		return (false);

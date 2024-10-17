@@ -6,11 +6,11 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:43:19 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/16 22:44:12 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:52:13 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 /**
  * This function check the input character to see whether it's a
@@ -33,9 +33,9 @@ bool	ft_isspace(char c)
 void	quote_count(char c, int *simple_q, int *double_q)
 {
 	if (c == '\"')
-		*double_q++;
+		double_q++;
 	if (c == '\'')
-		*simple_q++;
+		simple_q++;
 }
 
 /**

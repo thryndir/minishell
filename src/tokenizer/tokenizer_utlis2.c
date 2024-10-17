@@ -6,11 +6,11 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:51:49 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/15 22:59:59 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:51:45 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 /**
  * Main word counter here, the other two are here because of

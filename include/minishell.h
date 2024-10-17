@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:34:36 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/16 22:46:55 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:54:20 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ typedef enum e_read_or_write
 typedef enum e_error
 {
 	WRITE_MSG = 1,
-	FREE_ENV = 2,
-	FREE_P_PATH = 3,
-	CLOSE_PIPE = 4,
-	FREE_PIPE = 5,
-	FREE_CMD = 6,
-	FREE_PATH = 7,
-	FREE_LST = 8
+	FREE_ENV,
+	FREE_P_PATH,
+	CLOSE_PIPE,
+	FREE_PIPE,
+	FREE_CMD,
+	FREE_PATH,
+	FREE_LST,
 }	t_error;
 
 typedef enum e_child
@@ -63,10 +63,13 @@ typedef struct s_flags
 	uint8_t _f : 1;
 }	t_flags;
 
-typedef	struct	s_test
+typedef struct s_env
 {
-	int	a;
-}	t_test;
+	struct s_env 	*next;
+	struct s_env 	*previous;
+	char			*name;
+	char			*value;
+}	t_env;
 
 typedef struct s_pipex
 {
@@ -78,8 +81,9 @@ typedef struct s_pipex
 	char		*outfile;
 	int			cmd_nbr;
 	bool		pipe;
+	t_env		*env;
 	t_list		*lst;
-	char		**env;
+	char		**envp;
 	bool		here_doc;
 	int			status;
 }	t_pipex;
@@ -121,39 +125,6 @@ int			exit_builtin(t_pipex *pipex);
 int			export_builtin(t_pipex *pipex);
 int			pwd_builtin(t_pipex *pipex);
 int			unset_builtin(t_pipex *pipex);
+void		free_env(t_env *env);
 
-/**
- * PARSING FUNCTIONS
-*/
-
-/**
- * Syntax
-*/
-bool		ft_isspace(char c);
-void		quote_count(char c, int *simple_q, int *double_q);
-bool		is_symbol_or_nullchar(char c);
-bool		check_after_redir(const char **input, char redir);
-bool		misplaced_operators(const char *input);
-bool		check_invalid_redirection(const char *input);
-bool		invalid_operators(const char *input);
-bool		unclosed_quotes(const char *input);
-bool		syntax_errors(const char *input);
-
-/**
- * Tokenizer
-*/
-bool		is_quote(char c);
-bool		is_symbol(char c);
-bool		is_double_symbol(const char *str, int i);
-bool		count_quoted_word(const char *str, int *i);
-bool		count_regular_word(const char *str, int *i);
-int			count_word(const char *str, int *i);
-int			ft_strnbr(const char *str);
-int			ft_charnbr(const char *str);
-void		ft_malloc_fail(char **strs, int j);
-char		*extract_quoted_word(const char *str, int *i, int len);
-char		*extract_regular_word(const char *str, int *i, int len);
-char		*extract_word(const char *str, int *i, int *status);
-char		**ft_str_to_array(char **strs, const char *str);
-char		**ft_mini_split(char const *str);
 #endif

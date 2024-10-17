@@ -6,11 +6,11 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:54:54 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/15 23:48:01 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:51:49 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 /**
  * This function return a boolean wether the input char is a quote or not.
