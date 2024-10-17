@@ -121,5 +121,6 @@ void		print_lst(t_env *env);
 char 		*ft_strsjoin(int str_nbr, ...);
 void		name_and_value(char *var, t_env *env);
 void		del_env(t_env *env);
+char		*get_value(t_env *env, char *name);
 
 #endif
