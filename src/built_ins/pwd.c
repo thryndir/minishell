@@ -4,9 +4,6 @@
 
 int pwd_builtin(t_pipex *pipex)
 {
-	(void)pipex;
-	char *str;
-	str = NULL;
-	ft_dprintf(2, "%s\n", getcwd(str, 0));
-	exit(0);
+	ft_dprintf(2, "%s\n", get_value(pipex->env, "PWD"));
+	return (0);
 }
