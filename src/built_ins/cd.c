@@ -8,7 +8,8 @@ int cd_builtin(t_pipex *pipex)
 	int		to_free;
 
 	to_free = 0;
-	if (pipex->cmds[1][0] == '~' || !ft_strncmp("/home", pipex->cmds[1], 5))
+	if (pipex->cmds[1] && 
+	(pipex->cmds[1][0] == '~' || !ft_strncmp("/home", pipex->cmds[1], 5)))
 		path = pipex->cmds[1];
 	else
 	{

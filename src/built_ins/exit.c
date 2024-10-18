@@ -23,13 +23,20 @@ int exit_builtin(t_pipex *pipex)
 		return (1);
 	}
 	else if (!pipex->cmds[1])
+	{
+		free_all(pipex, FREE_LST);
 		exit(0);
+	}
 	else if (is_only_digit(pipex->cmds[1]))
+	{
+		free_all(pipex, FREE_LST);
 		exit(ft_atoull(pipex->cmds[1]));
+	}
 	else
 	{
 		ft_printf("minishell: exit: %s: numeric argument required",
 		pipex->cmds[1]);
+		free_all(pipex, FREE_LST);
 		exit (2);
 	}
 }

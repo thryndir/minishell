@@ -44,5 +44,5 @@ int unset_builtin(t_pipex *pipex)
 			del_in_env(&(pipex->env), curr);
 		curr = next;
 	}
-	exit(0);
+	return (0);
 }

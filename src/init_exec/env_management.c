@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_management.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:27 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/10/17 18:31:09 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:22:28 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	add_in_env(t_env *env, char *name, char *value)
 	}
 	var = ft_strsjoin(3, name, "=", value);
 	ft_envadd_back(&env, ft_envnew(var));
+	free(var);
 }
 
 char	*get_value(t_env *env, char *name)
