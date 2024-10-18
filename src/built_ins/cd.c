@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:44:08 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/17 19:31:33 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:13:25 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int cd_builtin(t_pipex *pipex)
 	int		to_free;
 
 	to_free = 0;
-	if (pipex->cmds[1][0] == '~' || !ft_strncmp("/home", pipex->cmds[1], 5))
+	if (pipex->cmds[1] && 
+	(pipex->cmds[1][0] == '~' || !ft_strncmp("/home", pipex->cmds[1], 5)))
 		path = pipex->cmds[1];
 	else
 	{

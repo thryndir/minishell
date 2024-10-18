@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:48:01 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/15 13:52:59 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:05:52 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,21 @@
 
 int env_builtin(t_pipex *pipex)
 {
-	while (pipex->env)
+	t_env *current = pipex->env;
+	
+	while (current != NULL)
 	{
-		ft_dprintf(2, "%s", pipex->env->name);
-		write(2, "=", 1);
-		ft_dprintf(2, "%s", pipex->env->value);
-		write(2, "\n", 1);
-		pipex->env = pipex->env->next;
+		if (current->name && current->value)
+		{
+			ft_dprintf(2, "%s=", current->name);
+			ft_dprintf(2, "%s\n", current->value);
+		}
+		else
+		{
+			ft_dprintf(2, "Invalid environment variable\n");
+		}
+		current = current->next;
 	}
+
 	return(0);
 }

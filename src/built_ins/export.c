@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:48:44 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/16 13:40:20 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:26:50 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	sort_env(t_env **env)
-// {
-// 	t_env	**current;
-// 	t_env	*last;
-// 	t_env	*temp;
-	
-// 	last = NULL;
-// 	while (*env != last)
-// 	{
-// 		current = env;
-// 		while ((*current)->next != last)
-// 		{
-// 			if (ft_strcmp((*current)->name, (*current)->next->name) > 0)
-// 			{
-// 				temp = (*current)->next;
-// 				if (temp->next)
-// 				(*current)->next = temp->next;
-// 				temp->next = *current;
-// 				(*current) = temp;
-// 			}
-// 			current = &(*current)->next;
-// 		}
-// 		last = *current;
-// 	}
-// }
 
 void	sort_env(t_env *env)
 {
@@ -72,7 +46,9 @@ t_env	*env_copy(t_env *env)
 	char	*var;
 
 	current = env;
-	new = ft_envnew(ft_strsjoin(3, current->name, "=", current->value));
+	var = ft_strsjoin(3, current->name, "=", current->value);
+	new = ft_envnew(var);
+	free(var);
 	current = current->next;
 	while (current)
 	{
@@ -100,6 +76,7 @@ int	export_builtin(t_pipex *pipex)
 		temp = ft_envnew(pipex->cmds[1]);
 		add_in_env(pipex->env, temp->name, temp->value);
 	}
+	del_env(temp);
 	del_env(copy);
 	return (0);
 }
