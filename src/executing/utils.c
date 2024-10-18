@@ -61,7 +61,7 @@ void	free_lst(t_list *lst)
 void	free_all(t_pipex *pipex, int which)
 {
 	if (which >= 2 && pipex->env != NULL)
-		free_env(pipex->env);
+		del_env(pipex->env);
 	if (which >= 3 && pipex->p_path != NULL)
 		double_array_free(pipex->p_path);
 	if (which >= 4)

@@ -4,13 +4,21 @@
 
 int env_builtin(t_pipex *pipex)
 {
-	while (pipex->env)
+	t_env *current = pipex->env;
+	
+	while (current != NULL)
 	{
-		ft_dprintf(2, "%s", pipex->env->name);
-		write(2, "=", 1);
-		ft_dprintf(2, "%s", pipex->env->value);
-		write(2, "\n", 1);
-		pipex->env = pipex->env->next;
+		if (current->name && current->value)
+		{
+			ft_dprintf(2, "%s=", current->name);
+			ft_dprintf(2, "%s\n", current->value);
+		}
+		else
+		{
+			ft_dprintf(2, "Invalid environment variable\n");
+		}
+		current = current->next;
 	}
+
 	return(0);
 }
