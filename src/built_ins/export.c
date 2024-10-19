@@ -55,6 +55,7 @@ int	export_builtin(t_pipex *pipex)
 	t_env	*copy;
 	t_env	*temp;
 
+	temp = NULL;
 	copy = env_copy(pipex->env);
 	if (pipex->cmds[1] == NULL)
 	{
