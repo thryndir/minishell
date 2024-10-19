@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:48:44 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/18 17:26:50 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/10/19 13:46:51 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	export_builtin(t_pipex *pipex)
 	t_env	*copy;
 	t_env	*temp;
 
+	temp = NULL;
 	copy = env_copy(pipex->env);
 	if (pipex->cmds[1] == NULL)
 	{
