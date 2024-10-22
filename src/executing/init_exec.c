@@ -1,5 +1,3 @@
-
-
 #include "minishell.h"
 
 void	fork_init(t_pipex *pipex)

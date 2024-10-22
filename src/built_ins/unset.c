@@ -1,5 +1,3 @@
-
-
 #include "minishell.h"
 
 void	print_lst(t_env *env)

@@ -1,5 +1,3 @@
-
-
 #include "minishell.h"
 
 int	env_builtin(t_pipex *pipex)
