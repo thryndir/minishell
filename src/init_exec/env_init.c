@@ -1,5 +1,3 @@
-
-
 #include "minishell.h"
 
 t_env	*ft_envlast(t_env *env)

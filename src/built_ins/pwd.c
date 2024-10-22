@@ -1,5 +1,3 @@
-
-
 #include "minishell.h"
 
 int	pwd_builtin(t_pipex *pipex)

@@ -6,7 +6,7 @@
 /*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/22 11:50:12 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:54:55 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,55 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
-typedef enum e_token_type
-{
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_REDIR_HEREDOC,
-	TOKEN_ENV_VAR,
-}	t_token_type;
+// the differents types of nodes
+typedef enum e_type {
+	NODE_PIPE,
+	NODE_CMD,
+	NODE_REDIR
+}	t_type;
 
-typedef struct s_ast_node
+// The differents types of redirections possible
+typedef	enum e_redir_type {
+	REDIR_IN,//		<
+	REDIR_OUT,//	>
+	REDIR_APPEND,//	>>
+	REDIR_HEREDOC//	<<
+}	t_redir_type;
+
+// the structure for the node type pipe
+typedef struct s_pipe
 {
-	t_token_type		type;
-	int					file_type;
-	char				**args;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
-}	t_ast_node;
+	t_node	*left;//  the left node
+	t_node	*right;// the right node
+}	t_pipe;
+
+// the structure for the node type redirection
+typedef	struct s_redir
+{
+	enum e_redir_type	type;//	 the type of the redirection
+	char				*file;// the file of the redirection
+	struct s_node		*cmd;//  the node type command associated with the redirection
+}	t_redir;
+
+// the structure for the node type command
+typedef struct s_command
+{
+	char	*name;//  the name of the command
+	char	**args;// the arguments of the command
+	char	*path;//  the path to the command
+}	t_command;
+
+// the main structure of the node
+typedef struct s_node
+{
+	enum e_type	type;// type of node
+	union// union optimize the memory taken by the structure by allowing only
+	{//		one node type at the time
+		struct s_pipe		pipe;
+		struct s_command	cmd;
+		struct s_redir		redir;
+	} u;
+}	t_node;
 
 /**
  * PARSING FUNCTIONS

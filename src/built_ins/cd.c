@@ -1,5 +1,3 @@
-
-
 #include "minishell.h"
 
 int	cd_builtin(t_pipex *pipex)

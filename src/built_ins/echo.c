@@ -1,5 +1,3 @@
-
-
 #include "minishell.h"
 
 int	is_only_c(char *str, char c)

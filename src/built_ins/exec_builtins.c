@@ -1,5 +1,3 @@
-
-
 #include <minishell.h>
 
 static unsigned int	hash(const char *str, size_t len)

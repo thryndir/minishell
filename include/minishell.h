@@ -59,15 +59,14 @@ typedef struct s_pipex
 	char		**p_path;
 	char		**cmds;
 	char		*path;
+	bool		here_doc;
 	int			(*pipe_fd)[2];
 	char		*infile;
 	char		*outfile;
 	int			cmd_nbr;
-	bool		pipe;
 	t_env		*env;
-	t_list		*lst;
+	t_list		*pid;
 	char		**envp;
-	bool		here_doc;
 	int			status;
 }	t_pipex;
 

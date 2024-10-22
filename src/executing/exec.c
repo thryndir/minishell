@@ -1,5 +1,3 @@
-
-
 #include "minishell.h"
 
 void	runner(int current, t_pipex *pipex, int which_child)
@@ -12,19 +10,19 @@ void	runner(int current, t_pipex *pipex, int which_child)
 	else if (which_child == FIRST_CHILD)
 	{
 		fork_init(pipex);
-		if (ft_lstlast(pipex->lst)->data == 0)
+		if (ft_lstlast(pipex->pid)->data == 0)
 			first_child(current, pipex, pipex->pipe_fd);
 	}
 	else if (which_child == MIDDLE_CHILD)
 	{
 		fork_init(pipex);
-		if (ft_lstlast(pipex->lst)->data == 0)
+		if (ft_lstlast(pipex->pid)->data == 0)
 			middle_child(current, pipex, pipex->pipe_fd);
 	}
 	else if (which_child == LAST_CHILD)
 	{
 		fork_init(pipex);
-		if (pipex->lst->data == 0)
+		if (pipex->pid->data == 0)
 			last_child(current, pipex, pipex->pipe_fd);
 	}
 }
@@ -65,7 +63,7 @@ void	pipe_parent(char **argv, int end, t_pipex *pipex)
 	init_exec(pipex, argv[end]);
 	runner(end - start, pipex, FIRST_CHILD);
 	close_pipe(pipex->pipe_fd, pipex->cmd_nbr);
-	hold_on(pipex->lst, &(pipex->status));
+	hold_on(pipex->pid, &(pipex->status));
 	if (WEXITSTATUS(pipex->status))
 		return_code(pipex);
 }
