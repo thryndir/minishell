@@ -23,7 +23,6 @@ int	echo_builtin(t_pipex *pipex)
 
 	i = 1;
 	newline = 1;
-
 	if (is_only_c(pipex->cmds[1] + 1, 'n'))
 	{
 		newline = 0;
@@ -37,5 +36,5 @@ int	echo_builtin(t_pipex *pipex)
 	}
 	if (newline)
 		write(1, "\n", 1);
-	return(0);
+	return (0);
 }

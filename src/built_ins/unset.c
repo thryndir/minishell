@@ -6,7 +6,7 @@ void	print_lst(t_env *env)
 {
 	t_env	*curr;
 	char	*var;
-	
+
 	curr = env;
 	while (curr)
 	{
@@ -25,16 +25,16 @@ int	ft_strscmp(char **cmds, char *name, int cmd_nbr)
 	while (cmds && i < cmd_nbr)
 	{
 		if (!ft_strcmp(cmds[i], name))
-			return(0);
+			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int unset_builtin(t_pipex *pipex)
+int	unset_builtin(t_pipex *pipex)
 {
-	t_env *next;
-	t_env *curr;
+	t_env	*next;
+	t_env	*curr;
 
 	curr = pipex->env;
 	while (curr)

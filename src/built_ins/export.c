@@ -6,7 +6,7 @@ void	sort_env(t_env *env)
 {
 	t_env	*i;
 	t_env	*j;
-	char *tmp;
+	char	*tmp;
 
 	i = env;
 	while (i->next)

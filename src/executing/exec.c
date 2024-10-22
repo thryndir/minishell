@@ -74,26 +74,28 @@ void	no_pipe_child(t_pipex *pipex)
 {
 	t_builtin	*builtin;
 
-	if ((builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]))))
+	builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]));
+	if (builtin)
 		builtin->builtin_func(pipex);
 	else if (pipex->path != NULL)
 		execve(pipex->path, pipex->cmds, pipex->envp);
 	ft_dprintf(2, "pipex: command not found: %s\n", pipex->cmds[0]);
 	free_all(pipex, FREE_LST);
 	exit(127);
-}	
+}
 
 void	first_child(int current, t_pipex *pipex, int (*pipe_fd)[2])
 {
 	int			fd;
 	t_builtin	*builtin;
 
+	builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]));
 	fd = read_or_write(pipex->infile, READ, *pipex);
 	dup2(fd, 0);
 	close(fd);
 	dup2(pipe_fd[current][1], 1);
 	close_pipe(pipe_fd, pipex->cmd_nbr);
-	if ((builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]))))
+	if (builtin)
 		builtin->builtin_func(pipex);
 	else if (pipex->path != NULL)
 		execve(pipex->path, pipex->cmds, pipex->envp);
@@ -104,12 +106,13 @@ void	first_child(int current, t_pipex *pipex, int (*pipe_fd)[2])
 
 void	middle_child(int current, t_pipex *pipex, int (*pipe_fd)[2])
 {
-	t_builtin *builtin;
+	t_builtin	*builtin;
 
+	builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]));
 	dup2(pipe_fd[current - 1][0], 0);
 	dup2(pipe_fd[current][1], 1);
 	close_pipe(pipe_fd, pipex->cmd_nbr);
-	if ((builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]))))
+	if (builtin)
 		builtin->builtin_func(pipex);
 	else if (pipex->path != NULL)
 		execve(pipex->path, pipex->cmds, pipex->envp);
@@ -123,12 +126,13 @@ void	last_child(int current, t_pipex *pipex, int (*pipe_fd)[2])
 	int			fd;
 	t_builtin	*builtin;
 
+	builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]));
 	fd = read_or_write(pipex->outfile, WRITE, *pipex);
 	dup2(fd, 1);
 	close(fd);
 	dup2(pipe_fd[current - 1][0], 0);
 	close_pipe(pipe_fd, pipex->cmd_nbr);
-	if ((builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]))))
+	if (builtin)
 		builtin->builtin_func(pipex);
 	else if (pipex->path != NULL)
 		execve(pipex->path, pipex->cmds, pipex->envp);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   strsjoin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:46:13 by thryndir          #+#    #+#             */
-/*   Updated: 2024/10/08 12:30:13 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:06:41 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		size_and_convert(char **strs, int str_nbr, va_list arg)
+int	size_and_convert(char **strs, int str_nbr, va_list arg)
 {
 	int	result;
 	int	i;
@@ -30,11 +30,11 @@ int		size_and_convert(char **strs, int str_nbr, va_list arg)
 
 char	*ft_strsjoin(int str_nbr, ...)
 {
-	va_list arg;
+	va_list	arg;
 	int		total_len;
 	int		i;
-	char 	*result;
-	char 	**strs;
+	char	*result;
+	char	**strs;
 
 	strs = (char **)malloc(str_nbr * sizeof(char *) + 1);
 	i = 0;

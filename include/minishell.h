@@ -47,10 +47,9 @@ typedef enum e_child
 	LAST_CHILD
 }	t_child;
 
-
 typedef struct s_env
 {
-	struct s_env 	*next;
+	struct s_env	*next;
 	char			*name;
 	char			*value;
 }	t_env;
@@ -74,8 +73,8 @@ typedef struct s_pipex
 
 typedef struct s_builtin
 {
-	const char* key;
-	int (*builtin_func)(t_pipex *);
+	const char	*key;
+	int			(*builtin_func)(t_pipex *);
 }	t_builtin;
 
 char		**search_in_env(char **env);
@@ -118,7 +117,7 @@ void		ft_envadd_back(t_env **env, t_env *new);
 t_env		*ft_envnew(char *var);
 t_env		*ft_envlast(t_env *env);
 void		print_lst(t_env *env);
-char 		*ft_strsjoin(int str_nbr, ...);
+char		*ft_strsjoin(int str_nbr, ...);
 int			name_and_value(char *var, t_env *env);
 void		del_env(t_env *env);
 char		*get_value(t_env *env, char *name);

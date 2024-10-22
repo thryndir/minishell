@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env_management.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 14:27:27 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/10/18 17:22:28 by thryndir         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -27,7 +17,7 @@ void	ft_envadd_back(t_env **env, t_env *new)
 
 void	del_env(t_env *env)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	while (env)
 	{
@@ -41,13 +31,13 @@ void	del_env(t_env *env)
 
 void	del_in_env(t_env **env, t_env *to_delete)
 {
-	t_env *current;
+	t_env	*current;
 
 	current = *env;
 	while (current && current->next != to_delete && current != to_delete)
 		current = current->next;
 	if (*env == to_delete)
-		*env =(*env)->next;
+		*env = (*env)->next;
 	else
 		current->next = to_delete->next;
 	free(to_delete->name);
@@ -57,7 +47,7 @@ void	del_in_env(t_env **env, t_env *to_delete)
 
 void	add_in_env(t_env *env, char *name, char *value)
 {
-	t_env 	*current;
+	t_env	*current;
 	char	*var;
 
 	current = env;
@@ -66,7 +56,7 @@ void	add_in_env(t_env *env, char *name, char *value)
 		if (!ft_strcmp(current->name, name) && ft_strcmp(current->value, value))
 		{
 			current->value = ft_strdup(value);
-			return;
+			return ;
 		}
 		current = current->next;
 	}

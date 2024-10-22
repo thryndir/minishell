@@ -13,7 +13,7 @@ t_env	*ft_envlast(t_env *env)
 	return (env);
 }
 
-int		pos_in_str(char *str, char to_search)
+int	pos_in_str(char *str, char to_search)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ int		pos_in_str(char *str, char to_search)
 	return (0);
 }
 
-int		name_and_value(char *var, t_env *env)
+int	name_and_value(char *var, t_env *env)
 {
 	int	i;
 	int	j;
@@ -36,10 +36,10 @@ int		name_and_value(char *var, t_env *env)
 	pos = pos_in_str(var, '=');
 	env->name = ft_calloc(pos + 1, sizeof(char));
 	if (!env->name)
-		return 1;
+		return (1);
 	env->value = ft_calloc(ft_strlen(var) - pos, sizeof(char));
 	if (!env->value)
-		return 1;
+		return (1);
 	while (var[i] && var[i] != '=')
 	{
 		env->name[i] = var[i];
@@ -65,10 +65,10 @@ t_env	*ft_envnew(char *var)
 	return (env);
 }
 
-int		env_init(char **envp, t_pipex *pipex)
+int	env_init(char **envp, t_pipex *pipex)
 {
-	int	i;
-	t_env *new;
+	int		i;
+	t_env	*new;
 
 	pipex->env = ft_envnew(envp[0]);
 	if (!pipex->env)

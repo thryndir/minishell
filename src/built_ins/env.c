@@ -2,10 +2,11 @@
 
 #include "minishell.h"
 
-int env_builtin(t_pipex *pipex)
+int	env_builtin(t_pipex *pipex)
 {
-	t_env *current = pipex->env;
-	
+	t_env	*current;
+
+	current = pipex->env;
 	while (current != NULL)
 	{
 		if (current->name && current->value)
@@ -19,6 +20,5 @@ int env_builtin(t_pipex *pipex)
 		}
 		current = current->next;
 	}
-
-	return(0);
+	return (0);
 }

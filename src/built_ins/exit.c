@@ -5,6 +5,7 @@
 int	is_only_digit(char *str)
 {
 	int	i;
+
 	i = 0;
 	while (str[i])
 	{
@@ -15,7 +16,7 @@ int	is_only_digit(char *str)
 	return (1);
 }
 
-int exit_builtin(t_pipex *pipex)
+int	exit_builtin(t_pipex *pipex)
 {
 	if (pipex->cmds[2])
 	{
@@ -35,7 +36,7 @@ int exit_builtin(t_pipex *pipex)
 	else
 	{
 		ft_printf("minishell: exit: %s: numeric argument required",
-		pipex->cmds[1]);
+			pipex->cmds[1]);
 		free_all(pipex, FREE_LST);
 		exit (2);
 	}
