@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/17 12:34:33 by lgalloux          #+#    #+#              #
-#    Updated: 2024/10/19 14:40:33 by lgalloux         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME := minishell
 HEADER := -Ilibft/include -Iinclude 
 CC := cc
@@ -21,6 +9,7 @@ FILES := main executing/init executing/init_exec executing/exec\
 executing/utils executing/error built_ins/echo built_ins/exec_builtins\
 built_ins/cd built_ins/env built_ins/exit built_ins/export built_ins/pwd\
 built_ins/unset init_exec/env_init init_exec/env_management utils/strsjoin\
+init_exec/which_exec
 
 
 SRC_DIR := src/

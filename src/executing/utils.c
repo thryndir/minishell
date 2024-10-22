@@ -1,5 +1,3 @@
-
-
 #include "minishell.h"
 
 int	read_or_write(char *file, int read_or_write, t_pipex pipex)

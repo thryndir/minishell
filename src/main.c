@@ -1,5 +1,3 @@
-
-
 #include "minishell.h"
 
 // void	which_exec(t_cmd *cmd)
