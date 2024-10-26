@@ -1,3 +1,4 @@
+
 NAME := minishell
 HEADER := -Ilibft/include -Iinclude 
 CC := cc
