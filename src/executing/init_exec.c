@@ -1,11 +1,11 @@
 #include "minishell.h"
 
-void	fork_init(t_pipex *pipex)
+void	fork_init(t_exec *exec)
 {
-	ft_lstadd_back(&(pipex->lst), ft_lstnew(-1));
-	ft_lstlast(pipex->lst)->data = fork();
-	if (ft_lstlast(pipex->lst)->data == -1)
-		ft_error("problem with the fork: ", pipex, FREE_LST, 1);
+	ft_lstadd_back(&(exec->pid), ft_lstnew(-1));
+	ft_lstlast(exec->pid)->data = fork();
+	if (ft_lstlast(exec->pid)->data == -1)
+		ft_error("problem with the fork: ", exec, FREE_LST, 1);
 }
 
 void	no_pipe_init(t_pipex *pipex, char **argv, int argc)

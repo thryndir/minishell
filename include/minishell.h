@@ -13,6 +13,7 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include "libft.h"
+# include "parsing.h"
 # include <assert.h>
 
 # define TOTAL_KEYWORDS 7
@@ -54,61 +55,58 @@ typedef struct s_env
 	char			*value;
 }	t_env;
 
-typedef struct s_pipex
+typedef struct exec
 {
 	char		**p_path;
-	char		**cmds;
-	char		*path;
 	int			(*pipe_fd)[2];
-	char		*infile;
-	char		*outfile;
 	int			cmd_nbr;
+	int			cmd_count;
+	t_node		*node;
 	t_env		*env;
 	t_list		*pid;
-	t_list		*lst;
 	char		**envp;
 	int			status;
-}	t_pipex;
+}	t_exec;
 
 typedef struct s_builtin
 {
 	const char	*key;
-	int			(*builtin_func)(t_pipex *);
+	int			(*builtin_func)(t_exec *);
 }	t_builtin;
 
 char		**search_in_env(char **env);
-void		pipe_parent(char **argv, int end, t_pipex *pipex);
-void		ft_error(char *message, t_pipex *pipex, int which, int status);
-char		*this_is_the_path(t_pipex *pipex, char **p_path, char **cmd);
-void		free_all(t_pipex *pipex, int which);
-void		init_exec(t_pipex *pipex, char *cmd);
-void		return_code(t_pipex *pipex);
+void		pipe_parent(char **argv, int end, t_exec *exec);
+void		ft_error(char *message, t_exec *exec, int which, int status);
+char		*this_is_the_path(t_exec *exec, char **p_path, char **cmd);
+void		free_all(t_exec *exec, int which);
+void		init_exec(t_exec *exec, char *cmd);
+void		return_code(t_exec *exec);
 void		double_array_free(char **strs);
-void		runner(int current, t_pipex *pipex, int which);
-void		fork_init(t_pipex *pipex);
-void		no_pipe_parent(char **argv, int end, t_pipex *pipex);
-void		no_pipe_child(t_pipex *pipex);
-void		no_pipe_init(t_pipex *pipex, char **argv, int argc);
-void		init_pipe_fds(t_pipex *pipex);
-void		struct_init(t_pipex *pipex, char **argv, int argc, char **env);
-void		last_child(int current, t_pipex *pipex, int (*pipe_fd)[2]);
-void		first_child(int current, t_pipex *pipex, int (*pipe_fd)[2]);
-void		middle_child(int current, t_pipex *pipex, int (*pipe_fd)[2]);
+void		runner(t_command *cmd, t_exec *exec);
+void		fork_init(t_exec *exec);
+void		no_pipe_parent(char **argv, int end, t_exec *exec);
+void		no_pipe_child(t_exec *exec);
+void		no_pipe_init(t_exec *exec, char **argv, int argc);
+void		init_pipe_fds(t_exec *exec);
+void		struct_init(t_exec *exec, char **argv, int argc, char **env);
+void		last_child(int current, t_exec *exec, int (*pipe_fd)[2]);
+void		first_child(int current, t_exec *exec, int (*pipe_fd)[2]);
+void		middle_child(t_exec *exec, int (*pipe_fd)[2]);
 void		close_pipe(int (*pipe_fd)[2], int cmd_nbr);
-void		here_doc(t_pipex *pipex, char *lim);
-int			read_or_write(char *file, int read_or_write, t_pipex pipex);
-void		here_doc_verif(t_pipex *pipex, int argc, char **argv);
+void		here_doc(t_exec *exec, char *lim);
+int			read_or_write(char *file, int read_or_write, t_exec exec);
+void		here_doc_verif(t_exec *exec, int argc, char **argv);
 void		hold_on(t_list *lst, int *status);
 t_builtin	*htable_get(const char *str, size_t len);
-int			echo_builtin(t_pipex *pipex);
-int			cd_builtin(t_pipex *pipex);
-int			env_builtin(t_pipex *pipex);
-int			exit_builtin(t_pipex *pipex);
-int			export_builtin(t_pipex *pipex);
-int			pwd_builtin(t_pipex *pipex);
-int			unset_builtin(t_pipex *pipex);
+int			echo_builtin(t_exec *exec);
+int			cd_builtin(t_exec *exec);
+int			env_builtin(t_exec *exec);
+int			exit_builtin(t_exec *exec);
+int			export_builtin(t_exec *exec);
+int			pwd_builtin(t_exec *exec);
+int			unset_builtin(t_exec *exec);
 void		free_env(t_env *env);
-int			env_init(char **envp, t_pipex *pipex);
+int			env_init(char **envp, t_exec *exec);
 int			pos_in_str(char *str, char to_search);
 void		del_in_env(t_env **env, t_env *to_delete);
 void		add_in_env(t_env *env, char *name, char *value);

@@ -16,7 +16,7 @@ void	ast_exec(t_node *node)
 	return ;
 }
 
-void	linear_exec(t_node *node)
+void	linear_exec(t_node *node, t_exec *exec)
 {
 	t_node *current;
 
@@ -24,19 +24,22 @@ void	linear_exec(t_node *node)
 	redir_all(node);
 	while (current)
 	{
-		if (current->type == NODE_CMD && !current->u_u.cmd.builtin)
-			exec_cmd(current->u_u.cmd);
-		else if (current->type == NODE_CMD && current->u_u.cmd.builtin)
-			exec_builtin(current->u_u.cmd);
 		if (current->type == NODE_CMD)
-			current = current->u_u.redir.node;
+		{
+			runner(&current->u_u.cmd, exec);
+			exec->cmd_count++;
+			current = current->u_u.cmd.node;
+		}
 		else
 			current = current->u_u.redir.node;
-		current = 
 	}
+	close_pipe(exec->pipe_fd, exec->cmd_nbr);
+	hold_on(exec->pid, &(exec->status));
+	if (WEXITSTATUS(exec->status))
+		return_code(exec);
 }
 
-void	linear_or_ast(t_node *node)
+void	linear_or_ast(t_node *node, t_exec *exec)
 {
 	if (node->type == NODE_PIPE)
         ast_exec(node);
