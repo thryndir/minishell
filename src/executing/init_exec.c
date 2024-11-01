@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "executing.h"
 
 void	fork_init(t_exec *exec)
 {
@@ -6,12 +6,6 @@ void	fork_init(t_exec *exec)
 	ft_lstlast(exec->pid)->data = fork();
 	if (ft_lstlast(exec->pid)->data == -1)
 		ft_error("problem with the fork: ", exec, FREE_LST, 1);
-}
-
-void	no_pipe_init(t_pipex *pipex, char **argv, int argc)
-{
-	pipex->cmd_nbr = argc - 1;
-	no_pipe_parent(argv, argc - 1, pipex);
 }
 
 char	*this_is_the_path(t_pipex *pipex, char **p_path, char **cmd)

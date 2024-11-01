@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "executing.h"
 
 int	size_and_convert(char **strs, int str_nbr, va_list arg)
 {
