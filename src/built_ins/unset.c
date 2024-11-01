@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "executing.h"
 
 void	print_lst(t_env *env)
 {

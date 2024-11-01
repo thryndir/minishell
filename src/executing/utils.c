@@ -1,20 +1,20 @@
-#include "minishell.h"
+#include "executing.h"
 
-int	read_or_write(char *file, int read_or_write, t_pipex pipex)
+int	read_or_write(int read_or_write, t_redir *redir, t_exec exec)
 {
 	int	fd;
 	int	flag;
 
 	fd = -1;
 	flag = O_TRUNC;
-	if (!ft_strcmp(pipex.infile, "/tmp/temp"))
+	if (!ft_strcmp(redir->file, "/tmp/temp"))
 		flag = O_APPEND;
 	if (read_or_write == READ)
-		fd = open(file, O_RDONLY);
+		fd = open(redir->file, O_RDONLY);
 	else
-		fd = open(file, O_WRONLY | O_CREAT | flag, 0644);
+		fd = open(redir->file, O_WRONLY | O_CREAT | flag, 0644);
 	if (fd == -1)
-		ft_error("problem when opening the file: ", &pipex, FREE_LST, 1);
+		ft_error("problem when opening the file: ", &exec, FREE_LST, 1);
 	return (fd);
 }
 
@@ -31,15 +31,15 @@ void	double_array_free(char **strs)
 	free(strs);
 }
 
-void	close_pipe(int (*pipe_fd)[2], int cmd_nbr)
+void	close_pipe(t_exec *exec)
 {
 	int	i;
 
 	i = 0;
-	while (i < cmd_nbr - 1)
+	while (i < exec->cmd_nbr - 1)
 	{
-		close(pipe_fd[i][0]);
-		close(pipe_fd[i][1]);
+		close(exec->pipe_fd[i][0]);
+		close(exec->pipe_fd[i][1]);
 		i++;
 	}
 }

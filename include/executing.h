@@ -1,6 +1,6 @@
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXECUTING_H
+# define EXECUTING_H
 
 # include <stdbool.h>
 # include <stdio.h>
@@ -40,14 +40,6 @@ typedef enum e_error
 	FREE_LST,
 }	t_error;
 
-typedef enum e_child
-{
-	NO_PIPE_CHILD,
-	FIRST_CHILD,
-	MIDDLE_CHILD,
-	LAST_CHILD
-}	t_child;
-
 typedef struct s_env
 {
 	struct s_env	*next;
@@ -58,13 +50,11 @@ typedef struct s_env
 typedef struct exec
 {
 	char		**p_path;
-	int			(*pipe_fd)[2];
+	int			(*pipe_fds)[2];
 	int			cmd_nbr;
-	int			cmd_count;
-	t_node		*node;
+	t_command	*cmd;
 	t_env		*env;
 	t_list		*pid;
-	char		**envp;
 	int			status;
 }	t_exec;
 
@@ -82,7 +72,7 @@ void		free_all(t_exec *exec, int which);
 void		init_exec(t_exec *exec, char *cmd);
 void		return_code(t_exec *exec);
 void		double_array_free(char **strs);
-void		runner(t_command *cmd, t_exec *exec);
+int			runner(t_command *cmd, t_exec *exec);
 void		fork_init(t_exec *exec);
 void		no_pipe_parent(char **argv, int end, t_exec *exec);
 void		no_pipe_child(t_exec *exec);
@@ -91,10 +81,10 @@ void		init_pipe_fds(t_exec *exec);
 void		struct_init(t_exec *exec, char **argv, int argc, char **env);
 void		last_child(int current, t_exec *exec, int (*pipe_fd)[2]);
 void		first_child(int current, t_exec *exec, int (*pipe_fd)[2]);
-void		middle_child(t_exec *exec, int (*pipe_fd)[2]);
-void		close_pipe(int (*pipe_fd)[2], int cmd_nbr);
+void		child(t_exec *exec, t_command *cmd);
+void		close_pipe(t_exec *exec);
 void		here_doc(t_exec *exec, char *lim);
-int			read_or_write(char *file, int read_or_write, t_exec exec);
+int			read_or_write(int read_or_write, t_redir *redir, t_exec exec);
 void		here_doc_verif(t_exec *exec, int argc, char **argv);
 void		hold_on(t_list *lst, int *status);
 t_builtin	*htable_get(const char *str, size_t len);

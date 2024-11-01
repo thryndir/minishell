@@ -1,6 +1,14 @@
-#include "minishell.h"
+#include "executing.h"
 
-void	runner(t_command *cmd, t_exec *exec)
+void	init_pipe(int *pipe_fds[2])
+{
+	if (pipe(pipe_fds[0]) == -1)
+		ft_error();
+	if (pipe(pipe_fds[1]) == -1)
+		ft_error();
+}
+
+int	runner(t_command *cmd, t_exec *exec)
 {
 	t_builtin	*htable;
 
@@ -10,27 +18,77 @@ void	runner(t_command *cmd, t_exec *exec)
 		htable->builtin_func(exec);
 		return;
 	}
-	if (exec->cmd_count == 0)
-
 	fork_init(exec);
+	init_pipe(exec->pipe_fds);
 	if (ft_lstlast(exec->pid)->data == 0)
-		middle_child(exec, exec->pipe_fd);
+	{
+		redirect(cmd, exec);
+		child(exec, cmd);
+	}
+	return (0);
 }
 
-void	middle_child(t_exec *exec, int (*pipe_fd)[2])
+int	last_fd_type(int type, t_redir *redir)
 {
-	t_node		*node = exec->node;
-	t_builtin	*htable;
+	t_redir *current;
+	int		last_fd;
 
-	dup2(pipe_fd[exec->cmd_count - 1][0], 0);
-	dup2(pipe_fd[exec->cmd_count][1], 1);
-	close_pipe(pipe_fd, exec->cmd_nbr);
-	htable = htable_get(node->u_u.cmd.name, ft_strlen(node->u_u.cmd.name));
+	current = redir;
+	last_fd = type;
+	while (current)
+	{
+		if (current->type == type)
+			last_fd = current->fd;
+		current = current->next;
+	}
+	return (last_fd);
+}
+
+void	prioritize_pipe(t_command *cmd, t_exec exec)
+{
+	if (exec.cmd_nbr == 1)
+		return;
+	if (cmd->index == 0)
+		cmd->fd_out = exec.pipe_fd[cmd->index][1];
+	if (cmd->index == exec.cmd_nbr - 1)
+		cmd->fd_in = exec.pipe_fd[cmd->index - 1][0];
+}
+
+void	redirect(t_command *cmd, t_exec *exec)
+{
+	t_redir	*current;
+
+	current = cmd->redirections;
+	while (current)
+	{
+		if (current->type == REDIR_IN)
+			current->fd = read_or_write(READ, current, *exec);
+		else if (current->type == REDIR_OUT)
+			current->fd = read_or_write(WRITE, current, *exec);
+		current = current->next;
+	}
+	cmd->fd_in = last_fd_type(REDIR_IN, cmd->redirections);
+	cmd->fd_out = last_fd_type(REDIR_OUT, cmd->fd_out);
+	prioritize_pipe(cmd, *exec);
+}
+
+void	child(t_exec *exec, t_command *cmd)
+{
+	t_builtin	*htable;
+	char 		**env;
+
+	lst_to_array(exec->cmd, env);
+	dup2(cmd->fd_in, 0);
+	dup2(cmd->fd_out, 1);
+	if (cmd->redirections)
+		close_fd(cmd->redirections);
+	close_pipe(exec);
+	htable = htable_get(cmd->name, ft_strlen(cmd->name));
 	if (htable)
 		htable->builtin_func(exec);
-	else if (exec->node->u_u.cmd.path != NULL)
-		execve(node->u_u.cmd.path, node->u_u.cmd.args, exec->envp);
-	ft_dprintf(2, "minishell: command not found: %s\n", node->u_u.cmd.name);
+	else if (cmd->path != NULL)
+		execve(cmd->path, cmd->args, env);
+	ft_dprintf(2, "minishell: command not found: %s\n", cmd->name);
 	free_all(exec, FREE_LST);
 	exit(127);
 }
