@@ -1,14 +1,6 @@
 #include "executing.h"
 
-void	init_pipe(int *pipe_fds[2])
-{
-	if (pipe(pipe_fds[0]) == -1)
-		ft_error();
-	if (pipe(pipe_fds[1]) == -1)
-		ft_error();
-}
-
-int	runner(t_command *cmd, t_exec *exec)
+int	runner(t_command *cmd, t_exec *exec, int pipe_fds[2])
 {
 	t_builtin	*htable;
 
@@ -19,10 +11,9 @@ int	runner(t_command *cmd, t_exec *exec)
 		return;
 	}
 	fork_init(exec);
-	init_pipe(exec->pipe_fds);
 	if (ft_lstlast(exec->pid)->data == 0)
 	{
-		redirect(cmd, exec);
+		redirect(cmd, exec, pipe_fds);
 		child(exec, cmd);
 	}
 	return (0);
@@ -44,17 +35,28 @@ int	last_fd_type(int type, t_redir *redir)
 	return (last_fd);
 }
 
-void	prioritize_pipe(t_command *cmd, t_exec exec)
+void	prioritize_pipe(t_command *cmd, t_exec exec, int pipe_fds[2])
 {
 	if (exec.cmd_nbr == 1)
 		return;
 	if (cmd->index == 0)
-		cmd->fd_out = exec.pipe_fd[cmd->index][1];
-	if (cmd->index == exec.cmd_nbr - 1)
-		cmd->fd_in = exec.pipe_fd[cmd->index - 1][0];
+	{
+		cmd->fd_out = pipe_fds[1];
+		close(pipe_fds[0]);
+	}
+	else if (cmd->index == exec.cmd_nbr - 1)
+	{
+		cmd->fd_in = pipe_fds[0];
+		close(pipe_fds[1]);
+	}
+	else
+	{
+		cmd->fd_in = pipe_fds[0];
+		cmd->fd_out = pipe_fds[1];
+	}
 }
 
-void	redirect(t_command *cmd, t_exec *exec)
+void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2])
 {
 	t_redir	*current;
 
@@ -69,20 +71,21 @@ void	redirect(t_command *cmd, t_exec *exec)
 	}
 	cmd->fd_in = last_fd_type(REDIR_IN, cmd->redirections);
 	cmd->fd_out = last_fd_type(REDIR_OUT, cmd->fd_out);
-	prioritize_pipe(cmd, *exec);
+	prioritize_pipe(cmd, *exec, pipe_fds);
 }
 
-void	child(t_exec *exec, t_command *cmd)
+void	child(t_exec *exec, t_command *cmd, int pipe_fds[2])
 {
 	t_builtin	*htable;
 	char 		**env;
 
 	lst_to_array(exec->cmd, env);
-	dup2(cmd->fd_in, 0);
-	dup2(cmd->fd_out, 1);
+	dup2(cmd->fd_in, STDIN_FILENO);
+	dup2(cmd->fd_out, STDOUT_FILENO);
 	if (cmd->redirections)
 		close_fd(cmd->redirections);
-	close_pipe(exec);
+	close(pipe_fds[0]);
+	close(pipe_fds[1]);
 	htable = htable_get(cmd->name, ft_strlen(cmd->name));
 	if (htable)
 		htable->builtin_func(exec);
