@@ -50,7 +50,6 @@ typedef struct s_env
 typedef struct exec
 {
 	char		**p_path;
-	int			(*pipe_fds)[2];
 	int			cmd_nbr;
 	t_command	*cmd;
 	t_env		*env;
@@ -72,7 +71,7 @@ void		free_all(t_exec *exec, int which);
 void		init_exec(t_exec *exec, char *cmd);
 void		return_code(t_exec *exec);
 void		double_array_free(char **strs);
-int			runner(t_command *cmd, t_exec *exec);
+int			runner(t_command *cmd, t_exec *exec, int pipe_fds[2]);
 void		fork_init(t_exec *exec);
 void		no_pipe_parent(char **argv, int end, t_exec *exec);
 void		no_pipe_child(t_exec *exec);
