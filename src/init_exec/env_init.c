@@ -63,13 +63,13 @@ t_env	*ft_envnew(char *var)
 	return (env);
 }
 
-int	env_init(char **envp, t_pipex *pipex)
+int	env_init(char **envp, t_exec *exec)
 {
 	int		i;
 	t_env	*new;
 
-	pipex->env = ft_envnew(envp[0]);
-	if (!pipex->env)
+	exec->env = ft_envnew(envp[0]);
+	if (!exec->env)
 		return (1);
 	i = 1;
 	while (envp[i])
@@ -77,7 +77,7 @@ int	env_init(char **envp, t_pipex *pipex)
 		new = ft_envnew(envp[i]);
 		if (!new)
 			return (1);
-		ft_envadd_back(&(pipex->env), new);
+		ft_envadd_back(&(exec->env), new);
 		i++;
 	}
 	return (0);

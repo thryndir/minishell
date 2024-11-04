@@ -8,7 +8,7 @@ void	fork_init(t_exec *exec)
 		ft_error("problem with the fork: ", exec, FREE_LST, 1);
 }
 
-char	*this_is_the_path(t_pipex *pipex, char **p_path, char **cmd)
+char	*this_is_the_path(t_exec *exec, char **p_path, char **cmd)
 {
 	char	*path;
 	char	*tmp;
@@ -23,7 +23,7 @@ char	*this_is_the_path(t_pipex *pipex, char **p_path, char **cmd)
 	{
 		tmp = ft_strjoin("/", cmd[0]);
 		if (tmp == NULL)
-			ft_error("malloc failed\n", pipex, -FREE_CMD, 1);
+			ft_error("malloc failed\n", exec, -FREE_CMD, 1);
 		path = ft_strjoin(p_path[i], tmp);
 		if (path == NULL)
 			return (NULL);
@@ -37,14 +37,14 @@ char	*this_is_the_path(t_pipex *pipex, char **p_path, char **cmd)
 	return (NULL);
 }
 
-void	init_exec(t_pipex *pipex, char *cmd)
-{
-	if (pipex->cmds != NULL)
-		double_array_free(pipex->cmds);
-	pipex->cmds = ft_split(cmd, ' ');
-	if (pipex->cmds == NULL)
-		ft_error("problem with the first split\n", pipex, -FREE_PIPE, 1);
-	if (pipex->path != NULL)
-		free(pipex->path);
-	pipex->path = this_is_the_path(pipex, pipex->p_path, pipex->cmds);
-}
+// void	init_exec(t_exec *exec, char *cmd)
+// {
+// 	if (exec->cmd != NULL)
+// 		double_array_free(exec->cmd);
+// 	exec->cmd = ft_split(cmd, ' ');
+// 	if (exec->cmd == NULL)
+// 		ft_error("problem with the first split\n", exec, -FREE_PIPE, 1);
+// 	if (exec->path != NULL)
+// 		free(exec->path);
+// 	exec->cmd->path = this_is_the_path(exec, exec->p_path, exec->cmd);
+// }
