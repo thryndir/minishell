@@ -30,14 +30,14 @@ int	get_cmd_nbr(t_command *cmd)
 	return (cmd_nbr);
 }
 
-void	struct_init(t_exec *exec, t_command *cmd, char **argv, int argc)
+int	struct_init(t_exec *exec, t_command *cmd, char **envp)
 {
 	exec->status = 0;
+	if (env_init(envp, exec))
+		return (1);
 	exec->cmd_nbr = get_cmd_nbr(cmd);
 	exec->pid = NULL;
-	exec->pipe_fd = malloc((exec->cmd_nbr - 1) * sizeof(int [2]));
-	if (exec->pipe_fd == NULL)
-		ft_error("malloc fail\n", exec, -FREE_P_PATH, 1);
+	return (0);
 }
 
 void	here_doc(t_exec *exec, char *lim)

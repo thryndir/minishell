@@ -64,7 +64,7 @@ typedef struct s_builtin
 }	t_builtin;
 
 char		**search_in_env(char **env);
-void		pipe_parent(char **argv, int end, t_exec *exec);
+void		parent(t_command *cmd, t_exec *exec);
 void		ft_error(char *message, t_exec *exec, int which, int status);
 char		*this_is_the_path(t_exec *exec, char **p_path, char **cmd);
 void		free_all(t_exec *exec, int which);
@@ -73,13 +73,7 @@ void		return_code(t_exec *exec);
 void		double_array_free(char **strs);
 int			runner(t_command *cmd, t_exec *exec, int pipe_fds[2]);
 void		fork_init(t_exec *exec);
-void		no_pipe_parent(char **argv, int end, t_exec *exec);
-void		no_pipe_child(t_exec *exec);
-void		no_pipe_init(t_exec *exec, char **argv, int argc);
-void		init_pipe_fds(t_exec *exec);
-void		struct_init(t_exec *exec, char **argv, int argc, char **env);
-void		last_child(int current, t_exec *exec, int (*pipe_fd)[2]);
-void		first_child(int current, t_exec *exec, int (*pipe_fd)[2]);
+int			struct_init(t_exec *exec, t_command *cmd, char **envp);
 void		child(t_exec *exec, t_command *cmd);
 void		close_pipe(t_exec *exec);
 void		here_doc(t_exec *exec, char *lim);

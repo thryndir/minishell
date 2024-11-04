@@ -1,15 +1,15 @@
 #include "executing.h"
 
-void	ft_error(char *message, t_pipex *pipex, int which, int status)
+void	ft_error(char *message, t_exec *exec, int which, int status)
 {
 	if (which > 0 && errno != 0)
 		ft_dprintf(2, "%s%s\n", message, strerror(errno));
 	else if (which < 0)
 		ft_dprintf(2, "%s", message);
 	if (which < 0)
-		free_all(pipex, which *= -1);
+		free_all(exec, which *= -1);
 	else
-		free_all(pipex, which);
+		free_all(exec, which);
 	exit(status);
 }
 
