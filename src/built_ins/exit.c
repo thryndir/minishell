@@ -14,28 +14,28 @@ int	is_only_digit(char *str)
 	return (1);
 }
 
-int	exit_builtin(t_pipex *pipex)
+int	exit_builtin(t_command *cmd, t_exec *exec)
 {
-	if (pipex->cmds[2])
+	if (cmd->args[2])
 	{
 		ft_printf("minishell: exit: too many arguments");
 		return (1);
 	}
-	else if (!pipex->cmds[1])
+	else if (!cmd->args[1])
 	{
-		free_all(pipex, FREE_LST);
+		free_all(exec, FREE_LST);
 		exit(0);
 	}
-	else if (is_only_digit(pipex->cmds[1]))
+	else if (is_only_digit(cmd->args[1]))
 	{
-		free_all(pipex, FREE_LST);
-		exit(ft_atoull(pipex->cmds[1]));
+		free_all(exec, FREE_LST);
+		exit(ft_atoull(cmd->args[1]));
 	}
 	else
 	{
 		ft_printf("minishell: exit: %s: numeric argument required",
-			pipex->cmds[1]);
-		free_all(pipex, FREE_LST);
+			cmd->args[1]);
+		free_all(exec, FREE_LST);
 		exit (2);
 	}
 }

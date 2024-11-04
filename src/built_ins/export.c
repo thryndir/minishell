@@ -48,22 +48,22 @@ t_env	*env_copy(t_env *env)
 	return (new);
 }
 
-int	export_builtin(t_pipex *pipex)
+int	export_builtin(t_command *cmd, t_exec *exec)
 {
 	t_env	*copy;
 	t_env	*temp;
 
 	temp = NULL;
-	copy = env_copy(pipex->env);
-	if (pipex->cmds[1] == NULL)
+	copy = env_copy(exec->env);
+	if (cmd->args[1] == NULL)
 	{
 		sort_env(copy);
 		print_lst(copy);
 	}
 	else
 	{
-		temp = ft_envnew(pipex->cmds[1]);
-		add_in_env(pipex->env, temp->name, temp->value);
+		temp = ft_envnew(cmd->args[1]);
+		add_in_env(exec->env, temp->name, temp->value);
 	}
 	del_env(temp);
 	del_env(copy);

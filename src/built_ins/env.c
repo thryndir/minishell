@@ -1,10 +1,11 @@
 #include "executing.h"
 
-int	env_builtin(t_pipex *pipex)
+int	env_builtin(t_command *cmd, t_exec *exec)
 {
 	t_env	*current;
+	(void)cmd;
 
-	current = pipex->env;
+	current = exec->env;
 	while (current != NULL)
 	{
 		if (current->name && current->value)

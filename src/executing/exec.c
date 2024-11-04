@@ -62,7 +62,7 @@ int	runner(t_command *cmd, t_exec *exec, int pipe_fds[2])
 	htable = htable_get(cmd->name, ft_strlen(cmd->name));
 	if (htable)
 	{
-		htable->builtin_func(exec);
+		htable->builtin_func(cmd, exec);
 		return (0);
 	}
 	fork_init(exec);
@@ -106,12 +106,29 @@ char **lst_to_array(t_env *env)
 	return (result);
 }
 
-void	close_all(t_redir *redir)
+void	close_all(t_command *cmd, int redir_or_cmd)
 {
-	while (redir)
+	t_command 	*current;
+	t_redir		*redir;
+
+	current = cmd;
+	if (redir_or_cmd == REDIR)
 	{
-		close(redir->fd);
-		redir = redir->next;
+		redir = current->redirections;
+		while (redir)
+		{
+			close(redir->fd);
+			redir = redir->next;
+		}
+	}
+	else if (redir_or_cmd == CMD)
+	{
+		while (current)
+		{
+			close(current->fd_in);
+			close(current->fd_out);
+			current = current->next;
+		}
 	}
 }
 
@@ -123,7 +140,7 @@ void	child(t_exec *exec, t_command *cmd)
 	dup2(cmd->fd_in, STDIN_FILENO);
 	dup2(cmd->fd_out, STDOUT_FILENO);
 	if (cmd->redirections)
-		close_all(cmd->redirections);
+		close_all(cmd, REDIR);
 	close(cmd->fd_in);
 	close(cmd->fd_out);
 	execve(cmd->path, cmd->args, env);

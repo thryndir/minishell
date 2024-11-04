@@ -29,17 +29,17 @@ int	ft_strscmp(char **cmds, char *name, int cmd_nbr)
 	return (1);
 }
 
-int	unset_builtin(t_pipex *pipex)
+int	unset_builtin(t_command *cmd, t_exec *exec)
 {
 	t_env	*next;
 	t_env	*curr;
 
-	curr = pipex->env;
+	curr = exec->env;
 	while (curr)
 	{
 		next = curr->next;
-		if (!ft_strscmp(pipex->cmds, curr->name, pipex->cmd_nbr))
-			del_in_env(&(pipex->env), curr);
+		if (!ft_strscmp(cmd->args, curr->name, cmd->argc))
+			del_in_env(&(exec->env), curr);
 		curr = next;
 	}
 	return (0);

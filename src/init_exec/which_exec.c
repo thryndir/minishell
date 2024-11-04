@@ -19,13 +19,13 @@ void	parent(t_command *cmd, t_exec *exec)
 		parent(cmd->next, exec);
 	if (cmd->index != exec->cmd_nbr - 1)
 		if (pipe(pipe_fds) == -1)
-			ft_error();
+			ft_dprintf(2, "problem with a pipe\n");
 	runner(cmd, exec, pipe_fds);
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
 	if (!(cmd->index))
 	{
-		close_pipe(cmd);
+		close_all(cmd, CMD);
 		hold_on(exec->pid, &(exec->status));
 		if (WEXITSTATUS(exec->status))
 			return_code(exec);

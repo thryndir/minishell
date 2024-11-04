@@ -28,6 +28,12 @@ typedef enum e_read_or_write
 	WRITE
 }	t_read_or_write;
 
+typedef enum e_redir_or_cmd
+{
+	REDIR,
+	CMD,
+}	t_redir_or_cmd;
+
 typedef enum e_error
 {
 	WRITE_MSG = 1,
@@ -60,7 +66,7 @@ typedef struct exec
 typedef struct s_builtin
 {
 	const char	*key;
-	int			(*builtin_func)(t_exec *);
+	int			(*builtin_func)(t_command *, t_exec *);
 }	t_builtin;
 
 char		**search_in_env(char **env);
@@ -70,24 +76,24 @@ char		*this_is_the_path(t_exec *exec, char **p_path, char **cmd);
 void		free_all(t_exec *exec, int which);
 void		init_exec(t_exec *exec, char *cmd);
 void		return_code(t_exec *exec);
+void		close_all(t_command *cmd, int redir_or_cmd);
 void		double_array_free(char **strs);
 int			runner(t_command *cmd, t_exec *exec, int pipe_fds[2]);
 void		fork_init(t_exec *exec);
 int			struct_init(t_exec *exec, t_command *cmd, char **envp);
 void		child(t_exec *exec, t_command *cmd);
-void		close_pipe(t_exec *exec);
 void		here_doc(t_exec *exec, char *lim);
 int			read_or_write(int read_or_write, t_redir *redir, t_exec exec);
 void		here_doc_verif(t_exec *exec, int argc, char **argv);
 void		hold_on(t_list *lst, int *status);
 t_builtin	*htable_get(const char *str, size_t len);
-int			echo_builtin(t_exec *exec);
-int			cd_builtin(t_exec *exec);
-int			env_builtin(t_exec *exec);
-int			exit_builtin(t_exec *exec);
-int			export_builtin(t_exec *exec);
-int			pwd_builtin(t_exec *exec);
-int			unset_builtin(t_exec *exec);
+int			echo_builtin(t_command *cmd, t_exec *exec);
+int			cd_builtin(t_command *cmd, t_exec *exec);
+int			env_builtin(t_command *cmd, t_exec *exec);
+int			exit_builtin(t_command *cmd, t_exec *exec);
+int			export_builtin(t_command *cmd, t_exec *exec);
+int			pwd_builtin(t_command *cmd, t_exec *exec);
+int			unset_builtin(t_command *cmd, t_exec *exec);
 void		free_env(t_env *env);
 int			env_init(char **envp, t_exec *exec);
 int			pos_in_str(char *str, char to_search);
