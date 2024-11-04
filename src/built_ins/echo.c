@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "executing.h"
 
 int	is_only_c(char *str, char c)
 {
@@ -14,23 +14,24 @@ int	is_only_c(char *str, char c)
 	return (1);
 }
 
-int	echo_builtin(t_pipex *pipex)
+int	echo_builtin(t_command *cmd, t_exec *exec)
 {
 	int		i;
 	bool	newline;
 
 	i = 1;
+	(void)exec;
 	newline = 1;
-	if (is_only_c(pipex->cmds[1] + 1, 'n'))
+	if (is_only_c(cmd->args[1] + 1, 'n'))
 	{
 		newline = 0;
 		i = 2;
 	}
-	while (pipex->cmds[i])
+	while (cmd->args[i])
 	{
-		ft_printf("%s ", pipex->cmds[i++]);
-		if (pipex->cmds[i] && pipex->cmds[i + 1] == NULL)
-			ft_printf("%s", pipex->cmds[i++]);
+		ft_printf("%s ", cmd->args[i++]);
+		if (cmd->args[i] && cmd->args[i + 1] == NULL)
+			ft_printf("%s", cmd->args[i++]);
 	}
 	if (newline)
 		write(1, "\n", 1);
