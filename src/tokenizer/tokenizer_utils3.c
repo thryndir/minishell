@@ -6,11 +6,12 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:54:06 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/17 21:51:47 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/05 00:54:07 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "gcmalloc.h"
 
 /**
  * This function extract a word between quotes in the input string.
@@ -22,7 +23,7 @@ char	*extract_quoted_word(const char *str, int *i, int len)
 	char	quote;
 
 	k = 0;
-	word = (char *)malloc((len + 1) * sizeof(char));
+	word = (char *)gc_malloc((len + 1) * sizeof(char));
 	if (word == NULL)
 		return (NULL);
 	quote = str[*i];
@@ -44,7 +45,7 @@ char	*extract_regular_word(const char *str, int *i, int len)
 	char	*word;
 
 	k = 0;
-	word = (char *)malloc((len + 1) * sizeof(char));
+	word = (char *)gc_malloc((len + 1) * sizeof(char));
 	if (word == NULL)
 		return (NULL);
 	while (k < len)
@@ -113,7 +114,7 @@ char	**ft_mini_split(char const *str)
 	if (str == NULL)
 		return (NULL);
 	word_count = ft_strnbr(str);
-	strs = (char **)malloc((word_count + 1) * sizeof(char *));
+	strs = (char **)gc_malloc((word_count + 1) * sizeof(char *));
 	if (strs == NULL)
 		return (NULL);
 	return (ft_str_to_array(strs, str));
