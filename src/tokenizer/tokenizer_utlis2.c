@@ -6,11 +6,12 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:51:49 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/17 22:05:44 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/05 00:54:08 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "gcmalloc.h"
 
 /**
  * Main word counter here, the other two are here because of
@@ -91,8 +92,8 @@ void	ft_malloc_fail(char **strs, int j)
 	i = 0;
 	while (i < j)
 	{
-		free(strs[i]);
+		gc_free(strs[i]);
 		i++;
 	}
-	free(strs);
+	gc_tab_free(strs);
 }
