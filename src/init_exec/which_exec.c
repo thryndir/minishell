@@ -11,15 +11,14 @@
 // 		execute_pipe(cmd->pipe);
 // }
 
-void	parent(t_command *cmd, t_exec *exec)
+void	parent(t_command *cmd, t_exec *exec, int depth)
 {
 	static int	pipe_fds[2];
 
 	if (cmd->next)
-		parent(cmd->next, exec);
-	if (cmd->index != exec->cmd_nbr - 1)
-		if (pipe(pipe_fds) == -1)
-			ft_dprintf(2, "problem with a pipe\n");
+		parent(cmd->next, exec, depth + 1);
+	if (pipe(pipe_fds) == -1)
+		ft_error("problem with a pipe");
 	runner(cmd, exec, pipe_fds);
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);

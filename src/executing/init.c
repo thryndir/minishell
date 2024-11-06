@@ -40,7 +40,7 @@ int	struct_init(t_exec *exec, t_command *cmd, char **envp)
 	return (0);
 }
 
-void	here_doc(t_exec *exec, char *lim)
+void	here_doc(char *lim)
 {
 	char	*str;
 	char	*temp;
@@ -48,8 +48,7 @@ void	here_doc(t_exec *exec, char *lim)
 
 	fd = open("/tmp/temp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		ft_error("here_doc failed to open tmpfile in /tmp: ",
-			exec, FREE_P_PATH, 1);
+		ft_error("here_doc failed to open tmpfile in /tmp: ");
 	while (1)
 	{
 		write(1, "exec heredoc> ", 15);

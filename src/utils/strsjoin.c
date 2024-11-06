@@ -36,7 +36,7 @@ char	*ft_strsjoin(int str_nbr, ...)
 	char	*result;
 	char	**strs;
 
-	strs = (char **)malloc(str_nbr * sizeof(char *) + 1);
+	strs = (char **)malloc((str_nbr * sizeof(char *)) + 1);
 	i = 0;
 	va_start(arg, str_nbr);
 	total_len = size_and_convert(strs, str_nbr, arg) + 1;

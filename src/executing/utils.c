@@ -1,6 +1,6 @@
 #include "executing.h"
 
-int	read_or_write(int read_or_write, t_redir *redir, t_exec exec)
+int	read_or_write(int read_or_write, t_redir *redir)
 {
 	int	fd;
 	int	flag;
@@ -14,7 +14,7 @@ int	read_or_write(int read_or_write, t_redir *redir, t_exec exec)
 	else
 		fd = open(redir->file, O_WRONLY | O_CREAT | flag, 0644);
 	if (fd == -1)
-		ft_error("problem when opening the file: ", &exec, FREE_LST, 1);
+		ft_error("problem when opening the file: ");
 	return (fd);
 }
 

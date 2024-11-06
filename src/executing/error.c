@@ -1,17 +1,10 @@
 #include "executing.h"
 
-// void	ft_error(char *message, t_exec *exec, int which, int status)
-// {
-// 	if (which > 0 && errno != 0)
-// 		ft_dprintf(2, "%s%s\n", message, strerror(errno));
-// 	else if (which < 0)
-// 		ft_dprintf(2, "%s", message);
-// 	if (which < 0)
-// 		free_all(exec, which *= -1);
-// 	else
-// 		free_all(exec, which);
-// 	exit(status);
-// }
+void	ft_error(char *message)
+{
+	ft_dprintf(2, "%s\n", message);
+	exit(1);
+}
 
 // void	here_doc_verif(t_pipex *pipex, int argc, char **argv)
 // {
@@ -29,9 +22,8 @@ void	return_code(t_exec *exec)
 	if (WIFEXITED(exec->status))
 	{
 		if (WEXITSTATUS(exec->status) == 127)
-			ft_error("", exec, -FREE_LST, WEXITSTATUS(exec->status));
-		ft_error("", exec,
-			-FREE_LST, WEXITSTATUS(exec->status));
+			ft_error("command not found");
+		ft_error("commande not found");
 	}
 }
 

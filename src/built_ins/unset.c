@@ -9,7 +9,7 @@ void	print_lst(t_env *env)
 	while (curr)
 	{
 		var = ft_strsjoin(3, curr->name, "=", curr->value);
-		ft_dprintf(2, "%s\n", var);
+		dprintf(2, "%s\n", var);
 		free(var);
 		curr = curr->next;
 	}
