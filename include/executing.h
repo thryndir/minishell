@@ -55,7 +55,6 @@ typedef struct s_env
 
 typedef struct exec
 {
-	char		**p_path;
 	int			cmd_nbr;
 	t_command	*cmd;
 	t_env		*env;
@@ -70,9 +69,9 @@ typedef struct s_builtin
 }	t_builtin;
 
 char		**search_in_env(char **env);
-void		parent(t_command *cmd, t_exec *exec);
-void		ft_error(char *message, t_exec *exec, int which, int status);
-char		*this_is_the_path(t_exec *exec, char **p_path, char **cmd);
+void		parent(t_command *cmd, t_exec *exec, int depth);
+void		ft_error(char *message);
+char		*this_is_the_path(char **path, char *cmd);
 void		free_all(t_exec *exec, int which);
 void		init_exec(t_exec *exec, char *cmd);
 void		return_code(t_exec *exec);
@@ -82,9 +81,8 @@ int			runner(t_command *cmd, t_exec *exec, int pipe_fds[2]);
 void		fork_init(t_exec *exec);
 int			struct_init(t_exec *exec, t_command *cmd, char **envp);
 void		child(t_exec *exec, t_command *cmd);
-void		here_doc(t_exec *exec, char *lim);
-int			read_or_write(int read_or_write, t_redir *redir, t_exec exec);
-void		here_doc_verif(t_exec *exec, int argc, char **argv);
+void		here_doc(char *lim);
+int			read_or_write(int read_or_write, t_redir *redir);
 void		hold_on(t_list *lst, int *status);
 t_builtin	*htable_get(const char *str, size_t len);
 int			echo_builtin(t_command *cmd, t_exec *exec);

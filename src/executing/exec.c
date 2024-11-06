@@ -1,22 +1,30 @@
-#include "executing.h"
+#include "executing.h"	
 
-int	last_fd_type(int type, t_redir *redir)
+void	last_fd_type(int type, t_command *cmd, t_redir *redir)
 {
 	t_redir *current;
 	int		last_fd;
+	bool	existing;
 
 	current = redir;
 	last_fd = type;
+	existing = 0;
 	while (current)
 	{
-		if ((int)current->type == type)
+		if ((int)(current->type) == type)
+		{
 			last_fd = current->fd;
+			existing = 1;
+		}
 		current = current->next;
 	}
-	return (last_fd);
+	if (type == REDIR_IN && existing)
+		cmd->fd_in = last_fd;
+	else if (type == REDIR_OUT && existing)
+		cmd->fd_out = last_fd;
 }
 
-void	prioritize_pipe(t_command *cmd, t_exec exec, int pipe_fds[2])
+void	pipe_redir(t_command *cmd, t_exec exec, int pipe_fds[2])
 {
 	if (exec.cmd_nbr == 1)
 		return;
@@ -25,7 +33,7 @@ void	prioritize_pipe(t_command *cmd, t_exec exec, int pipe_fds[2])
 		cmd->fd_out = pipe_fds[1];
 		close(pipe_fds[0]);
 	}
-	else if (cmd->index == exec.cmd_nbr - 1)
+	else if (cmd->index == (exec.cmd_nbr - 1))
 	{
 		cmd->fd_in = pipe_fds[0];
 		close(pipe_fds[1]);
@@ -45,26 +53,30 @@ void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2])
 	while (current)
 	{
 		if (current->type == REDIR_IN)
-			current->fd = read_or_write(READ, current, *exec);
+			current->fd = read_or_write(READ, current);
 		else if (current->type == REDIR_OUT)
-			current->fd = read_or_write(WRITE, current, *exec);
+			current->fd = read_or_write(WRITE, current);
 		current = current->next;
 	}
-	cmd->fd_in = last_fd_type(REDIR_IN, cmd->redirections);
-	cmd->fd_out = last_fd_type(REDIR_OUT, cmd->redirections);
-	prioritize_pipe(cmd, *exec, pipe_fds);
+	pipe_redir(cmd, *exec, pipe_fds);
+	last_fd_type(REDIR_IN, cmd, cmd->redirections);
+	last_fd_type(REDIR_OUT, cmd, cmd->redirections);
 }
 
 int	runner(t_command *cmd, t_exec *exec, int pipe_fds[2])
 {
 	t_builtin	*htable;
+	char		**path;
 
 	htable = htable_get(cmd->name, ft_strlen(cmd->name));
-	if (htable)
+	if (htable && exec->cmd_nbr > 1)
 	{
+		redirect(cmd, exec, pipe_fds);
 		htable->builtin_func(cmd, exec);
 		return (0);
 	}
+	path = ft_split(get_value(exec->env, "PATH"), ':');
+	cmd->path = this_is_the_path(path, cmd->name);
 	fork_init(exec);
 	if (ft_lstlast(exec->pid)->data == 0)
 	{
@@ -97,9 +109,10 @@ char **lst_to_array(t_env *env)
 	result = malloc(sizeof(char *) * (lst_size(env) + 1));
 	while (env)
 	{
-		var = ft_strsjoin(3, env->name, '=', env->value);
+		var = ft_strsjoin(3, env->name, "=", env->value);
 		result[i] = ft_strdup(var);
 		free(var);
+		env = env->next;
 		i++;
 	}
 	result[i] = NULL;
@@ -135,6 +148,7 @@ void	close_all(t_command *cmd, int redir_or_cmd)
 void	child(t_exec *exec, t_command *cmd)
 {
 	char 		**env;
+	t_builtin	*htable;
 
 	env = lst_to_array(exec->env);
 	dup2(cmd->fd_in, STDIN_FILENO);
@@ -143,9 +157,15 @@ void	child(t_exec *exec, t_command *cmd)
 		close_all(cmd, REDIR);
 	close(cmd->fd_in);
 	close(cmd->fd_out);
-	execve(cmd->path, cmd->args, env);
-	ft_dprintf(2, "minishell: command not found: %s\n", cmd->name);
-	free_all(exec, FREE_LST);
+	htable = htable_get(cmd->name, ft_strlen(cmd->name));
+	if (htable)
+	{
+		htable->builtin_func(cmd, exec);
+		return;
+	}
+	else
+		execve(cmd->path, cmd->args, env);
+	dprintf(2, "minishell: command not found: %s\n", cmd->name);
 	exit(127);
 }
 
