@@ -22,6 +22,35 @@
 # define MIN_HASH_VALUE 2
 # define MAX_HASH_VALUE 9
 
+# define close(fd) \
+do \
+{ \
+	fprintf(stderr, "close(%d) at %s:%d\n", \
+			fd, __FILE__, __LINE__); \
+	close(fd); \
+} while (0)
+
+#define pipe(pipefd) \
+({ \
+	int ret = pipe(pipefd); \
+	if (ret == -1) \
+		fprintf(stderr, "pipe(%p) at %s:%d failed: %s\n", \
+				pipefd, __FILE__, __LINE__, strerror(errno)); \
+	else \
+		fprintf(stderr, "pipe("#pipefd") = {%d,%d} at %s:%d\n", \
+		pipefd[0], pipefd[1], \
+		__FILE__, __LINE__); \
+	ret; \
+})
+
+# define dup2(fd1, fd2) \
+do \
+{ \
+	fprintf(stderr, "dup2(%d, %d) at %s:%d\n", \
+			fd1, fd2, __FILE__, __LINE__); \
+	dup2(fd1, fd2); \
+} while (0)
+
 typedef enum e_read_or_write
 {
 	READ,
@@ -75,7 +104,7 @@ char		*this_is_the_path(char **path, char *cmd);
 void		free_all(t_exec *exec, int which);
 void		init_exec(t_exec *exec, char *cmd);
 void		return_code(t_exec *exec);
-void		close_all(t_command *cmd, int redir_or_cmd);
+void		close_all(t_command *cmd);
 void		double_array_free(char **strs);
 int			runner(t_command *cmd, t_exec *exec, int pipe_fds[2]);
 void		fork_init(t_exec *exec);

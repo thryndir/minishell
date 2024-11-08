@@ -33,7 +33,7 @@ char **tabdup(char **args, int argc)
 	if (!args)
 		return (NULL);
 	result = malloc(sizeof(char *) * argc);
-	if (result)
+	if (!result)
 		return (NULL);
 	while (args && i < argc)
 	{
@@ -54,8 +54,8 @@ t_command	*cmdnew(char *name, char **args, int argc, t_redir *redirection)
 	cmd->name = ft_strdup(name);
 	cmd->args = tabdup(args, argc);
 	cmd->argc = argc;
-	cmd->fd_in = STDIN_FILENO;
-	cmd->fd_out = STDOUT_FILENO;
+	cmd->fd_in = -1;
+	cmd->fd_out = -1;
 	cmd->index = -1;
 	cmd->path = NULL;
 	cmd->redirections = redirection;
@@ -89,10 +89,12 @@ t_redir	*redirnew(t_redir_type type, char *file)
 {
 	t_redir	*redir;
 
-	redir = malloc(sizeof(t_redir)); 
+	redir = malloc(sizeof(t_redir));
 	if (!redir)
 		return (NULL);
+	redir->next = NULL;
 	redir->type = type;
+	redir->fd = -1;
 	redir->file = ft_strdup(file);
 	return (redir);
 }
