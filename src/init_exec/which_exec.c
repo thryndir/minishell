@@ -17,14 +17,14 @@ void	parent(t_command *cmd, t_exec *exec, int depth)
 
 	if (cmd->next)
 		parent(cmd->next, exec, depth + 1);
+	dprintf(2, "\nparent depth %d\n", depth);
 	if (pipe(pipe_fds) == -1)
 		ft_error("problem with a pipe");
 	runner(cmd, exec, pipe_fds);
+	sleep(1);
 	close(pipe_fds[0]);
-	close(pipe_fds[1]);
 	if (!(cmd->index))
 	{
-		close_all(cmd, CMD);
 		hold_on(exec->pid, &(exec->status));
 		if (WEXITSTATUS(exec->status))
 			return_code(exec);
