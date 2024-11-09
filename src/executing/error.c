@@ -23,14 +23,14 @@ void	return_code(t_exec *exec)
 	{
 		if (WEXITSTATUS(exec->status) == 127)
 			ft_error("command not found");
-		ft_error("commande not found");
+		ft_error("command not found");
 	}
 }
 
 void	hold_on(t_list *lst, int *status)
 {
 	(void)status;
-	waitpid(lst->data, status, 0);
+	// waitpid(lst->data, status, 0);
 	lst = lst->next;
 	while (lst)
 	{

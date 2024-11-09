@@ -38,7 +38,7 @@ int	unset_builtin(t_command *cmd, t_exec *exec)
 	while (curr)
 	{
 		next = curr->next;
-		if (!ft_strscmp(cmd->args, curr->name, cmd->argc))
+		if (!ft_strscmp(cmd->argv, curr->name, cmd->argc))
 			del_in_env(&(exec->env), curr);
 		curr = next;
 	}

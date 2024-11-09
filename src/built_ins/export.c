@@ -55,14 +55,14 @@ int	export_builtin(t_command *cmd, t_exec *exec)
 
 	temp = NULL;
 	copy = env_copy(exec->env);
-	if (cmd->args[1] == NULL)
+	if (cmd->argv[1] == NULL)
 	{
 		sort_env(copy);
 		print_lst(copy);
 	}
 	else
 	{
-		temp = ft_envnew(cmd->args[1]);
+		temp = ft_envnew(cmd->argv[1]);
 		add_in_env(exec->env, temp->name, temp->value);
 	}
 	del_env(temp);

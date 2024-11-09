@@ -100,14 +100,13 @@ typedef struct s_builtin
 
 char		**search_in_env(char **env);
 void		parent(t_command *cmd, t_exec *exec, int depth);
+int			verif_and_close(int *fd);
 void		ft_error(char *message);
 char		*this_is_the_path(char **path, char *cmd);
-void		free_all(t_exec *exec, int which);
-void		init_exec(t_exec *exec, char *cmd);
 void		return_code(t_exec *exec);
 void		close_all(t_command *cmd);
 void		double_array_free(char **strs);
-int			runner(t_command *cmd, t_exec *exec, int pipe_fds[2]);
+int			runner(t_command *cmd, t_exec *exec, int *pipe_fds);
 void		fork_init(t_exec *exec);
 int			struct_init(t_exec *exec, t_command *cmd, char **envp);
 void		child(t_exec *exec, t_command *cmd);
