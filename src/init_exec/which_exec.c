@@ -14,14 +14,25 @@
 void	parent(t_command *cmd, t_exec *exec, int depth)
 {
 	static int	pipe_fds[2];
+	int prev_out;
 
 	if (cmd->next)
 		parent(cmd->next, exec, depth + 1);
 	dprintf(2, "\nparent depth %d\n", depth);
-	if (pipe(pipe_fds) == -1)
-		ft_error("problem with a pipe");
-	runner(cmd, exec, pipe_fds);
+	prev_out = pipe_fds[1];
+	printf("fd = %d\n", prev_out);
+	if (cmd->index != 0)
+	{
+		if (pipe(pipe_fds) == -1)
+			ft_error("problem with a pipe");
+	}
+	int test[2];
+	test[0] = pipe_fds[0];
+	test[1] = prev_out;
+	runner(cmd, exec, test);
 	sleep(1);
+	if (cmd->next)
+		close(prev_out);
 	close(pipe_fds[0]);
 	if (!(cmd->index))
 	{

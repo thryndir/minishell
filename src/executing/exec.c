@@ -1,6 +1,6 @@
 #include "executing.h"	
 
-void	last_fd_type(int type, t_command *cmd, t_redir *redir)
+int	last_fd_type(int type, t_command *cmd, t_redir *redir)
 {
 	t_redir *current;
 	int		last_fd;
@@ -22,6 +22,7 @@ void	last_fd_type(int type, t_command *cmd, t_redir *redir)
 		cmd->fd_in = last_fd;
 	else if (type == REDIR_OUT && existing)
 		cmd->fd_out = last_fd;
+	return (last_fd);
 }
 
 void	pipe_redir(t_command *cmd, t_exec exec, int pipe_fds[2])
@@ -124,12 +125,17 @@ void	close_all(t_command *cmd)
 {
 	t_command 	*current;
 	t_redir		*redir;
+	int			last_fd_in;
+	int			last_fd_out;
 
 	current = cmd;
 	redir = current->redirections;
+	last_fd_in = last_fd_type(REDIR_IN, cmd, redir);
+	last_fd_out = last_fd_type(REDIR_OUT, cmd, redir);
 	while (redir)
 	{
-		close(redir->fd);
+		if (redir->fd != last_fd_in && redir->fd != last_fd_out)
+			close(redir->fd);
 		redir = redir->next;
 	}
 }
@@ -140,8 +146,10 @@ void	child(t_exec *exec, t_command *cmd)
 	t_builtin	*htable;
 
 	env = lst_to_array(exec->env);
-	dup2(cmd->fd_in, STDIN_FILENO);
-	dup2(cmd->fd_out, STDOUT_FILENO);
+	if (cmd->fd_in != -1)
+		dup2(STDIN_FILENO, cmd->fd_in);
+	if (cmd->fd_out != -1)
+		dup2(STDOUT_FILENO, cmd->fd_out);
 	if (cmd->redirections)
 		close_all(cmd);
 	close(cmd->fd_in);

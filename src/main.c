@@ -99,14 +99,12 @@ t_redir	*redirnew(t_redir_type type, char *file)
 	return (redir);
 }
 
-//< Makefile cat | cat | wc | cat > out
+//ls | sort
 
 void	tester(t_command **cmd)
 {
-	cmdadd_back(cmd, cmdnew("cat", NULL, 1, redirnew(REDIR_IN, "Makefile")));
-	cmdadd_back(cmd, cmdnew("cat", NULL, 1, NULL));
-	cmdadd_back(cmd, cmdnew("wc", NULL, 1, NULL));
-	cmdadd_back(cmd, cmdnew("cat", NULL, 1, redirnew(REDIR_OUT, "out")));
+	cmdadd_back(cmd, cmdnew("ls", NULL, 1, NULL));
+	cmdadd_back(cmd, cmdnew("sort", NULL, 1, NULL));
 }
 
 int	main(int argc, char **argv, char **env)
