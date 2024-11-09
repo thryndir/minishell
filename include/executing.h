@@ -48,7 +48,8 @@ do \
 { \
 	fprintf(stderr, "dup2(%d, %d) at %s:%d\n", \
 			fd1, fd2, __FILE__, __LINE__); \
-	dup2(fd1, fd2); \
+	 if (dup2(fd1, fd2) == -1) \
+	 	perror("dup2"); \
 } while (0)
 
 typedef enum e_read_or_write

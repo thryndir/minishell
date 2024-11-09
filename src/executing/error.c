@@ -29,6 +29,7 @@ void	return_code(t_exec *exec)
 
 void	hold_on(t_list *lst, int *status)
 {
+	(void)status;
 	waitpid(lst->data, status, 0);
 	lst = lst->next;
 	while (lst)
