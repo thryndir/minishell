@@ -44,15 +44,14 @@ char **tabdup(char **args, int argc)
 	return (result);
 }
 
-t_command	*cmdnew(char *name, char **args, int argc, t_redir *redirection)
+t_command	*cmdnew(char **args, int argc, t_redir *redirection)
 {
 	t_command	*cmd;
 
 	cmd = malloc(sizeof(t_command));
 	if (!cmd)
 		return (NULL);
-	cmd->name = ft_strdup(name);
-	cmd->args = tabdup(args, argc);
+	cmd->argv = tabdup(args, argc);
 	cmd->argc = argc;
 	cmd->fd_in = -1;
 	cmd->fd_out = -1;
@@ -103,8 +102,8 @@ t_redir	*redirnew(t_redir_type type, char *file)
 
 void	tester(t_command **cmd)
 {
-	cmdadd_back(cmd, cmdnew("ls", NULL, 1, NULL));
-	cmdadd_back(cmd, cmdnew("sort", NULL, 1, NULL));
+	cmdadd_back(cmd, cmdnew((char*[]){"cat", "-e", NULL}, 1, NULL));
+	cmdadd_back(cmd, cmdnew((char* []){"wc", "-w", NULL}, 1, NULL));
 }
 
 int	main(int argc, char **argv, char **env)

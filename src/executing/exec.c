@@ -32,12 +32,12 @@ void	pipe_redir(t_command *cmd, t_exec exec, int pipe_fds[2])
 	if (cmd->index == 0)
 	{
 		cmd->fd_out = pipe_fds[1];
-		close(pipe_fds[0]);
+		verif_and_close(&pipe_fds[0]);
 	}
 	else if (cmd->index == (exec.cmd_nbr - 1))
 	{
 		cmd->fd_in = pipe_fds[0];
-		close(pipe_fds[1]);
+		verif_and_close(&pipe_fds[1]);
 	}
 	else
 	{
@@ -64,12 +64,12 @@ void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2])
 	last_fd_type(REDIR_OUT, cmd, cmd->redirections);
 }
 
-int	runner(t_command *cmd, t_exec *exec, int pipe_fds[2])
+int	runner(t_command *cmd, t_exec *exec, int *pipe_fds)
 {
 	t_builtin	*htable;
 	char		**path;
 
-	htable = htable_get(cmd->name, ft_strlen(cmd->name));
+	htable = htable_get(cmd->argv[0], ft_strlen(cmd->argv[0]));
 	if (htable && exec->cmd_nbr > 1)
 	{
 		redirect(cmd, exec, pipe_fds);
@@ -77,7 +77,7 @@ int	runner(t_command *cmd, t_exec *exec, int pipe_fds[2])
 		return (0);
 	}
 	path = ft_split(get_value(exec->env, "PATH"), ':');
-	cmd->path = this_is_the_path(path, cmd->name);
+	cmd->path = this_is_the_path(path, cmd->argv[0]);
 	fork_init(exec);
 	if (ft_lstlast(exec->pid)->data == 0)
 	{
@@ -135,7 +135,7 @@ void	close_all(t_command *cmd)
 	while (redir)
 	{
 		if (redir->fd != last_fd_in && redir->fd != last_fd_out)
-			close(redir->fd);
+			verif_and_close(&redir->fd);
 		redir = redir->next;
 	}
 }
@@ -147,22 +147,22 @@ void	child(t_exec *exec, t_command *cmd)
 
 	env = lst_to_array(exec->env);
 	if (cmd->fd_in != -1)
-		dup2(STDIN_FILENO, cmd->fd_in);
+		dup2(cmd->fd_in, STDIN_FILENO);
 	if (cmd->fd_out != -1)
-		dup2(STDOUT_FILENO, cmd->fd_out);
+		dup2(cmd->fd_out, STDOUT_FILENO);
 	if (cmd->redirections)
 		close_all(cmd);
-	close(cmd->fd_in);
-	close(cmd->fd_out);
-	htable = htable_get(cmd->name, ft_strlen(cmd->name));
+	verif_and_close(&cmd->fd_in);
+	verif_and_close(&cmd->fd_out);
+	htable = htable_get(cmd->argv[0], ft_strlen(cmd->argv[0]));
 	if (htable)
 	{
 		htable->builtin_func(cmd, exec);
 		return;
 	}
 	else
-		execve(cmd->path, cmd->args, env);
-	dprintf(2, "minishell: command not found: %s\n", cmd->name);
+		execve(cmd->path, cmd->argv, env);
+	dprintf(2, "minishell: command not found: %s\n", cmd->argv[0]);
 	exit(127);
 }
 

@@ -62,5 +62,5 @@ void	here_doc(char *lim)
 	}
 	free(str);
 	free(temp);
-	close(fd);
+	verif_and_close(&fd);
 }

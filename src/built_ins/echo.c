@@ -22,16 +22,16 @@ int	echo_builtin(t_command *cmd, t_exec *exec)
 	i = 1;
 	(void)exec;
 	newline = 1;
-	if (is_only_c(cmd->args[1] + 1, 'n'))
+	if (is_only_c(cmd->argv[1] + 1, 'n'))
 	{
 		newline = 0;
 		i = 2;
 	}
-	while (cmd->args[i])
+	while (cmd->argv[i])
 	{
-		ft_printf("%s ", cmd->args[i++]);
-		if (cmd->args[i] && cmd->args[i + 1] == NULL)
-			ft_printf("%s", cmd->args[i++]);
+		ft_printf("%s ", cmd->argv[i++]);
+		if (cmd->argv[i] && cmd->argv[i + 1] == NULL)
+			ft_printf("%s", cmd->argv[i++]);
 	}
 	if (newline)
 		write(1, "\n", 1);
