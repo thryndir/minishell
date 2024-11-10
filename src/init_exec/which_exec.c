@@ -29,12 +29,16 @@ void	parent(t_command *cmd, t_exec *exec, int depth)
 			ft_error("problem with a pipe");
 	if (cmd->index != exec->cmd_nbr - 1)
 		dup2(next_out, pipe_fds[1]);
-	runner(cmd, exec, pipe_fds);
-	if (cmd->index != exec->cmd_nbr - 1)
-		verif_and_close(&pipe_fds[1]);
+	print_open_fds("parent process before child");
+	runner(cmd, exec, pipe_fds, next_out);
+	// if (cmd->index != exec->cmd_nbr - 1)
+	// 	verif_and_close(&pipe_fds[1]);
 	sleep(1);
 	verif_and_close(&next_out);
 	verif_and_close(&pipe_fds[0]);
+	if (cmd->index == 0)
+		verif_and_close(&pipe_fds[1]);
+	print_open_fds("parent process after child");
 	if (!(cmd->index))
 	{
 		hold_on(exec->pid, &(exec->status));

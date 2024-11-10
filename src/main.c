@@ -24,34 +24,34 @@ void	cmdadd_back(t_command **cmd, t_command *new)
 	}
 }
 
-char **tabdup(char **args, int argc)
-{
-	char **result;
-	int	i;
+// char **tabdup(char **args, int argc)
+// {
+// 	char **result;
+// 	int	i;
 	
-	i = 0;
-	if (!args)
-		return (NULL);
-	result = malloc(sizeof(char *) * argc);
-	if (!result)
-		return (NULL);
-	while (args && i < argc)
-	{
-		result[i] = ft_strdup(args[i]);
-		i++;
-	}
-	result[i] = NULL;
-	return (result);
-}
+// 	i = 0;
+// 	if (!args)
+// 		return (NULL);
+// 	result = malloc(sizeof(char *) * argc);
+// 	if (!result)
+// 		return (NULL);
+// 	while (args && i < argc)
+// 	{
+// 		result[i] = ft_strdup(args[i]);
+// 		i++;
+// 	}
+// 	result[i] = NULL;
+// 	return (result);
+// }
 
-t_command	*cmdnew(char **args, int argc, t_redir *redirection)
+t_command	*cmdnew(char *args, int argc, t_redir *redirection)
 {
 	t_command	*cmd;
 
 	cmd = malloc(sizeof(t_command));
 	if (!cmd)
 		return (NULL);
-	cmd->argv = tabdup(args, argc);
+	cmd->argv = ft_split(args, ' ');
 	cmd->argc = argc;
 	cmd->fd_in = -1;
 	cmd->fd_out = -1;
@@ -98,12 +98,13 @@ t_redir	*redirnew(t_redir_type type, char *file)
 	return (redir);
 }
 
-//ls | sort
-
 void	tester(t_command **cmd)
 {
-	cmdadd_back(cmd, cmdnew((char*[]){"cat", "-e", NULL}, 1, NULL));
-	cmdadd_back(cmd, cmdnew((char* []){"wc", "-w", NULL}, 1, NULL));
+	cmdadd_back(cmd, cmdnew("ls", 1, NULL));
+	cmdadd_back(cmd, cmdnew("cat", 1, NULL));
+	cmdadd_back(cmd, cmdnew("cat", 1, NULL));
+	cmdadd_back(cmd, cmdnew("cat", 1, NULL));
+	cmdadd_back(cmd, cmdnew("cat", 1, NULL));
 }
 
 int	main(int argc, char **argv, char **env)
