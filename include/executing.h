@@ -22,13 +22,13 @@
 # define MIN_HASH_VALUE 2
 # define MAX_HASH_VALUE 9
 
-# define close(fd) \
+/*# define close(fd) \
 do \
 { \
 	fprintf(stderr, "close(%d) at %s:%d\n", \
 			fd, __FILE__, __LINE__); \
 	close(fd); \
-} while (0)
+} while (0)*/
 
 #define pipe(pipefd) \
 ({ \
@@ -42,7 +42,7 @@ do \
 		__FILE__, __LINE__); \
 	ret; \
 })
-
+/*
 # define dup2(fd1, fd2) \
 do \
 { \
@@ -50,7 +50,7 @@ do \
 			fd1, fd2, __FILE__, __LINE__); \
 	 if (dup2(fd1, fd2) == -1) \
 	 	perror("dup2"); \
-} while (0)
+} while (0) */
 
 typedef enum e_read_or_write
 {
@@ -98,6 +98,7 @@ typedef struct s_builtin
 	int			(*builtin_func)(t_command *, t_exec *);
 }	t_builtin;
 
+void 	print_open_fds(const char *where);
 char		**search_in_env(char **env);
 void		parent(t_command *cmd, t_exec *exec, int depth);
 int			verif_and_close(int *fd);
@@ -106,10 +107,10 @@ char		*this_is_the_path(char **path, char *cmd);
 void		return_code(t_exec *exec);
 void		close_all(t_command *cmd);
 void		double_array_free(char **strs);
-int			runner(t_command *cmd, t_exec *exec, int *pipe_fds);
+int			runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out);
 void		fork_init(t_exec *exec);
 int			struct_init(t_exec *exec, t_command *cmd, char **envp);
-void		child(t_exec *exec, t_command *cmd);
+void		child(t_exec *exec, t_command *cmd, int next_out);
 void		here_doc(char *lim);
 int			read_or_write(int read_or_write, t_redir *redir);
 void		hold_on(t_list *lst, int *status);

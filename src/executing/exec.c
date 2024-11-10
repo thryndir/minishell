@@ -64,7 +64,7 @@ void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2])
 	last_fd_type(REDIR_OUT, cmd, cmd->redirections);
 }
 
-int	runner(t_command *cmd, t_exec *exec, int *pipe_fds)
+int	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 {
 	t_builtin	*htable;
 	char		**path;
@@ -82,8 +82,8 @@ int	runner(t_command *cmd, t_exec *exec, int *pipe_fds)
 	if (ft_lstlast(exec->pid)->data == 0)
 	{
 		redirect(cmd, exec, pipe_fds);
-		dprintf(2, "\nenfant cmd nbr : %d\n", cmd->index);
-		child(exec, cmd);
+		dprintf(2, "enfant cmd nbr : %d\n", cmd->index);
+		child(exec, cmd, next_out);
 	}
 	return (0);
 }
@@ -140,12 +140,21 @@ void	close_all(t_command *cmd)
 	}
 }
 
-void	child(t_exec *exec, t_command *cmd)
+void print_open_fds(const char *where) {
+	for (int fd = 0; fd < 10; fd++) {
+		if (fcntl(fd, F_GETFD) != -1) {
+			dprintf(2, "%s - FD %d is open (PID: %d)\n", where, fd, getpid());
+		}
+	}
+}
+
+void	child(t_exec *exec, t_command *cmd, int next_out)
 {
 	char 		**env;
 	t_builtin	*htable;
 
 	env = lst_to_array(exec->env);
+	dprintf(2, "fd_in = %d, fd_out = %d, next_out = %d\n", cmd->fd_in, cmd->fd_out, next_out);
 	if (cmd->fd_in != -1)
 		dup2(cmd->fd_in, STDIN_FILENO);
 	if (cmd->fd_out != -1)
@@ -154,7 +163,9 @@ void	child(t_exec *exec, t_command *cmd)
 		close_all(cmd);
 	verif_and_close(&cmd->fd_in);
 	verif_and_close(&cmd->fd_out);
+	verif_and_close(&next_out);
 	htable = htable_get(cmd->argv[0], ft_strlen(cmd->argv[0]));
+	print_open_fds("child process");
 	if (htable)
 	{
 		htable->builtin_func(cmd, exec);
