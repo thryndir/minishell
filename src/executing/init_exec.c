@@ -18,6 +18,8 @@ char	*this_is_the_path(char **path, char *cmd)
 		return (NULL);
 	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
+	if (ft_strchr(cmd, '/'))
+		return (NULL);
 	while (path[i])
 	{
 		cmd_path = ft_strsjoin(3, path[i], "/", cmd);

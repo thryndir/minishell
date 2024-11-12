@@ -24,26 +24,6 @@ void	cmdadd_back(t_command **cmd, t_command *new)
 	}
 }
 
-// char **tabdup(char **args, int argc)
-// {
-// 	char **result;
-// 	int	i;
-	
-// 	i = 0;
-// 	if (!args)
-// 		return (NULL);
-// 	result = malloc(sizeof(char *) * argc);
-// 	if (!result)
-// 		return (NULL);
-// 	while (args && i < argc)
-// 	{
-// 		result[i] = ft_strdup(args[i]);
-// 		i++;
-// 	}
-// 	result[i] = NULL;
-// 	return (result);
-// }
-
 t_command	*cmdnew(char *args, int argc, t_redir *redirection)
 {
 	t_command	*cmd;
@@ -98,13 +78,15 @@ t_redir	*redirnew(t_redir_type type, char *file)
 	return (redir);
 }
 
+// ls -l | cat < test.c | cat > out | cat > papaye |
 void	tester(t_command **cmd)
 {
-	cmdadd_back(cmd, cmdnew("ls", 1, NULL));
+	// t_command *last_cmd;
+
+	cmdadd_back(cmd, cmdnew("cat", 1, redirnew(REDIR_HEREDOC, "lim")));
 	cmdadd_back(cmd, cmdnew("cat", 1, NULL));
 	cmdadd_back(cmd, cmdnew("cat", 1, NULL));
-	cmdadd_back(cmd, cmdnew("cat", 1, NULL));
-	cmdadd_back(cmd, cmdnew("cat", 1, NULL));
+	cmdadd_back(cmd, cmdnew("cat", 1, redirnew(REDIR_OUT, "out")));
 }
 
 int	main(int argc, char **argv, char **env)

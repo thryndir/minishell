@@ -1,27 +1,28 @@
 #include "executing.h"	
 
-int	last_fd_type(int type, t_command *cmd, t_redir *redir)
+int	last_fd_type(int type, t_command *cmd, t_redir *redir, int pipe_fds[2])
 {
 	t_redir *current;
 	int		last_fd;
-	bool	existing;
 
 	current = redir;
-	last_fd = type;
-	existing = 0;
+	last_fd = -1;
 	while (current)
 	{
 		if ((int)(current->type) == type)
-		{
 			last_fd = current->fd;
-			existing = 1;
-		}
 		current = current->next;
 	}
-	if (type == REDIR_IN && existing)
+	if (type == REDIR_IN && last_fd != -1)
+	{
 		cmd->fd_in = last_fd;
-	else if (type == REDIR_OUT && existing)
+		verif_and_close(&pipe_fds[0]);
+	}
+	else if (type == REDIR_OUT && last_fd != -1)
+	{
 		cmd->fd_out = last_fd;
+		verif_and_close(&pipe_fds[1]);
+	}
 	return (last_fd);
 }
 
@@ -55,13 +56,13 @@ void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2])
 	{
 		if (current->type == REDIR_IN)
 			current->fd = read_or_write(READ, current);
-		else if (current->type == REDIR_OUT)
+		else if (current->type == REDIR_OUT || current->type == REDIR_APPEND)
 			current->fd = read_or_write(WRITE, current);
 		current = current->next;
 	}
 	pipe_redir(cmd, *exec, pipe_fds);
-	last_fd_type(REDIR_IN, cmd, cmd->redirections);
-	last_fd_type(REDIR_OUT, cmd, cmd->redirections);
+	last_fd_type(REDIR_IN, cmd, cmd->redirections, pipe_fds);
+	last_fd_type(REDIR_OUT, cmd, cmd->redirections, pipe_fds);
 }
 
 int	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
@@ -123,28 +124,26 @@ char **lst_to_array(t_env *env)
 
 void	close_all(t_command *cmd)
 {
-	t_command 	*current;
 	t_redir		*redir;
-	int			last_fd_in;
-	int			last_fd_out;
 
-	current = cmd;
-	redir = current->redirections;
-	last_fd_in = last_fd_type(REDIR_IN, cmd, redir);
-	last_fd_out = last_fd_type(REDIR_OUT, cmd, redir);
+	redir = cmd->redirections;
 	while (redir)
 	{
-		if (redir->fd != last_fd_in && redir->fd != last_fd_out)
-			verif_and_close(&redir->fd);
+		verif_and_close(&redir->fd);
 		redir = redir->next;
 	}
 }
 
-void print_open_fds(const char *where) {
-	for (int fd = 0; fd < 10; fd++) {
-		if (fcntl(fd, F_GETFD) != -1) {
+void print_open_fds(const char *where)
+{
+	int	fd;
+
+	fd = 0;
+	while (fd < 10)
+	{
+		if (fcntl(fd, F_GETFD) != -1) 
 			dprintf(2, "%s - FD %d is open (PID: %d)\n", where, fd, getpid());
-		}
+		fd++;
 	}
 }
 

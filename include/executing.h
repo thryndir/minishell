@@ -42,7 +42,7 @@ do \
 		__FILE__, __LINE__); \
 	ret; \
 })
-/*
+
 # define dup2(fd1, fd2) \
 do \
 { \
@@ -50,7 +50,7 @@ do \
 			fd1, fd2, __FILE__, __LINE__); \
 	 if (dup2(fd1, fd2) == -1) \
 	 	perror("dup2"); \
-} while (0) */
+} while (0) 
 
 typedef enum e_read_or_write
 {
@@ -111,7 +111,7 @@ int			runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out);
 void		fork_init(t_exec *exec);
 int			struct_init(t_exec *exec, t_command *cmd, char **envp);
 void		child(t_exec *exec, t_command *cmd, int next_out);
-void		here_doc(char *lim);
+void		here_doc(t_redir *redir);
 int			read_or_write(int read_or_write, t_redir *redir);
 void		hold_on(t_list *lst, int *status);
 t_builtin	*htable_get(const char *str, size_t len);
