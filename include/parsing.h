@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/22 11:50:12 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/11/12 01:38:17 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,36 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
-typedef enum e_token_type
-{
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_REDIR_HEREDOC,
-	TOKEN_ENV_VAR,
-}	t_token_type;
+///////////////////////TEMPORAIRE/////////////////////
+// The differents types of redirections possible
+typedef	enum e_redir_type {
+	REDIR_IN,//		<
+	REDIR_OUT,//	>
+	REDIR_APPEND,//	>>
+	REDIR_HEREDOC,//<< 
+}	t_redir_type;
 
-typedef struct s_ast_node
+typedef	struct s_redir
 {
-	t_token_type		type;
-	int					file_type;
-	char				**args;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
-}	t_ast_node;
+	enum e_redir_type	type;//	 the type of the redirection
+	char				*file;// the file of the redirection
+	int					fd;//	 the fd of the file
+	struct s_redir		*next;// a pointer ot the next node
+}	t_redir;
+
+typedef struct s_command
+{
+	char				*name;//  		the name of the command
+	char				**args;//		the arguments of the command
+	int					argc;//			the number of arguments for the command
+	int					fd_in;//		the fd_in of the command
+	int					fd_out;//		the fd_out of the command
+	int					index;//		the index of the command in the chained list
+	char				*path;// 		the path to the command
+	struct s_redir		*redirections;// a chained list of the redirection of the command
+	struct s_command	*next;
+}	t_command;
+/////////////////////////////////////////////////////
 
 /**
  * PARSING FUNCTIONS
@@ -70,5 +81,14 @@ char		*extract_regular_word(const char *str, int *i, int len);
 char		*extract_word(const char *str, int *i, int *status);
 char		**ft_str_to_array(char **strs, const char *str);
 char		**ft_mini_split(char const *str);
+
+void		free_redirs(t_redir *redir);
+void		free_command_args(char **args);
+void		free_commands(t_command *cmd);
+t_redir		*init_redir(void);
+t_command	*init_command(void);
+int			add_redir(t_command *cmd, t_redir *new_redir);
+int			add_command(t_command **cmd_list, t_command *new_cmd);
+
 
 #endif
