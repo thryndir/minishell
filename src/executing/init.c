@@ -17,12 +17,16 @@ void	free_env(t_env *env)
 int	get_cmd_nbr(t_command *cmd)
 {
 	t_command 	*current;
+	t_redir		*redir;
 	int			cmd_nbr;
 
 	cmd_nbr = 0;
 	current = cmd;
+	redir = current->redirections;
 	while (current)
 	{
+		if (redir && redir->type == REDIR_HEREDOC)
+			here_doc(redir);
 		current->index = cmd_nbr;
 		current = current->next;
 		cmd_nbr++;
@@ -40,15 +44,19 @@ int	struct_init(t_exec *exec, t_command *cmd, char **envp)
 	return (0);
 }
 
-void	here_doc(char *lim)
+void	here_doc(t_redir *redir)
 {
 	char	*str;
 	char	*temp;
+	char	*lim;
 	int		fd;
 
+	lim = redir->file;
 	fd = open("/tmp/temp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		ft_error("here_doc failed to open tmpfile in /tmp: ");
+	redir->file = "/tmp/temp";
+	redir->type = REDIR_IN;
 	while (1)
 	{
 		write(1, "exec heredoc> ", 15);

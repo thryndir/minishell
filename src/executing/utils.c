@@ -7,12 +7,13 @@ int	read_or_write(int read_or_write, t_redir *redir)
 
 	fd = -1;
 	flag = O_TRUNC;
-	if (!ft_strcmp(redir->file, "/tmp/temp"))
+	if (redir->type == REDIR_HEREDOC || redir->type == REDIR_APPEND)
 		flag = O_APPEND;
 	if (read_or_write == READ)
 		fd = open(redir->file, O_RDONLY);
 	else
 		fd = open(redir->file, O_WRONLY | O_CREAT | flag, 0644);
+	dprintf(2, "le fd de la redirection %s est %d\n", redir->file, fd);
 	if (fd == -1)
 		ft_error("problem when opening the file: ");
 	return (fd);
