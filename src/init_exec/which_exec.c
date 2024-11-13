@@ -19,11 +19,15 @@ bool	has_redir_type(t_redir *redir, int type)
 	current = redir;
 	while (current)
 	{
-		if ((int)current->type == type)
-			return (1);
+		if (type == REDIR_IN && ((int)redir->type == REDIR_IN 
+			|| (int)redir->type == REDIR_HEREDOC))
+				return (true);
+		else if (type == REDIR_OUT && ((int)redir->type == REDIR_OUT 
+			|| (int)redir->type == REDIR_APPEND))
+				return (true);
 		current = current->next;
 	}
-	return (0);
+	return (false);
 }
 
 void	parent(t_command *cmd, t_exec *exec, int depth)
@@ -40,17 +44,17 @@ void	parent(t_command *cmd, t_exec *exec, int depth)
 	if (exec->cmd_nbr > 1)
 		if (pipe(pipe_fds) == -1)
 			ft_error("problem with a pipe");
-	if (cmd->next && !has_redir_type(cmd->redirections, REDIR_OUT) // be carefull with append
+	if (cmd->next && !has_redir_type(cmd->redirections, REDIR_OUT)
 		&& !has_redir_type(cmd->next->redirections, REDIR_IN))
 		dup2(next_out, pipe_fds[1]);
 	print_open_fds("parent before child");
-	sleep(1);
 	runner(cmd, exec, pipe_fds, next_out);
-	print_open_fds("parent after child");
+	sleep(1);
 	verif_and_close(&next_out);
 	verif_and_close(&pipe_fds[0]);
 	if (cmd->index == 0)
 		verif_and_close(&pipe_fds[1]);
+	print_open_fds("parent after child");
 	if (!(cmd->index))
 	{
 		hold_on(exec->pid, &(exec->status));

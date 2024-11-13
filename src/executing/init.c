@@ -22,9 +22,9 @@ int	get_cmd_nbr(t_command *cmd)
 
 	cmd_nbr = 0;
 	current = cmd;
-	redir = current->redirections;
 	while (current)
 	{
+		redir = current->redirections;
 		if (redir && redir->type == REDIR_HEREDOC)
 			here_doc(redir);
 		current->index = cmd_nbr;
