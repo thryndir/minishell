@@ -78,14 +78,14 @@ t_redir	*redirnew(t_redir_type type, char *file)
 	return (redir);
 }
 
-// ls -l | cat < test.c | cat > out | cat > papaye |
+// cat < test.c | cat << lim | cat >> papaye | cat > out |
 void	tester(t_command **cmd)
 {
 	// t_command *last_cmd;
 
+	cmdadd_back(cmd, cmdnew("cat", 1, redirnew(REDIR_IN, "test.c")));
 	cmdadd_back(cmd, cmdnew("cat", 1, redirnew(REDIR_HEREDOC, "lim")));
-	cmdadd_back(cmd, cmdnew("cat", 1, NULL));
-	cmdadd_back(cmd, cmdnew("cat", 1, NULL));
+	cmdadd_back(cmd, cmdnew("cat", 1, redirnew(REDIR_APPEND, "papaye")));
 	cmdadd_back(cmd, cmdnew("cat", 1, redirnew(REDIR_OUT, "out")));
 }
 

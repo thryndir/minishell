@@ -18,7 +18,7 @@ int	last_fd_type(int type, t_command *cmd, t_redir *redir, int pipe_fds[2])
 		cmd->fd_in = last_fd;
 		verif_and_close(&pipe_fds[0]);
 	}
-	else if (type == REDIR_OUT && last_fd != -1)
+	else if ((type == REDIR_OUT || type == REDIR_APPEND) && last_fd != -1)
 	{
 		cmd->fd_out = last_fd;
 		verif_and_close(&pipe_fds[1]);
@@ -63,6 +63,7 @@ void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2])
 	pipe_redir(cmd, *exec, pipe_fds);
 	last_fd_type(REDIR_IN, cmd, cmd->redirections, pipe_fds);
 	last_fd_type(REDIR_OUT, cmd, cmd->redirections, pipe_fds);
+	last_fd_type(REDIR_APPEND, cmd, cmd->redirections, pipe_fds);
 }
 
 int	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
