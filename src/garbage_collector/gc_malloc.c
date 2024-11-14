@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 02:09:05 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/05 00:40:56 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/14 22:52:00 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,11 @@ t_alloc_ptr	*remove_address(int index, t_alloc_ptr *lst)
 }
 
 /**
- * This function can create a linked list or add a
- * node to an existing linked list
+ * This function use a static to store the head of a
+ * linked list when first called in gc_malloc.
+ * It can be re-used to append a node to a linked list
+ * or just return the head of the linked list depending of
+ * the code given in parameter.
  */
 t_alloc_ptr	*addr_save(t_alloc_ptr *ptr, int code)
 {
