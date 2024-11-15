@@ -6,11 +6,12 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 01:31:32 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/15 01:17:49 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:11:57 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "gc_malloc.h"
 
 /**
  * redir node initialization
@@ -19,7 +20,7 @@ t_redir	*init_redir(void)
 {
 	t_redir	*redir;
 
-	redir = malloc(sizeof(t_redir));
+	redir = gc_malloc(sizeof(t_redir));
 	if (!redir)
 		return (NULL);
 	redir->type = REDIR_IN;
@@ -36,7 +37,7 @@ t_command	*init_command(void)
 {
 	t_command	*cmd;
 
-	cmd = malloc(sizeof(t_command));
+	cmd = gc_malloc(sizeof(t_command));
 	if (!cmd)
 		return (NULL);
 	cmd->args = NULL;
