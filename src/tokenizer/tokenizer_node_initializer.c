@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 01:31:32 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/12 01:35:41 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/15 01:17:49 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ t_command	*init_command(void)
 	cmd = malloc(sizeof(t_command));
 	if (!cmd)
 		return (NULL);
-	cmd->name = NULL;
 	cmd->args = NULL;
 	cmd->argc = 0;
 	cmd->fd_in = -1;
