@@ -6,11 +6,12 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:59:24 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/15 00:36:05 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:11:58 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "gc_malloc.h"
 
 /**
  * This function create a new redirection 
@@ -29,7 +30,7 @@ t_redir	*create_redir(const char *op, const char *file)
 	redir->file = mini_strdup(file);
 	if (!redir->file)
 	{
-		free(redir);
+		gc_free(redir);
 		return (NULL);
 	}
 	return (redir);

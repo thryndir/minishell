@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 23:20:02 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/14 23:25:05 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:11:56 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	handle_args(t_command *cmd, char **input, int start, int count)
 	int	i;
 	int	args_index;
 
-	cmd->args = malloc(sizeof(char *) * (count + 1));
+	cmd->args = gc_malloc(sizeof(char *) * (count + 1));
 	i = 0;
 	args_index = 0;
 	while (i < count)

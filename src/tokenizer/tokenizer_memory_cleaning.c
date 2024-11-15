@@ -6,14 +6,12 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 01:23:47 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/15 01:18:26 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:11:57 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-/*-----EVERY MALLOC AND FREE MUST BE CHANGED TO THE /\ EQUIVALENT-----*/
-/*                                           garbage collector        */
+#include "gc_malloc.h"
 
 /**
  * This function free the redir node and it's member
@@ -27,10 +25,10 @@ void	free_redirs(t_redir *redir)
 	{
 		temp = redir->next;
 		if (redir->file)
-			free(redir->file);
+			gc_free(redir->file);
 		if (redir->fd > 2)
 			close(redir->fd);
-		free(redir);
+		gc_free(redir);
 		redir = temp;
 	}
 }
@@ -45,10 +43,10 @@ void	free_command_args(char **args)
 	i = 0;
 	while (args[i])
 	{
-		free(args[i]);
+		gc_free(args[i]);
 		i++;
 	}
-	free(args);
+	gc_free(args);
 }
 
 /**
@@ -61,10 +59,8 @@ void	free_commands(t_command *cmd)
 	while (cmd)
 	{
 		temp = cmd->next;
-		if (cmd->name)
-			free(cmd->name);
 		if (cmd->path)
-			free(cmd->path);
+			gc_free(cmd->path);
 		if (cmd->args)
 			free_command_args(cmd->args);
 		if (cmd->fd_in > 2)
@@ -72,7 +68,7 @@ void	free_commands(t_command *cmd)
 		if (cmd->fd_out > 2)
 			close(cmd->fd_out);
 		free_redirs(cmd->redirections);
-		free(cmd);
+		gc_free(cmd);
 		cmd = temp;
 	}
 }
