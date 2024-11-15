@@ -6,10 +6,14 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 01:23:47 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/09 01:39:55 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/15 01:18:26 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parsing.h"
+
+/*-----EVERY MALLOC AND FREE MUST BE CHANGED TO THE /\ EQUIVALENT-----*/
+/*                                           garbage collector        */
 
 /**
  * This function free the redir node and it's member

@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 02:09:07 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/13 22:36:32 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/15 01:16:31 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ enum e_redir_type	get_redir_type(const char *str)
 			return (REDIR_APPEND);
 		return (REDIR_OUT);
 	}
+	return (REDIR_NULL);
 }
 
 /**
