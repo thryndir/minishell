@@ -1,18 +1,21 @@
 #include "executing.h"
 
-void	ft_error(char *message)
+void	ft_error(char *message, int which, int status)
 {
-	ft_dprintf(2, "%s\n", message);
-	exit(1);
+	if (which == 0)
+		dprintf(2, "%s\n", message);
+	if (which == 1 && errno)
+		dprintf(2, "%s: %s\n", message, strerror(errno));
+	gc_free_all();
+	exit(status);
 }
 
 void	return_code(t_exec *exec)
 {
 	if (WIFEXITED(exec->status))
 	{
-		if (WEXITSTATUS(exec->status) == 127)
-			ft_error("command not found");
-		ft_error("command not found");
+		gc_free_all();
+		exit(exec->status);
 	}
 }
 

@@ -13,9 +13,7 @@ int	read_or_write(int read_or_write, t_redir *redir)
 		fd = open(redir->file, O_RDONLY);
 	else
 		fd = open(redir->file, O_WRONLY | O_CREAT | flag, 0644);
-	dprintf(2, "le fd de la redirection %s est %d\n", redir->file, fd);
-	if (fd == -1)
-		ft_error("problem when opening the file: ");
+	// dprintf(2, "le fd de la redirection %s est %d\n", redir->file, fd);
 	return (fd);
 }
 
@@ -26,10 +24,10 @@ void	double_array_free(char **strs)
 	i = 0;
 	while (strs[i])
 	{
-		free(strs[i]);
+		gc_free(strs[i]);
 		i++;
 	}
-	free(strs);
+	gc_free(strs);
 }
 
 void	free_lst(t_list *lst)
@@ -39,25 +37,7 @@ void	free_lst(t_list *lst)
 	while (lst)
 	{
 		temp = lst->next;
-		free(lst);
+		gc_free(lst);
 		lst = temp;
 	}
 }
-
-// void	free_all(t_exec *exec, int which)
-// {
-// 	if (which >= 2 && exec->env != NULL)
-// 		del_env(exec->env);
-// 	if (which >= 3 && exec->p_path != NULL)
-// 		double_array_free(exec->p_path);
-// 	if (which >= 4)
-// 		close_pipe(exec->pipe_fd, exec->cmd_nbr);
-// 	if (which >= 5 && exec->pipe_fd != NULL)
-// 		free(exec->pipe_fd);
-// 	if (which >= 6 && exec->cmds != NULL)
-// 		double_array_free(exec->cmds);
-// 	if (which >= 7 && exec->path != NULL)
-// 		free(exec->path);
-// 	if (which >= 8 && exec->lst != NULL)
-// 		free_lst(exec->lst);
-// }

@@ -36,16 +36,17 @@ char	*ft_strsjoin(int str_nbr, ...)
 	char	*result;
 	char	**strs;
 
-	strs = (char **)malloc((str_nbr * sizeof(char *)) + 1);
+	strs = gc_malloc((str_nbr * sizeof(char *)) + 1);
 	i = 0;
 	va_start(arg, str_nbr);
 	total_len = size_and_convert(strs, str_nbr, arg) + 1;
-	result = (char *)ft_calloc(sizeof(char), total_len + 1);
+	result = gc_malloc(sizeof(char) * (total_len + 1));
+	ft_bzero(result, total_len);
 	while (i < str_nbr)
 	{
 		ft_strlcat(result, strs[i], total_len);
 		i++;
 	}
-	free(strs);
+	gc_free(strs);
 	return (result);
 }

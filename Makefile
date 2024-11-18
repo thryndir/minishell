@@ -1,5 +1,6 @@
 NAME := minishell
-HEADER := -Ilibft/include -Iinclude 
+HEADER := -Ilibft/include -Iinclude
+LFLAGS := -lreadline
 CC := cc
 CFLAGS = -Wall -Wextra -Werror -g
 RM := rm -rf
@@ -9,7 +10,7 @@ FILES := main executing/init executing/init_exec executing/exec\
 executing/utils executing/error built_ins/echo built_ins/exec_builtins\
 built_ins/cd built_ins/env built_ins/exit built_ins/export built_ins/pwd\
 built_ins/unset init_exec/env_init init_exec/env_management utils/strsjoin\
-init_exec/which_exec
+init_exec/which_exec garbage_collector/gc_malloc garbage_collector/gc_malloc_utils\
 
 
 SRC_DIR := src/
@@ -20,7 +21,7 @@ OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(LFLAGS) $^ -o $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(@D)

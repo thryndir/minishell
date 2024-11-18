@@ -68,6 +68,11 @@ int	env_init(char **envp, t_exec *exec)
 	int		i;
 	t_env	*new;
 
+	if (!envp)
+	{
+		exec->env = NULL;
+		return (0);
+	}
 	exec->env = ft_envnew(envp[0]);
 	if (!exec->env)
 		return (1);

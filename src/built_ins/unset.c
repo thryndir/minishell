@@ -10,7 +10,7 @@ void	print_lst(t_env *env)
 	{
 		var = ft_strsjoin(3, curr->name, "=", curr->value);
 		dprintf(2, "%s\n", var);
-		free(var);
+		gc_free(var);
 		curr = curr->next;
 	}
 }

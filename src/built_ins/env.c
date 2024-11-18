@@ -9,14 +9,9 @@ int	env_builtin(t_command *cmd, t_exec *exec)
 	while (current != NULL)
 	{
 		if (current->name && current->value)
-		{
-			ft_dprintf(2, "%s=", current->name);
-			ft_dprintf(2, "%s\n", current->value);
-		}
+			printf("%s=%s\n", current->name, current->value);
 		else
-		{
-			ft_dprintf(2, "Invalid environment variable\n");
-		}
+			dprintf(2, "Invalid environment variable\n");
 		current = current->next;
 	}
 	return (0);

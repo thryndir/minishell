@@ -1,0 +1,7 @@
+--leak-check=full
+--keep-debuginfo=yes
+--show-leak-kinds=all
+--track-fds=yes
+--track-origins=yes
+ --trace-children=no
+--suppressions=ignore_readline.supp

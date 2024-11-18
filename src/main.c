@@ -1,5 +1,7 @@
 #include "executing.h"
 
+int	exit_code = 0;
+
 t_command	*cmdlast(t_command *cmd)
 {
 	if (cmd == NULL)
@@ -28,7 +30,7 @@ t_command	*cmdnew(char *args, int argc, t_redir *redirection)
 {
 	t_command	*cmd;
 
-	cmd = malloc(sizeof(t_command));
+	cmd = gc_malloc(sizeof(t_command));
 	if (!cmd)
 		return (NULL);
 	cmd->argv = ft_split(args, ' ');
@@ -68,7 +70,7 @@ t_redir	*redirnew(t_redir_type type, char *file)
 {
 	t_redir	*redir;
 
-	redir = malloc(sizeof(t_redir));
+	redir = gc_malloc(sizeof(t_redir));
 	if (!redir)
 		return (NULL);
 	redir->next = NULL;
@@ -83,10 +85,10 @@ void	tester(t_command **cmd)
 {
 	// t_command *last_cmd;
 
-	cmdadd_back(cmd, cmdnew("cat", 1, redirnew(REDIR_IN, "test.c")));
-	cmdadd_back(cmd, cmdnew("cat", 1, redirnew(REDIR_HEREDOC, "lim")));
-	cmdadd_back(cmd, cmdnew("cat", 1, redirnew(REDIR_APPEND, "papaye")));
-	cmdadd_back(cmd, cmdnew("cat", 1, redirnew(REDIR_OUT, "out")));
+	cmdadd_back(cmd, cmdnew("ls", 1, redirnew(REDIR_IN, "test.c")));
+	cmdadd_back(cmd, cmdnew("ls", 1, redirnew(REDIR_IN, "lim")));
+	cmdadd_back(cmd, cmdnew("ls", 1, redirnew(REDIR_APPEND, "papaye")));
+	cmdadd_back(cmd, cmdnew("ls", 1, redirnew(REDIR_OUT, "out")));
 }
 
 int	main(int argc, char **argv, char **env)
@@ -99,5 +101,7 @@ int	main(int argc, char **argv, char **env)
 	tester(&exec.cmd);
 	struct_init(&exec, exec.cmd, env);
 	parent(exec.cmd, &exec, 0);
+	gc_free_all();
+	free_env(exec.env);
 	return (0);
 }

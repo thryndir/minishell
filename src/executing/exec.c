@@ -47,7 +47,7 @@ void	pipe_redir(t_command *cmd, t_exec exec, int pipe_fds[2])
 	}
 }
 
-void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2])
+void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2], int next_out)
 {
 	t_redir	*current;
 
@@ -58,6 +58,13 @@ void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2])
 			current->fd = read_or_write(READ, current);
 		else if (current->type == REDIR_OUT || current->type == REDIR_APPEND)
 			current->fd = read_or_write(WRITE, current);
+		if (current->fd == -1)
+		{
+			verif_and_close(&pipe_fds[0]);
+			verif_and_close(&pipe_fds[1]);
+			verif_and_close(&next_out);
+			ft_error("minishell", 1, exit_code);
+		}
 		current = current->next;
 	}
 	pipe_redir(cmd, *exec, pipe_fds);
@@ -72,9 +79,9 @@ int	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 	char		**path;
 
 	htable = htable_get(cmd->argv[0], ft_strlen(cmd->argv[0]));
-	if (htable && exec->cmd_nbr > 1)
+	if (htable && exec->cmd_nbr == 1)
 	{
-		redirect(cmd, exec, pipe_fds);
+		redirect(cmd, exec, pipe_fds, next_out);
 		htable->builtin_func(cmd, exec);
 		return (0);
 	}
@@ -83,8 +90,8 @@ int	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 	fork_init(exec);
 	if (ft_lstlast(exec->pid)->data == 0)
 	{
-		redirect(cmd, exec, pipe_fds);
-		dprintf(2, "enfant cmd nbr : %d\n", cmd->index);
+		redirect(cmd, exec, pipe_fds, next_out);
+		// dprintf(2, "enfant cmd nbr : %d\n", cmd->index);
 		child(exec, cmd, next_out);
 	}
 	return (0);
@@ -106,16 +113,13 @@ int	lst_size(t_env *env)
 char **lst_to_array(t_env *env)
 {
 	char 	**result;
-	char	*var;
 	int		i;
 
 	i = 0;
 	result = malloc(sizeof(char *) * (lst_size(env) + 1));
 	while (env)
 	{
-		var = ft_strsjoin(3, env->name, "=", env->value);
-		result[i] = ft_strdup(var);
-		free(var);
+		result[i] = ft_strsjoin(3, env->name, "=", env->value);
 		env = env->next;
 		i++;
 	}
@@ -148,13 +152,72 @@ void print_open_fds(const char *where)
 	}
 }
 
+void	execve_fail(char *path, int status)
+{
+	if (!access(path, X_OK))
+	{
+		dprintf(2, "%s %s\n", strerror(errno), path);
+		exit (status);
+	}
+	else if (!access(path, F_OK))
+	{
+		dprintf(2, "command not found : %s\n", path);
+		exit(127);
+	}
+}
+
+bool	contain_an_except(void **addrs, void *addr)
+{
+	int		i;
+	bool	result;
+
+	i = 0;
+	result = false;
+	while (addrs[i])
+	{
+		if (addrs[i] == addr)
+			result = true;
+		i++;
+	}
+	return (result);
+}
+
+void	gc_free_all_except(int addr_nbr, ...)
+{
+	va_list		arg;
+	t_alloc_ptr	*lst;
+	t_alloc_ptr	*tmp;
+	void	**addr_array;
+	int		i;
+
+	i = 0;
+	lst = addr_save(NULL, 1);
+	va_start(arg, addr_nbr);
+	addr_array = malloc(sizeof(void *) * (addr_nbr + 1));
+	void **addr_array = (void **)(((void *)(&addr_nbr))+(24));
+	addr_array[addr_nbr] = NULL;
+	while (i < addr_nbr)
+	{
+		addr_array[i] = va_arg(arg, void *);
+		i++;
+	}
+	while (lst)
+	{
+		tmp = lst->next;
+		if (!contain_an_except(addr_array, lst->addr))
+			gc_free(lst->addr);
+		lst = tmp;
+	}
+	free(addr_array);
+}
+
 void	child(t_exec *exec, t_command *cmd, int next_out)
 {
 	char 		**env;
 	t_builtin	*htable;
 
 	env = lst_to_array(exec->env);
-	dprintf(2, "fd_in = %d, fd_out = %d, next_out = %d\n", cmd->fd_in, cmd->fd_out, next_out);
+	// dprintf(2, "fd_in = %d, fd_out = %d, next_out = %d\n", cmd->fd_in, cmd->fd_out, next_out);
 	if (cmd->fd_in != -1)
 		dup2(cmd->fd_in, STDIN_FILENO);
 	if (cmd->fd_out != -1)
@@ -165,93 +228,14 @@ void	child(t_exec *exec, t_command *cmd, int next_out)
 	verif_and_close(&cmd->fd_out);
 	verif_and_close(&next_out);
 	htable = htable_get(cmd->argv[0], ft_strlen(cmd->argv[0]));
-	print_open_fds("child process");
+	// print_open_fds("child process");
+	gc_free_all();
 	if (htable)
 	{
-		htable->builtin_func(cmd, exec);
+		exit_code = htable->builtin_func(cmd, exec);
 		return;
 	}
 	else
-		execve(cmd->path, cmd->argv, env);
-	dprintf(2, "minishell: command not found: %s\n", cmd->argv[0]);
-	exit(127);
+		exit_code = execve(cmd->path, cmd->argv, env);
+	execve_fail(cmd->path, exit_code);
 }
-
-// void	pipe_parent(char **argv, int end, t_pipex *pipex)
-// {
-// 	int	start;
-
-// 	if (pipex->here_doc)
-// 		start = 3;
-// 	else
-// 		start = 2;
-// 	init_exec(pipex, argv[end]);
-// 	runner(end - start, pipex, LAST_CHILD);
-// 	end--;
-// 	while (end > start)
-// 	{
-// 		init_exec(pipex, argv[end]);
-// 		runner(end - start, pipex, MIDDLE_CHILD);
-// 		end--;
-// 	}
-// 	init_exec(pipex, argv[end]);
-// 	runner(end - start, pipex, FIRST_CHILD);
-// 	close_pipe(pipex->pipe_fd, pipex->cmd_nbr);
-// 	hold_on(pipex->pid, &(pipex->status));
-// 	if (WEXITSTATUS(pipex->status))
-// 		return_code(pipex);
-// }
-
-// void	no_pipe_child(t_pipex *pipex)
-// {
-// 	t_builtin	*builtin;
-
-// 	builtin = htable_get(pipex->cmds[0], ft_strlen(pipex->cmds[0]));
-// 	if (builtin)
-// 		builtin->builtin_func(pipex);
-// 	else if (pipex->path != NULL)
-// 		execve(pipex->path, pipex->cmds, pipex->envp);
-// 	ft_dprintf(2, "pipex: command not found: %s\n", pipex->cmds[0]);
-// 	free_all(pipex, FREE_LST);
-// 	exit(127);
-// }
-
-// void	first_child(int current, t_exec *exec, int (*pipe_fd)[2])
-// {
-// 	int			fd;
-// 	t_builtin	*builtin;
-
-// 	builtin = htable_get(exec->cmds[0], ft_strlen(exec->cmds[0]));
-// 	fd = read_or_write(exec->infile, READ, *exec);
-// 	dup2(fd, 0);
-// 	close(fd);
-// 	dup2(pipe_fd[current][1], 1);
-// 	close_pipe(pipe_fd, exec->cmd_nbr);
-// 	if (builtin)
-// 		builtin->builtin_func(exec);
-// 	else if (exec->path != NULL)
-// 		execve(exec->path, exec->cmds, exec->envp);
-// 	ft_dprintf(2, "minishell: command not found: %s\n", exec->cmds[0]);
-// 	free_all(exec, FREE_LST);
-// 	exit(127);
-// }
-
-// void	last_child(int current, t_exec *exec, int (*pipe_fd)[2])
-// {
-// 	int			fd;
-// 	t_builtin	*builtin;
-
-// 	builtin = htable_get(exec->cmds[0], ft_strlen(exec->cmds[0]));
-// 	fd = read_or_write(exec->outfile, WRITE, *exec);
-// 	dup2(fd, 1);
-// 	close(fd);
-// 	dup2(pipe_fd[current - 1][0], 0);
-// 	close_pipe(pipe_fd, exec->cmd_nbr);
-// 	if (builtin)
-// 		builtin->builtin_func(exec);
-// 	else if (exec->path != NULL)
-// 		execve(exec->path, exec->cmds, exec->envp);
-// 	ft_dprintf(2, "minishell: command not found: %s\n", exec->cmds[0]);
-// 	free_all(exec, FREE_LST);
-// 	exit(127);
-// }
