@@ -29,9 +29,9 @@ int	echo_builtin(t_command *cmd, t_exec *exec)
 	}
 	while (cmd->argv[i])
 	{
-		ft_printf("%s ", cmd->argv[i++]);
+		printf("%s ", cmd->argv[i++]);
 		if (cmd->argv[i] && cmd->argv[i + 1] == NULL)
-			ft_printf("%s", cmd->argv[i++]);
+			printf("%s", cmd->argv[i++]);
 	}
 	if (newline)
 		write(1, "\n", 1);

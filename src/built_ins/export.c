@@ -36,13 +36,13 @@ t_env	*env_copy(t_env *env)
 	current = env;
 	var = ft_strsjoin(3, current->name, "=", current->value);
 	new = ft_envnew(var);
-	free(var);
+	gc_free(var);
 	current = current->next;
 	while (current)
 	{
 		var = ft_strsjoin(3, current->name, "=", current->value);
 		ft_envadd_back(&new, ft_envnew(var));
-		free(var);
+		gc_free(var);
 		current = current->next;
 	}
 	return (new);

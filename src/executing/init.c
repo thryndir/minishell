@@ -6,12 +6,16 @@ void	free_env(t_env *env)
 
 	while (env)
 	{
+		printf("test\n");
 		temp = env->next;
 		free(env->value);
+		env->value = NULL;
 		free(env->name);
+		env->name = NULL;
 		free(env);
 		env = temp;
 	}
+	env = NULL;
 }
 
 int	get_cmd_nbr(t_command *cmd)
@@ -52,23 +56,22 @@ void	here_doc(t_redir *redir)
 	int		fd;
 
 	lim = redir->file;
-	fd = open("/tmp/temp", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	fd = read_or_write(WRITE, redir);
 	if (fd == -1)
-		ft_error("here_doc failed to open tmpfile in /tmp: ");
+		ft_error("here_doc failed to open tmpfile in /tmp: ", 1, exit_code);
 	redir->file = "/tmp/temp";
 	redir->type = REDIR_IN;
 	while (1)
 	{
-		write(1, "exec heredoc> ", 15);
-		str = get_next_line(0);
+		str = readline("heredoc :");
 		temp = ft_strtrim(str, "\n");
 		if (str == NULL || !ft_strcmp(temp, lim))
 			break ;
 		write(fd, str, ft_strlen(str));
 		free(str);
-		free(temp);
+		gc_free(temp);
 	}
 	free(str);
-	free(temp);
+	gc_free(temp);
 	verif_and_close(&fd);
 }

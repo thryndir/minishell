@@ -18,6 +18,6 @@ int	cd_builtin(t_command *cmd, t_exec *exec)
 	chdir(cmd->argv[1]);
 	add_in_env(exec->env, "PWD", path);
 	if (to_free)
-		free(path);
+		gc_free(path);
 	return (0);
 }

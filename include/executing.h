@@ -14,13 +14,69 @@
 # include <stdbool.h>
 # include "libft.h"
 # include "parsing.h"
-# include <assert.h>
+# include "gcmalloc.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define TOTAL_KEYWORDS 7
 # define MIN_WORD_LENGTH 2
 # define MAX_WORD_LENGTH 6
 # define MIN_HASH_VALUE 2
 # define MAX_HASH_VALUE 9
+
+extern	int exit_code;
+
+/*# define malloc(size) \
+({ \
+	void * ret = malloc(size); \
+	if (!ret) \
+		fprintf(stderr, "malloc fail at %s:%d failed: %s\n", \
+			__FILE__, __LINE__, strerror(errno)); \
+	else \
+		fprintf(stderr, "malloc at(%p) at %s:%d\n", \
+		ret, __FILE__, __LINE__); \
+	ret; \
+})*/
+
+/*# define gc_free(addr) \
+do \
+{ \
+	fprintf(stderr, "gc_free(%p) at %s:%d\n", \
+			addr, __FILE__, __LINE__); \
+	free(addr); \
+} while (0)
+*/
+/*# define gc_malloc(size) \
+({ \
+	void * ret = gc_malloc(size); \
+	if (!ret) \
+		fprintf(stderr, "gc_malloc fail at %s:%d failed: %s\n", \
+			__FILE__, __LINE__, strerror(errno)); \
+	else \
+		fprintf(stderr, "gc_malloc at(%p) at %s:%d\n", \
+		ret, __FILE__, __LINE__); \
+	ret; \
+})*/
+
+/*# define ft_calloc(elmt_nbr, elmt_size) \
+({ \
+	void * ret = ft_calloc(elmt_nbr, elmt_size); \
+	if (!ret) \
+		fprintf(stderr, "malloc fail at %s:%d failed: %s\n", \
+			__FILE__, __LINE__, strerror(errno)); \
+	else \
+		fprintf(stderr, "ft_calloc at(%p) at %s:%d\n", \
+		ret, __FILE__, __LINE__); \
+	ret; \
+})*/
+
+/*# define free(ptr) \
+do \
+{ \
+	fprintf(stderr, "free(%p) at %s:%d\n", \
+			ptr, __FILE__, __LINE__); \
+	free(ptr); \
+} while (0)*/
 
 /*# define close(fd) \
 do \
@@ -30,7 +86,7 @@ do \
 	close(fd); \
 } while (0)*/
 
-#define pipe(pipefd) \
+/*#define pipe(pipefd) \
 ({ \
 	int ret = pipe(pipefd); \
 	if (ret == -1) \
@@ -50,7 +106,7 @@ do \
 			fd1, fd2, __FILE__, __LINE__); \
 	 if (dup2(fd1, fd2) == -1) \
 	 	perror("dup2"); \
-} while (0) 
+} while (0)*/
 
 typedef enum e_read_or_write
 {
@@ -98,11 +154,11 @@ typedef struct s_builtin
 	int			(*builtin_func)(t_command *, t_exec *);
 }	t_builtin;
 
-void 	print_open_fds(const char *where);
+void 		print_open_fds(const char *where);
 char		**search_in_env(char **env);
 void		parent(t_command *cmd, t_exec *exec, int depth);
 int			verif_and_close(int *fd);
-void		ft_error(char *message);
+void		ft_error(char *message, int which, int status);
 char		*this_is_the_path(char **path, char *cmd);
 void		return_code(t_exec *exec);
 void		close_all(t_command *cmd);

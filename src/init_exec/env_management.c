@@ -60,7 +60,7 @@ void	add_in_env(t_env *env, char *name, char *value)
 	}
 	var = ft_strsjoin(3, name, "=", value);
 	ft_envadd_back(&env, ft_envnew(var));
-	free(var);
+	gc_free(var);
 }
 
 char	*get_value(t_env *env, char *name)
