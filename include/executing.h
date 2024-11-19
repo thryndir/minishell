@@ -155,10 +155,12 @@ typedef struct s_builtin
 }	t_builtin;
 
 void 		print_open_fds(const char *where);
-char		**search_in_env(char **env);
+void		free_cmd_exec(t_exec *exec, t_command *to_keep);
 void		parent(t_command *cmd, t_exec *exec, int depth);
 int			verif_and_close(int *fd);
 void		ft_error(char *message, int which, int status);
+void		free_lst(t_list *lst);
+int			lst_size(t_env *env);
 char		*this_is_the_path(char **path, char *cmd);
 void		return_code(t_exec *exec);
 void		close_all(t_command *cmd);
@@ -167,6 +169,8 @@ int			runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out);
 void		fork_init(t_exec *exec);
 int			struct_init(t_exec *exec, t_command *cmd, char **envp);
 void		child(t_exec *exec, t_command *cmd, int next_out);
+void		execve_fail(char *path, int status);
+char 		**lst_to_array(t_env *env);
 void		here_doc(t_redir *redir);
 int			read_or_write(int read_or_write, t_redir *redir);
 void		hold_on(t_list *lst, int *status);

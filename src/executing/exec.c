@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/19 20:44:33 by lgalloux          #+#    #+#             */
+/*   Updated: 2024/11/19 20:44:34 by lgalloux         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "executing.h"	
 
 int	last_fd_type(int type, t_command *cmd, t_redir *redir, int pipe_fds[2])
@@ -87,6 +99,7 @@ int	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 	}
 	path = ft_split(get_value(exec->env, "PATH"), ':');
 	cmd->path = this_is_the_path(path, cmd->argv[0]);
+	gc_tab_free(path);
 	fork_init(exec);
 	if (ft_lstlast(exec->pid)->data == 0)
 	{
@@ -97,119 +110,18 @@ int	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 	return (0);
 }
 
-int	lst_size(t_env *env)
-{
-	int	i;
+// void print_open_fds(const char *where)
+// {
+// 	int	fd;
 
-	i = 0;
-	while (env)
-	{
-		env = env->next;
-		i++;
-	}
-	return (i);
-}
-
-char **lst_to_array(t_env *env)
-{
-	char 	**result;
-	int		i;
-
-	i = 0;
-	result = malloc(sizeof(char *) * (lst_size(env) + 1));
-	while (env)
-	{
-		result[i] = ft_strsjoin(3, env->name, "=", env->value);
-		env = env->next;
-		i++;
-	}
-	result[i] = NULL;
-	return (result);
-}
-
-void	close_all(t_command *cmd)
-{
-	t_redir		*redir;
-
-	redir = cmd->redirections;
-	while (redir)
-	{
-		verif_and_close(&redir->fd);
-		redir = redir->next;
-	}
-}
-
-void print_open_fds(const char *where)
-{
-	int	fd;
-
-	fd = 0;
-	while (fd < 10)
-	{
-		if (fcntl(fd, F_GETFD) != -1) 
-			dprintf(2, "%s - FD %d is open (PID: %d)\n", where, fd, getpid());
-		fd++;
-	}
-}
-
-void	execve_fail(char *path, int status)
-{
-	if (!access(path, X_OK))
-	{
-		dprintf(2, "%s %s\n", strerror(errno), path);
-		exit (status);
-	}
-	else if (!access(path, F_OK))
-	{
-		dprintf(2, "command not found : %s\n", path);
-		exit(127);
-	}
-}
-
-bool	contain_an_except(void **addrs, void *addr)
-{
-	int		i;
-	bool	result;
-
-	i = 0;
-	result = false;
-	while (addrs[i])
-	{
-		if (addrs[i] == addr)
-			result = true;
-		i++;
-	}
-	return (result);
-}
-
-void	gc_free_all_except(int addr_nbr, ...)
-{
-	va_list		arg;
-	t_alloc_ptr	*lst;
-	t_alloc_ptr	*tmp;
-	void	**addr_array;
-	int		i;
-
-	i = 0;
-	lst = addr_save(NULL, 1);
-	va_start(arg, addr_nbr);
-	addr_array = malloc(sizeof(void *) * (addr_nbr + 1));
-	void **addr_array = (void **)(((void *)(&addr_nbr))+(24));
-	addr_array[addr_nbr] = NULL;
-	while (i < addr_nbr)
-	{
-		addr_array[i] = va_arg(arg, void *);
-		i++;
-	}
-	while (lst)
-	{
-		tmp = lst->next;
-		if (!contain_an_except(addr_array, lst->addr))
-			gc_free(lst->addr);
-		lst = tmp;
-	}
-	free(addr_array);
-}
+// 	fd = 0;
+// 	while (fd < 10)
+// 	{
+// 		if (fcntl(fd, F_GETFD) != -1) 
+// 			dprintf(2, "%s - FD %d is open (PID: %d)\n", where, fd, getpid());
+// 		fd++;
+// 	}
+// }
 
 void	child(t_exec *exec, t_command *cmd, int next_out)
 {
@@ -229,7 +141,8 @@ void	child(t_exec *exec, t_command *cmd, int next_out)
 	verif_and_close(&next_out);
 	htable = htable_get(cmd->argv[0], ft_strlen(cmd->argv[0]));
 	// print_open_fds("child process");
-	gc_free_all();
+	free_cmd_exec(exec, cmd);
+	free_env(exec->env);
 	if (htable)
 	{
 		exit_code = htable->builtin_func(cmd, exec);

@@ -6,12 +6,13 @@ CFLAGS = -Wall -Wextra -Werror -g
 RM := rm -rf
 LIB := libft/libft.a
 
-FILES := main executing/init executing/init_exec executing/exec\
-executing/utils executing/error built_ins/echo built_ins/exec_builtins\
+FILES := main executing/browse executing/exec\
+built_ins/echo built_ins/exec_builtins executing/init_exec\
 built_ins/cd built_ins/env built_ins/exit built_ins/export built_ins/pwd\
-built_ins/unset init_exec/env_init init_exec/env_management utils/strsjoin\
-init_exec/which_exec garbage_collector/gc_malloc garbage_collector/gc_malloc_utils\
-
+built_ins/unset env/env_init env/env_management\
+garbage_collector/gc_malloc garbage_collector/gc_malloc_utils\
+utils/child_utils utils/memory_manage utils/strsjoin utils/error\
+utils/utils
 
 SRC_DIR := src/
 OBJ_DIR := obj/
@@ -21,7 +22,7 @@ OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	$(CC) $(CFLAGS) $(LFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(@D)

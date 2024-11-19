@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
+/*   Updated: 2024/11/19 21:43:35 by lgalloux         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "executing.h"
 
 int	exit_code = 0;
@@ -86,7 +98,7 @@ void	tester(t_command **cmd)
 	// t_command *last_cmd;
 
 	cmdadd_back(cmd, cmdnew("ls", 1, redirnew(REDIR_IN, "test.c")));
-	cmdadd_back(cmd, cmdnew("ls", 1, redirnew(REDIR_IN, "lim")));
+	cmdadd_back(cmd, cmdnew("ls", 1, redirnew(REDIR_IN, "Makefile")));
 	cmdadd_back(cmd, cmdnew("ls", 1, redirnew(REDIR_APPEND, "papaye")));
 	cmdadd_back(cmd, cmdnew("ls", 1, redirnew(REDIR_OUT, "out")));
 }
@@ -101,7 +113,7 @@ int	main(int argc, char **argv, char **env)
 	tester(&exec.cmd);
 	struct_init(&exec, exec.cmd, env);
 	parent(exec.cmd, &exec, 0);
-	gc_free_all();
+	free_cmd_exec(&exec, NULL);
 	free_env(exec.env);
 	return (0);
 }

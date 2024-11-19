@@ -20,9 +20,9 @@ void	del_env(t_env *env)
 	while (env)
 	{
 		temp = env->next;
-		free(env->name);
-		free(env->value);
-		free(env);
+		gc_free(env->name);
+		gc_free(env->value);
+		gc_free(env);
 		env = temp;
 	}
 }
@@ -38,9 +38,9 @@ void	del_in_env(t_env **env, t_env *to_delete)
 		*env = (*env)->next;
 	else
 		current->next = to_delete->next;
-	free(to_delete->name);
-	free(to_delete->value);
-	free(to_delete);
+	gc_free(to_delete->name);
+	gc_free(to_delete->value);
+	gc_free(to_delete);
 }
 
 void	add_in_env(t_env *env, char *name, char *value)

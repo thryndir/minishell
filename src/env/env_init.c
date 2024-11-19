@@ -55,7 +55,7 @@ t_env	*ft_envnew(char *var)
 {
 	t_env	*env;
 
-	env = malloc(sizeof(t_env));
+	env = gc_malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);
 	name_and_value(var, env);
