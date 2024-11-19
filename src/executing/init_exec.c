@@ -1,33 +1,59 @@
 #include "executing.h"
 
-void	fork_init(t_exec *exec)
+int	get_cmd_nbr(t_command *cmd)
 {
-	ft_lstadd_back(&(exec->pid), ft_lstnew(-1));
-	ft_lstlast(exec->pid)->data = fork();
-	if (ft_lstlast(exec->pid)->data == -1)
-		ft_error("problem with the fork: ", 1, exit_code);
+	t_command 	*current;
+	t_redir		*redir;
+	int			cmd_nbr;
+
+	cmd_nbr = 0;
+	current = cmd;
+	while (current)
+	{
+		redir = current->redirections;
+		if (redir && redir->type == REDIR_HEREDOC)
+			here_doc(redir);
+		current->index = cmd_nbr;
+		current = current->next;
+		cmd_nbr++;
+	}
+	return (cmd_nbr);
 }
 
-char	*this_is_the_path(char **path, char *cmd)
+int	struct_init(t_exec *exec, t_command *cmd, char **envp)
 {
-	char	*cmd_path;
-	int		i;
+	exec->status = 0;
+	if (env_init(envp, exec))
+		return (1);
+	exec->cmd_nbr = get_cmd_nbr(cmd);
+	exec->pid = NULL;
+	return (0);
+}
 
-	i = 0;
-	if (cmd == NULL)
-		return (NULL);
-	if (ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
-	while (path[i])
+void	here_doc(t_redir *redir)
+{
+	char	*str;
+	char	*temp;
+	char	*lim;
+	int		fd;
+
+	lim = redir->file;
+	fd = read_or_write(WRITE, redir);
+	if (fd == -1)
+		ft_error("here_doc failed to open tmpfile in /tmp: ", 1, exit_code);
+	redir->file = "/tmp/temp";
+	redir->type = REDIR_IN;
+	while (1)
 	{
-		cmd_path = ft_strsjoin(3, path[i], "/", cmd);
-		if (cmd_path == NULL)
-			return (NULL);
-		if (access(cmd_path, X_OK) == 0)
-			return (cmd_path);
-		else
-			gc_free(cmd_path);
-		i++;
+		str = readline("heredoc :");
+		temp = ft_strtrim(str, "\n");
+		if (str == NULL || !ft_strcmp(temp, lim))
+			break ;
+		write(fd, str, ft_strlen(str));
+		gc_free(str);
+		gc_free(temp);
 	}
-	return (NULL);
+	gc_free(str);
+	gc_free(temp);
+	verif_and_close(&fd);
 }
