@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 11:47:49 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:14:32 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	main(int argc, char **argv, char **env)
 		struct_init(&exec, exec.cmd, env);
 		parent(exec.cmd, &exec, 0);
 		free_cmd_exec(&exec, NULL);
-
+		gc_tab_free(splitted_input);
+		gc_free(input);
 	}
 	free_env(exec.env);
 }
