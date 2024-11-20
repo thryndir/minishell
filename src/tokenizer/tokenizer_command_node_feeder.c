@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "gcmalloc.h"
 
 /**
  * This function count and return the number
- * of args in a signle command
+ * of argv in a signle command
  */
-int	count_command_args(char **input, int index)
+int	count_command_argv(char **input, int index)
 {
 	int	count;
 
@@ -37,12 +38,12 @@ int	count_command_args(char **input, int index)
 
 /**
  * This function copy the command arguments in the
- * args field of the command node
+ * argv field of the command node
  */
 int	copy_arg(t_command *cmd, char **input, int *start, int *arg_index)
 {
-	cmd->args[*arg_index] = mini_strdup(input[*start]);
-	if (!cmd->args[*arg_index])
+	cmd->argv[*arg_index] = mini_strdup(input[*start]);
+	if (!cmd->argv[*arg_index])
 		return (0);
 	(*arg_index)++;
 	(*start)++;
@@ -50,24 +51,24 @@ int	copy_arg(t_command *cmd, char **input, int *start, int *arg_index)
 }
 
 /**
- * Create and handle the args field of the command node
+ * Create and handle the argv field of the command node
  */
-int	handle_args(t_command *cmd, char **input, int start, int count)
+int	handle_argv(t_command *cmd, char **input, int start, int count)
 {
 	int	i;
-	int	args_index;
+	int	argv_index;
 
-	cmd->args = gc_malloc(sizeof(char *) * (count + 1));
+	cmd->argv = gc_malloc(sizeof(char *) * (count + 1));
 	i = 0;
-	args_index = 0;
+	argv_index = 0;
 	while (i < count)
 	{
 		if (is_redirect(input[start + i]))
 			i += 2;
-		else if (!copy_arg(cmd, input, &i, &args_index))
+		else if (!copy_arg(cmd, input, &i, &argv_index))
 			return (0);
 	}
-	cmd->args[args_index] = NULL;
-	cmd->argc = args_index;
+	cmd->argv[argv_index] = NULL;
+	cmd->argc = argv_index;
 	return (1);
 }

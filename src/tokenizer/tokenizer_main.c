@@ -16,51 +16,48 @@
  * This function call all the needed function to process a
  * *char and make a node for the linked list
  */
-t_command	*parse_command(char **input, int *index)
+t_command	*parse_command(char **input, int i)
 {
 	t_command	*cmd;
 	int			count;
 
-	count = count_command_args(input, *index);
+	count = count_command_argv(input, i);
 	cmd = init_command();
-	if (!handle_args(cmd, input, *index, count))
+	if (!handle_argv(cmd, input, i, count))
 	{
 		free_commands(cmd);
 		return (NULL);
 	}
-	if (!process_redirections(cmd, input, *index, count))
+	if (!process_redirections(cmd, input, i, count))
 	{
 		free_commands(cmd);
 		return (NULL);
 	}
-	*index += count;
-	if (input[*index] && !ft_strcmp(input[*index], "|"))
-		(*index)++;
 	return (cmd);
 }
 
 /**
  * Tokenizer main command, call the parse_command function to process
  * **input and return a linked list of commands
- * if needed can free th linked_list and the current node
- * the *index parameter will give the number of command
  */
-t_command	*parse_input(char **input, int *index)
+t_command	*parse_input(char **input)
 {
 	t_command	*cmd_list;
 	t_command	*new_cmd;
+	int			i;
 
 	cmd_list = NULL;
-	index = 0;
-	while (input[*index])
+	i = 0;
+	while (input[i])
 	{
-		new_cmd = parse_command(input, index);
+		new_cmd = parse_command(input, i);
 		if (!add_command(&cmd_list, new_cmd))
 		{
 			free_commands(cmd_list);
 			free_commands(new_cmd);
 			return (NULL);
 		}
+		i++;
 	}
 	return (cmd_list);
 }

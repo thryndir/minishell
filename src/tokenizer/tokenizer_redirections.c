@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "gc_malloc.h"
+#include "gcmalloc.h"
 
 /**
  * This function create a new redirection 

@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # include <stdbool.h>
+# include <unistd.h>
+# include "libft.h"
 
 ///////////////////////TEMPORAIRE/////////////////////
 // The differents types of redirections possible
@@ -74,26 +76,26 @@ bool				is_double_symbol(const char *str, int i);
 bool				count_quoted_word(const char *str, int *i);
 bool				count_regular_word(const char *str, int *i);
 int					count_word(const char *str, int *i);
-int					ft_strnbr(const char *str);
-int					ft_charnbr(const char *str);
-void				ft_malloc_fail(char **strs, int j);
+int					mini_strnbr(const char *str);
+int					mini_charnbr(const char *str);
+void				mini_malloc_fail(char **strs, int j);
 char				*extract_quoted_word(const char *str, int *i, int len);
 char				*extract_regular_word(const char *str, int *i, int len);
 char				*extract_word(const char *str, int *i, int *status);
-char				**ft_str_to_array(char **strs, const char *str);
+char				**mini_str_to_array(char **strs, const char *str);
 char				**ft_mini_split(char const *str);
 
 void				free_redirs(t_redir *redir);
-void				free_command_args(char **args);
+void				free_command_argv(char **argv);
 void				free_commands(t_command *cmd);
 t_redir				*init_redir(void);
 t_command			*init_command(void);
 int					add_redir(t_command *cmd, t_redir *new_redir);
 int					add_command(t_command **cmd_list, t_command *new_cmd);
-int					count_command_args(char **input, int index);
+int					count_command_argv(char **input, int index);
 int					copy_arg(t_command *cmd, char **input,
 						int *start, int *arg_index);
-int					handle_args(t_command *cmd, char **input,
+int					handle_argv(t_command *cmd, char **input,
 						int start, int count);
 t_redir				*create_redir(const char *op, const char *file);
 int					process_one_redirection(t_command *cmd, char **input,
@@ -103,7 +105,7 @@ int					process_redirections(t_command *cmd, char **input,
 char				*mini_strdup(const char *src);
 bool				is_redirect(const char *str);
 enum e_redir_type	get_redir_type(const char *str);
-t_command			*parse_command(char **input, int *index);
-t_command			*parse_input(char **input, int *index);
+t_command			*parse_command(char **input, int index);
+t_command			*parse_input(char **input);
 
 #endif

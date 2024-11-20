@@ -33,9 +33,9 @@ bool	ft_isspace(char c)
 void	quote_count(char c, int *simple_q, int *double_q)
 {
 	if (c == '\"')
-		double_q++;
+		*double_q += 1;
 	if (c == '\'')
-		simple_q++;
+		*simple_q += 1;
 }
 
 /**
