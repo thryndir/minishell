@@ -39,7 +39,7 @@ int	count_word(const char *str, int *i)
 /**
  * This function count the number a word in the input string.
 */
-int	ft_strnbr(const char *str)
+int	mini_strnbr(const char *str)
 {
 	int	result;
 	int	i;
@@ -59,7 +59,7 @@ int	ft_strnbr(const char *str)
  * This function give back the number of char before specific
  * requirements (quote search).
 */
-int	ft_charnbr(const char *str)
+int	mini_charnbr(const char *str)
 {
 	int		i;
 	char	quote;
@@ -85,7 +85,7 @@ int	ft_charnbr(const char *str)
 /**
  * This function free every array that was created before a malloc failure.
 */
-void	ft_malloc_fail(char **strs, int j)
+void	mini_malloc_fail(char **strs, int j)
 {
 	int	i;
 

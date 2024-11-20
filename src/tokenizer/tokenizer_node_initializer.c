@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "gc_malloc.h"
+#include "gcmalloc.h"
 
 /**
  * redir node initialization
@@ -40,7 +40,7 @@ t_command	*init_command(void)
 	cmd = gc_malloc(sizeof(t_command));
 	if (!cmd)
 		return (NULL);
-	cmd->args = NULL;
+	cmd->argv = NULL;
 	cmd->argc = 0;
 	cmd->fd_in = -1;
 	cmd->fd_out = -1;

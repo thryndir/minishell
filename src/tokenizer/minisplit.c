@@ -63,7 +63,7 @@ char	*extract_word(const char *str, int *i, int *status)
 	int		len;
 	char	*word;
 
-	len = ft_charnbr(str + *i);
+	len = mini_charnbr(str + *i);
 	if (is_quote(str[*i]))
 		word = extract_quoted_word(str, i, len);
 	else
@@ -76,7 +76,7 @@ char	*extract_word(const char *str, int *i, int *status)
 /**
  *  This function convert the input string to a **tab.
 */
-char	**ft_str_to_array(char **strs, const char *str)
+char	**mini_str_to_array(char **strs, const char *str)
 {
 	int	i;
 	int	j;
@@ -94,7 +94,7 @@ char	**ft_str_to_array(char **strs, const char *str)
 		strs[j] = extract_word(str, &i, &status);
 		if (status == -1)
 		{
-			ft_malloc_fail(strs, j);
+			mini_malloc_fail(strs, j);
 			return (NULL);
 		}
 		j++;
@@ -113,9 +113,9 @@ char	**ft_mini_split(char const *str)
 
 	if (str == NULL)
 		return (NULL);
-	word_count = ft_strnbr(str);
+	word_count = mini_strnbr(str);
 	strs = (char **)gc_malloc((word_count + 1) * sizeof(char *));
 	if (strs == NULL)
 		return (NULL);
-	return (ft_str_to_array(strs, str));
+	return (mini_str_to_array(strs, str));
 }

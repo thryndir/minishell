@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "gc_malloc.h"
+#include "gcmalloc.h"
+
 
 /**
  * This function is an enum selector for the type of

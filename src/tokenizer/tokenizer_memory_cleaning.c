@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "gc_malloc.h"
+#include "gcmalloc.h"
 
 /**
  * This function free the redir node and it's member
@@ -34,19 +34,19 @@ void	free_redirs(t_redir *redir)
 }
 
 /**
- * This function free the args member of the command node
+ * This function free the argv member of the command node
  */
-void	free_command_args(char **args)
+void	free_command_argv(char **argv)
 {
 	int	i;
 
 	i = 0;
-	while (args[i])
+	while (argv[i])
 	{
-		gc_free(args[i]);
+		gc_free(argv[i]);
 		i++;
 	}
-	gc_free(args);
+	gc_free(argv);
 }
 
 /**
@@ -61,8 +61,8 @@ void	free_commands(t_command *cmd)
 		temp = cmd->next;
 		if (cmd->path)
 			gc_free(cmd->path);
-		if (cmd->args)
-			free_command_args(cmd->args);
+		if (cmd->argv)
+			free_command_argv(cmd->argv);
 		if (cmd->fd_in > 2)
 			close(cmd->fd_in);
 		if (cmd->fd_out > 2)
