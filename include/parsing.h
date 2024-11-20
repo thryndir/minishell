@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/20 12:38:55 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:47:01 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ typedef struct s_redir
 
 typedef struct s_command
 {
-	char				**args;//		the arguments of the command
-	int					argc;//			the number of arguments for the command
-	int					fd_in;//		the fd_in of the command
-	int					fd_out;//		the fd_out of the command
-	int					index;//		the index of the command in the chained list
-	char				*path;// 		the path to the command
-	struct s_redir		*redirections;// a chained list of the redirection of the command
+	char				**argv;
+	int					argc;
+	int					fd_in;
+	int					fd_out;
+	int					index;
+	char				*path;
+	struct s_redir		*redirections;
 	struct s_command	*next;
 }	t_command;
 /////////////////////////////////////////////////////
