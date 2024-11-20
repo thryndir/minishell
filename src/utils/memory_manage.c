@@ -76,7 +76,6 @@ void	free_env(t_env *env)
 
 	while (env)
 	{
-		printf("test\n");
 		temp = env->next;
 		gc_free(env->value);
 		env->value = NULL;
