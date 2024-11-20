@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_exec.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/20 11:56:47 by lgalloux          #+#    #+#             */
+/*   Updated: 2024/11/20 11:57:15 by lgalloux         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "executing.h"
 
 int	get_cmd_nbr(t_command *cmd)
 {
-	t_command 	*current;
+	t_command	*current;
 	t_redir		*redir;
 	int			cmd_nbr;
 
@@ -40,7 +52,7 @@ void	here_doc(t_redir *redir)
 	lim = redir->file;
 	fd = read_or_write(WRITE, redir);
 	if (fd == -1)
-		ft_error("here_doc failed to open tmpfile in /tmp: ", 1, exit_code);
+		ft_error("here_doc failed to open tmpfile in /tmp: ", 1, g_exit_code);
 	redir->file = "/tmp/temp";
 	redir->type = REDIR_IN;
 	while (1)

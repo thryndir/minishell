@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:13:05 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/19 20:38:20 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:02:20 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	lst_size(t_env *env)
 
 void	free_redir(t_redir *redir)
 {
-	t_redir *temp;
-	t_redir *current;
+	t_redir	*temp;
+	t_redir	*current;
 
 	current = redir;
 	while (current)
@@ -41,7 +41,8 @@ void	free_redir(t_redir *redir)
 }
 
 /**
- * @brief this function free every node of cmd except if cmd isn't `NULL` and free exec
+ * @brief this function free every node of cmd except if cmd isn't `NULL` and
+ * free exec
  * 
  * @param exec a pointer to the exec struct
  * @param to_keep a pointer of the node cmd you don't want to free

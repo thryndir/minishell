@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executing.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
+/*   Updated: 2024/11/20 11:32:29 by lgalloux         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef EXECUTING_H
 # define EXECUTING_H
@@ -24,7 +35,7 @@
 # define MIN_HASH_VALUE 2
 # define MAX_HASH_VALUE 9
 
-extern	int exit_code;
+extern int	g_exit_code;
 
 /*# define malloc(size) \
 ({ \
@@ -154,7 +165,7 @@ typedef struct s_builtin
 	int			(*builtin_func)(t_command *, t_exec *);
 }	t_builtin;
 
-void 		print_open_fds(const char *where);
+void		print_open_fds(const char *where);
 void		free_cmd_exec(t_exec *exec, t_command *to_keep);
 void		parent(t_command *cmd, t_exec *exec, int depth);
 int			verif_and_close(int *fd);
@@ -170,7 +181,7 @@ void		fork_init(t_exec *exec);
 int			struct_init(t_exec *exec, t_command *cmd, char **envp);
 void		child(t_exec *exec, t_command *cmd, int next_out);
 void		execve_fail(char *path, int status);
-char 		**lst_to_array(t_env *env);
+char		**lst_to_array(t_env *env);
 void		here_doc(t_redir *redir);
 int			read_or_write(int read_or_write, t_redir *redir);
 void		hold_on(t_list *lst, int *status);

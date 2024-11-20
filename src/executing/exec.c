@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:33 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/19 20:44:34 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:53:45 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	last_fd_type(int type, t_command *cmd, t_redir *redir, int pipe_fds[2])
 {
-	t_redir *current;
+	t_redir	*current;
 	int		last_fd;
 
 	current = redir;
@@ -41,7 +41,7 @@ int	last_fd_type(int type, t_command *cmd, t_redir *redir, int pipe_fds[2])
 void	pipe_redir(t_command *cmd, t_exec exec, int pipe_fds[2])
 {
 	if (exec.cmd_nbr == 1)
-		return;
+		return ;
 	if (cmd->index == 0)
 	{
 		cmd->fd_out = pipe_fds[1];
@@ -75,7 +75,7 @@ void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2], int next_out)
 			verif_and_close(&pipe_fds[0]);
 			verif_and_close(&pipe_fds[1]);
 			verif_and_close(&next_out);
-			ft_error("minishell", 1, exit_code);
+			ft_error("minishell", 1, g_exit_code);
 		}
 		current = current->next;
 	}
@@ -125,7 +125,7 @@ int	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 
 void	child(t_exec *exec, t_command *cmd, int next_out)
 {
-	char 		**env;
+	char		**env;
 	t_builtin	*htable;
 
 	env = lst_to_array(exec->env);
@@ -145,10 +145,10 @@ void	child(t_exec *exec, t_command *cmd, int next_out)
 	free_env(exec->env);
 	if (htable)
 	{
-		exit_code = htable->builtin_func(cmd, exec);
-		return;
+		g_exit_code = htable->builtin_func(cmd, exec);
+		return ;
 	}
 	else
-		exit_code = execve(cmd->path, cmd->argv, env);
-	execve_fail(cmd->path, exit_code);
+		g_exit_code = execve(cmd->path, cmd->argv, env);
+	execve_fail(cmd->path, g_exit_code);
 }
