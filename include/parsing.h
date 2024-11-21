@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/20 12:47:01 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:19:11 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int					process_redirections(t_command *cmd, char **input,
 char				*mini_strdup(const char *src);
 bool				is_redirect(const char *str);
 enum e_redir_type	get_redir_type(const char *str);
-t_command			*parse_command(char **input, int index);
+t_command			*parse_command(char **input, int *index);
 t_command			*parse_input(char **input);
 
 #endif
