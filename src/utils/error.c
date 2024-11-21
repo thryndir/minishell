@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:59:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/21 16:50:30 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:18:47 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_error(char *message, int which, int status)
 {
-	if (which == 0)
+	if (which == 0 && message)
 		dprintf(2, "%s\n", message);
-	if (which == 1 && errno)
+	if (which == 1 && errno && message)
 		dprintf(2, "%s: %s\n", message, strerror(errno));
 	gc_free_all();
 	exit(status);
