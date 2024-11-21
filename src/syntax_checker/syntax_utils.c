@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:43:19 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/17 21:52:13 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/21 18:43:32 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,19 @@ bool	check_after_redir(const char **input, char redir)
 	while (**input && ft_isspace(**input))
 		(*input)++;
 	return (is_symbol_or_nullchar(**input));
+}
+
+bool	syntax_checker(const char *input)
+{
+	int	i;
+
+	i = syntax_errors(input);
+	if (i == 1)
+	{
+		printf("minishell: parse error");
+		return (false);
+	}
+	if (i == 2)
+		return (false);
+	return (true);
 }
