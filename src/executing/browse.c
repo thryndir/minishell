@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:53:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 11:56:20 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:48:58 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,5 @@ void	parent(t_command *cmd, t_exec *exec, int depth)
 		verif_and_close(&pipe_fds[1]);
 	// print_open_fds("parent after child");
 	if (!(cmd->index))
-	{
-		hold_on(exec->pid, &(exec->status));
-		return_code(exec);
-	}
+		hold_on(exec->pid);
 }

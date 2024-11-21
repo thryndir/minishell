@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 11:32:29 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:44:52 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ typedef struct exec
 	t_command	*cmd;
 	t_env		*env;
 	t_list		*pid;
-	int			status;
 }	t_exec;
 
 typedef struct s_builtin
@@ -184,7 +183,7 @@ void		execve_fail(char *path, int status);
 char		**lst_to_array(t_env *env);
 void		here_doc(t_redir *redir);
 int			read_or_write(int read_or_write, t_redir *redir);
-void		hold_on(t_list *lst, int *status);
+void		hold_on(t_list *lst);
 t_builtin	*htable_get(const char *str, size_t len);
 int			echo_builtin(t_command *cmd, t_exec *exec);
 int			cd_builtin(t_command *cmd, t_exec *exec);

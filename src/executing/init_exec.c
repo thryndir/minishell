@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:56:47 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 11:57:15 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:48:32 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	get_cmd_nbr(t_command *cmd)
 
 int	struct_init(t_exec *exec, t_command *cmd, char **envp)
 {
-	exec->status = 0;
 	if (env_init(envp, exec))
 		return (1);
 	exec->cmd_nbr = get_cmd_nbr(cmd);

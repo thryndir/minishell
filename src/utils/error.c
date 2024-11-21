@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:59:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 11:59:57 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:50:30 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,9 @@ void	ft_error(char *message, int which, int status)
 	exit(status);
 }
 
-void	return_code(t_exec *exec)
+void	hold_on(t_list *lst)
 {
-	if (WIFEXITED(exec->status))
-	{
-		gc_free_all();
-		exit(exec->status);
-	}
-}
-
-void	hold_on(t_list *lst, int *status)
-{
-	(void)status;
-	waitpid(lst->data, status, 0);
+	waitpid(lst->data, &g_exit_code, 0);
 	lst = lst->next;
 	while (lst)
 	{
