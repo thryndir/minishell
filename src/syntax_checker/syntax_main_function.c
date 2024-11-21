@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:44:35 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/17 21:52:08 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/21 18:28:41 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,13 @@ bool	unclosed_quotes(const char *input)
  * Main syntax error it combine every syntax function to ensure that
  * minishell only get the right input to work with.
 */
-bool	syntax_errors(const char *input)
+int	syntax_errors(const char *input)
 {
 	const char	*tmp;
 	bool		empty;
 
 	if (!input)
-		return (true);
+		return (1);
 	tmp = input;
 	empty = true;
 	while (*tmp && empty)
@@ -142,8 +142,10 @@ bool	syntax_errors(const char *input)
 			empty = false;
 		tmp++;
 	}
-	if (empty || unclosed_quotes(input) || invalid_operators(input)
+	if (empty)
+		return (2);
+	if (unclosed_quotes(input) || invalid_operators(input)
 		|| misplaced_operators(input) || check_invalid_redirection(input))
-		return (true);
-	return (false);
+		return (1);
+	return (0);
 }
