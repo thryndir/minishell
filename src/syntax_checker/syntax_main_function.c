@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:44:35 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/21 18:28:41 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/26 02:53:27 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 bool	misplaced_operators(const char *input)
 {
 	int	command;
-	int	*simple_q;
-	int	*double_q;
+	int	simple_q;
+	int	double_q;
 
 	simple_q = 0;
 	double_q = 0;
@@ -29,8 +29,8 @@ bool	misplaced_operators(const char *input)
 		return (true);
 	while (*input)
 	{
-		quote_count(*input, simple_q, double_q);
-		if (*input == '|' && !(*(simple_q) % 2) && !(*(double_q) % 2))
+		quote_count(*input, &simple_q, &double_q);
+		if (*input == '|' && !((simple_q) % 2) && !((double_q) % 2))
 		{
 			if (command)
 				return (true);
