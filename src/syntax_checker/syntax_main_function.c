@@ -30,7 +30,7 @@ bool	misplaced_operators(const char *input)
 	while (*input)
 	{
 		quote_count(*input, &simple_q, &double_q);
-		if (*input == '|' && !((simple_q) % 2) && !((double_q) % 2))
+		if (*input == '|' && !(simple_q % 2) && !(double_q % 2))
 		{
 			if (command)
 				return (true);
