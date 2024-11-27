@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/26 23:13:05 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:09:53 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	main(int argc, char **argv, char **env)
 	{
 		input = readline(">> ");
 		if (!input)
-			break ;
-		if (!syntax_checker(input))
-			continue ; 
+			return (0);
 		add_history(input);
+		if (syntax_errors(input))
+			continue ;
 		splitted_input = ft_mini_split(input);
 		exec.cmd = parse_input(splitted_input);
 		struct_init(&exec, exec.cmd, env);

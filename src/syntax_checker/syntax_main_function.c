@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:44:35 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/26 02:53:27 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:18:25 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,7 @@ int	syntax_errors(const char *input)
 	}
 	if (empty)
 		return (2);
-	if (unclosed_quotes(input) || invalid_operators(input)
-		|| misplaced_operators(input) || check_invalid_redirection(input))
+	if (syntax_error_message(input))
 		return (1);
 	return (0);
 }

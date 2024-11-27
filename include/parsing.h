@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/21 18:44:22 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/27 01:18:50 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ bool				ft_isspace(char c);
 void				quote_count(char c, int *simple_q, int *double_q);
 bool				is_symbol_or_nullchar(char c);
 bool				check_after_redir(const char **input, char redir);
-bool				syntax_checker(const char *input);
 bool				misplaced_operators(const char *input);
 bool				check_invalid_redirection(const char *input);
 bool				invalid_operators(const char *input);
 bool				unclosed_quotes(const char *input);
 int					syntax_errors(const char *input);
+int					syntax_error_message(const char *input);
 
 /**
  * Tokenizer
