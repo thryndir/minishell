@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/21 18:52:01 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/26 23:44:45 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,7 @@ char		*ft_strsjoin(int str_nbr, ...);
 int			name_and_value(char *var, t_env *env);
 void		del_env(t_env *env);
 char		*get_value(t_env *env, char *name);
+
+void		set_signal(void);
 
 #endif
