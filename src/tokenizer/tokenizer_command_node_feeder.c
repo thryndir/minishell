@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 23:20:02 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/15 23:11:56 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/29 00:12:13 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,14 @@ int	handle_argv(t_command *cmd, char **input, int start, int count)
 	{
 		if (is_redirect(input[start + i]))
 			i += 2;
-		else if (!copy_arg(cmd, input, &i, &argv_index))
-			return (0);
+		else
+		{
+			cmd->argv[argv_index] = mini_strdup(input[start + i]);
+			if (!cmd->argv[argv_index])
+				return (0);
+			argv_index++;
+			i++;
+		}
 	}
 	cmd->argv[argv_index] = NULL;
 	cmd->argc = argv_index;
