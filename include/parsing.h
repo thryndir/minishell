@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/27 01:18:50 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/29 00:12:35 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,6 @@ t_command			*init_command(void);
 int					add_redir(t_command *cmd, t_redir *new_redir);
 int					add_command(t_command **cmd_list, t_command *new_cmd);
 int					count_command_argv(char **input, int index);
-int					copy_arg(t_command *cmd, char **input,
-						int *start, int *arg_index);
 int					handle_argv(t_command *cmd, char **input,
 						int start, int count);
 t_redir				*create_redir(const char *op, const char *file);
