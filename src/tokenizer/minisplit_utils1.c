@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_utils1.c                                 :+:      :+:    :+:   */
+/*   minisplit_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:54:54 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/10/17 21:51:49 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/28 01:41:44 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	count_quoted_word(const char *str, int *i)
 */
 bool	count_regular_word(const char *str, int *i)
 {
-	while (str[*i] && !is_symbol(str[*i]) && str[*i] != ' ')
+	while (str[*i] && !is_symbol(str[*i]) && !ft_isspace(str[*i]))
 		(*i)++;
 	return (true);
 }
