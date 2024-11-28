@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minisplit_utlis2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:51:49 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/20 12:44:51 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/28 01:41:54 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	count_word(const char *str, int *i)
 {
 	if (is_double_symbol(str, *i))
 	{
-		*i += 2;
+		(*i) += 2;
 		return (1);
 	}
 	if (is_symbol(str[*i]) && !is_quote(str[*i]))
@@ -31,8 +31,10 @@ int	count_word(const char *str, int *i)
 	}
 	if (is_quote(str[*i]))
 		return (count_quoted_word(str, i));
-	if (str[*i] && !is_symbol(str[*i]) && str[*i] != ' ')
+	if (str[*i] && !is_symbol(str[*i]) && !ft_isspace(str[*i]))
+	{
 		return (count_regular_word(str, i));
+	}
 	return (0);
 }
 
@@ -48,7 +50,7 @@ int	mini_strnbr(const char *str)
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] && str[i] == ' ')
+		while (str[i] && ft_isspace(str[i]))
 			i++;
 		result += count_word(str, &i);
 	}
@@ -77,7 +79,7 @@ int	mini_charnbr(const char *str)
 			i++;
 		return (i + 1);
 	}
-	while (str[i] && !is_symbol(str[i]) && str[i] != ' ')
+	while (str[i] && !is_symbol(str[i]) && !ft_isspace(str[i]))
 		i++;
 	return (i);
 }

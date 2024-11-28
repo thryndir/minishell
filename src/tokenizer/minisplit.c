@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_utils3.c                                 :+:      :+:    :+:   */
+/*   minisplit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:54:06 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/05 00:54:07 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/28 01:42:05 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "gcmalloc.h"
 
 /**
  * This function extract a word between quotes in the input string.
@@ -86,7 +85,7 @@ char	**mini_str_to_array(char **strs, const char *str)
 	j = 0;
 	while (str[i])
 	{
-		while (str[i] && str[i] == ' ')
+		while (str[i] && ft_isspace(str[i]))
 			i++;
 		if (!str[i])
 			break ;
