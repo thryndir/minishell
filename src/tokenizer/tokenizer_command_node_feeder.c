@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 23:20:02 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/29 00:12:13 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/29 00:18:56 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,6 @@ int	count_command_argv(char **input, int index)
 			count++;
 	}
 	return (count);
-}
-
-/**
- * This function copy the command arguments in the
- * argv field of the command node
- */
-int	copy_arg(t_command *cmd, char **input, int *start, int *arg_index)
-{
-	cmd->argv[*arg_index] = mini_strdup(input[*start]);
-	if (!cmd->argv[*arg_index])
-		return (0);
-	(*arg_index)++;
-	(*start)++;
-	return (1);
 }
 
 /**
