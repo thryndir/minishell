@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 02:09:07 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/16 00:06:14 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/29 22:38:36 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,13 @@
  */
 enum e_redir_type	get_redir_type(const char *str)
 {
+	if (str[0] == '<' && str[1] == '<')
+		return (REDIR_HEREDOC);
+	if (str[0] == '>' && str[1] == '>')
+		return (REDIR_APPEND);
 	if (str[0] == '<')
-	{
-		if (str[1] == '<')
-			return (REDIR_HEREDOC);
 		return (REDIR_IN);
-	}
-	if (str[0] == '>')
-	{
-		if (str[1] == '>')
-			return (REDIR_APPEND);
-		return (REDIR_OUT);
-	}
-	return (REDIR_NULL);
+	return (REDIR_OUT);
 }
 
 /**

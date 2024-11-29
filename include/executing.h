@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/26 23:44:45 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/29 23:35:54 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include "libft.h"
+# include "struct.h"
 # include "parsing.h"
 # include "gcmalloc.h"
 # include <readline/readline.h>
@@ -118,51 +119,6 @@ do \
 	 if (dup2(fd1, fd2) == -1) \
 	 	perror("dup2"); \
 } while (0)*/
-
-typedef enum e_read_or_write
-{
-	READ,
-	WRITE
-}	t_read_or_write;
-
-typedef enum e_redir_or_cmd
-{
-	REDIR,
-	CMD,
-}	t_redir_or_cmd;
-
-typedef enum e_error
-{
-	WRITE_MSG = 1,
-	FREE_ENV,
-	FREE_P_PATH,
-	CLOSE_PIPE,
-	FREE_PIPE,
-	FREE_CMD,
-	FREE_PATH,
-	FREE_LST,
-}	t_error;
-
-typedef struct s_env
-{
-	struct s_env	*next;
-	char			*name;
-	char			*value;
-}	t_env;
-
-typedef struct exec
-{
-	int			cmd_nbr;
-	t_command	*cmd;
-	t_env		*env;
-	t_list		*pid;
-}	t_exec;
-
-typedef struct s_builtin
-{
-	const char	*key;
-	int			(*builtin_func)(t_command *, t_exec *);
-}	t_builtin;
 
 void		print_open_fds(const char *where);
 void		free_cmd_exec(t_exec *exec, t_command *to_keep);
