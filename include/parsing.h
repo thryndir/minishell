@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/29 00:12:35 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/29 23:35:52 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,7 @@
 # include <stdbool.h>
 # include <unistd.h>
 # include "libft.h"
-
-///////////////////////TEMPORAIRE/////////////////////
-// The differents types of redirections possible
-typedef enum e_redir_type
-{
-	REDIR_IN,//		<
-	REDIR_OUT,//	>
-	REDIR_APPEND,//	>>
-	REDIR_HEREDOC,//<< 
-	REDIR_NULL, // needed to compile with -Werror
-}	t_redir_type;
-
-typedef struct s_redir
-{
-	enum e_redir_type	type;//	 the type of the redirection
-	char				*file;// the file of the redirection
-	int					fd;//	 the fd of the file
-	struct s_redir		*next;// a pointer ot the next node
-}	t_redir;
-
-typedef struct s_command
-{
-	char				**argv;
-	int					argc;
-	int					fd_in;
-	int					fd_out;
-	int					index;
-	char				*path;
-	struct s_redir		*redirections;
-	struct s_command	*next;
-}	t_command;
-/////////////////////////////////////////////////////
-
-/**
- * PARSING FUNCTIONS
-*/
+# include "struct.h"
 
 /**
  * Syntax
@@ -106,5 +71,20 @@ bool				is_redirect(const char *str);
 enum e_redir_type	get_redir_type(const char *str);
 t_command			*parse_command(char **input, int *index);
 t_command			*parse_input(char **input);
+
+/**
+ * Env swapper
+ */
+char				*env_substr(char const *str, unsigned int start,
+						size_t sublen);
+int					get_var_name_len(const char *str);
+void				copy_var_value(char *result, int *j, char *var_value);
+char				*get_var_value(char *str, int *i, t_env *env);
+void				handle_var_expansion(char *str, t_expansion *exp);
+int					get_var_len(char *str, int *i, t_env *env);
+int					get_expanded_len(char *str, t_env *env);
+char				*swap_vars(char *str, t_env *env);
+void				swap_arg(char **arg, t_env *env);
+void				loop_env_swapper(t_command *cmd, t_env *env);
 
 #endif

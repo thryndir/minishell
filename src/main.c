@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/27 01:09:53 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/29 23:17:39 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char **argv, char **env)
 		splitted_input = ft_mini_split(input);
 		exec.cmd = parse_input(splitted_input);
 		struct_init(&exec, exec.cmd, env);
+		loop_env_swapper(exec.cmd, exec.env);
 		parent(exec.cmd, &exec, 0);
 		free_cmd_exec(&exec, NULL);
 		gc_tab_free(splitted_input);
