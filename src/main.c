@@ -6,13 +6,20 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/29 23:17:39 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/30 01:18:52 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executing.h"
 
 int	g_exit_code = 0;
+
+void	main_free_function(t_exec *exec, char **tab, char *input)
+{
+	free_cmd_exec(exec, NULL);
+	gc_tab_free(tab);
+	gc_free(input);
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -23,6 +30,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	set_signal();
+	env_init(env, &exec);
 	while (1)
 	{
 		input = readline(">> ");
@@ -33,12 +41,10 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		splitted_input = ft_mini_split(input);
 		exec.cmd = parse_input(splitted_input);
-		struct_init(&exec, exec.cmd, env);
+		struct_init(&exec, exec.cmd);
 		loop_env_swapper(exec.cmd, exec.env);
 		parent(exec.cmd, &exec, 0);
-		free_cmd_exec(&exec, NULL);
-		gc_tab_free(splitted_input);
-		gc_free(input);
+		main_free_function(&exec, splitted_input, input);
 	}
 	free_env(exec.env);
 }
