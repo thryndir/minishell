@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:49:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 11:49:57 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/30 01:32:02 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ int	echo_builtin(t_command *cmd, t_exec *exec)
 			printf("%s", cmd->argv[i++]);
 	}
 	if (newline)
-		write(1, "\n", 1);
+		printf("\n");
 	return (0);
 }

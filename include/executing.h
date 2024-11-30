@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/29 23:35:54 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/11/30 01:07:05 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void		close_all(t_command *cmd);
 void		double_array_free(char **strs);
 int			runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out);
 void		fork_init(t_exec *exec);
-int			struct_init(t_exec *exec, t_command *cmd, char **envp);
+int			struct_init(t_exec *exec, t_command *cmd);
 void		child(t_exec *exec, t_command *cmd, int next_out);
 void		execve_fail(char *path, int status);
 char		**lst_to_array(t_env *env);
