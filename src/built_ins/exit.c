@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:51:27 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 11:51:27 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/02 23:32:07 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	is_only_digit(char *str)
 int	exit_builtin(t_command *cmd, t_exec *exec)
 {
 	(void)exec;
-	if (cmd->argv[2])
+	if (cmd->argv[2] && is_only_digit(cmd->argv[1]))
 	{
-		dprintf(2, "minishell: exit: too many arguments");
+		dprintf(2, "minishell: exit: too many arguments\n");
 		return (1);
 	}
 	else if (!cmd->argv[1])

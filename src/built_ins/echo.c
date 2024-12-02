@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:49:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/30 01:32:02 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/03 00:06:19 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ int	echo_builtin(t_command *cmd, t_exec *exec)
 	i = 1;
 	(void)exec;
 	newline = 1;
-	if (is_only_c(cmd->argv[1] + 1, 'n'))
+	if (is_only_c(cmd->argv[i] + 1, 'n'))
 	{
 		newline = 0;
 		i = 2;
+		while (is_only_c(cmd->argv[i] + 1, 'n'))
+			i++;
 	}
 	while (cmd->argv[i])
 	{
