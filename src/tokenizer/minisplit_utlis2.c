@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:51:49 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/28 01:41:54 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/04 00:07:19 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,44 @@ void	mini_malloc_fail(char **strs, int j)
 		i++;
 	}
 	gc_tab_free(strs);
+}
+
+/*
+void	remove_quotes_from_argv(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		if (is_quote(argv[i][0])
+			&& is_quote(argv[i][ft_strlen(argv[i]) - 1]))
+		{
+			argv[i]++;
+			argv[i][ft_strlen(argv[i]) - 1] = '\0';
+		}
+		i++;
+	}
+}
+*/
+
+void	remove_quotes_from_argv(char **argv)
+{
+	int		i;
+	char	*new_str;
+	int		len;
+
+	i = 0;
+	while (argv[i])
+	{
+		len = ft_strlen(argv[i]);
+		if (len > 1 && is_quote(argv[i][0]) && is_quote(argv[i][len - 1]))
+		{
+			new_str = gc_malloc(len - 1);
+			ft_strlcpy(new_str, argv[i] + 1, len - 1);
+			gc_free(argv[i]);
+			argv[i] = new_str;
+		}
+		i++;
+	}
 }
