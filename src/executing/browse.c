@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   browse.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:53:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/21 18:46:09 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:08:51 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,25 @@ void	parent(t_command *cmd, t_exec *exec, int depth)
 
 	if (cmd->next)
 		parent(cmd->next, exec, depth + 1);
-	// dprintf(2, "\nparent nbr : %d\n", depth);
+	dprintf(2, "\nparent nbr : %d\n", depth);
 	next_out = pipe_fds[1];
 	if (cmd->index == exec->cmd_nbr - 1)
 		next_out = -1;
+	pipe_fds[0] = 0;
 	if (exec->cmd_nbr > 1)
 		if (pipe(pipe_fds) == -1)
 			ft_error("problem with a pipe", 1, g_exit_code);
 	if (cmd->next && !has_redir_type(cmd->redirections, REDIR_OUT)
 		&& !has_redir_type(cmd->next->redirections, REDIR_IN))
 		dup2(next_out, pipe_fds[1]);
-	// print_open_fds("parent before child");
+	print_open_fds("parent before child");
 	runner(cmd, exec, pipe_fds, next_out);
-	// sleep(1);
+	sleep(1);
 	verif_and_close(&next_out);
 	verif_and_close(&pipe_fds[0]);
 	if (cmd->index == 0)
 		verif_and_close(&pipe_fds[1]);
-	// print_open_fds("parent after child");
+	print_open_fds("parent after child");
 	if (!(cmd->index) && exec->pid)
 		hold_on(exec->pid);
 }
