@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/30 01:18:52 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/03 23:27:56 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char **argv, char **env)
 		if (syntax_errors(input))
 			continue ;
 		splitted_input = ft_mini_split(input);
+		remove_quotes_from_argv(splitted_input);
 		exec.cmd = parse_input(splitted_input);
 		struct_init(&exec, exec.cmd);
 		loop_env_swapper(exec.cmd, exec.env);

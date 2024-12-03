@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/29 23:35:52 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/03 23:28:04 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int					count_word(const char *str, int *i);
 int					mini_strnbr(const char *str);
 int					mini_charnbr(const char *str);
 void				mini_malloc_fail(char **strs, int j);
+void				remove_quotes_from_argv(char **argv);
 char				*extract_quoted_word(const char *str, int *i, int len);
 char				*extract_regular_word(const char *str, int *i, int len);
 char				*extract_word(const char *str, int *i, int *status);
