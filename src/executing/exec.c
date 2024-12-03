@@ -3,39 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:33 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 11:53:45 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:52:01 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executing.h"	
 
-int	last_fd_type(int type, t_command *cmd, t_redir *redir, int pipe_fds[2])
+char	*last_fd_type(int type, t_command *cmd, t_redir *redir, int pipe_fds[2])
 {
 	t_redir	*current;
-	int		last_fd;
+	t_redir	*last_redir;
 
 	current = redir;
-	last_fd = -1;
+	last_redir = NULL;
 	while (current)
 	{
 		if ((int)(current->type) == type)
-			last_fd = current->fd;
+			last_redir = current;
 		current = current->next;
 	}
-	if (type == REDIR_IN && last_fd != -1)
+	if (type == REDIR_IN && last_redir)
 	{
-		cmd->fd_in = last_fd;
+		cmd->fd_in = last_redir->fd;
 		verif_and_close(&pipe_fds[0]);
 	}
-	else if ((type == REDIR_OUT || type == REDIR_APPEND) && last_fd != -1)
+	else if ((type == REDIR_OUT || type == REDIR_APPEND) && last_redir)
 	{
-		cmd->fd_out = last_fd;
+		cmd->fd_out = last_redir->fd;
 		verif_and_close(&pipe_fds[1]);
 	}
-	return (last_fd);
+	if (!last_redir)
+		return (NULL);
+	return (last_redir->file);
 }
 
 void	pipe_redir(t_command *cmd, t_exec exec, int pipe_fds[2])
@@ -59,6 +61,40 @@ void	pipe_redir(t_command *cmd, t_exec exec, int pipe_fds[2])
 	}
 }
 
+void		close_prev_open(t_redir *to_comp, t_redir *redir)
+{
+	t_redir *current = redir;
+	
+	while (current)
+	{
+		if (!ft_strcmp(current->file, to_comp->file) && current->fd != -1)
+			verif_and_close(&current->fd);
+		current = current->next;
+	}
+}
+
+void	keep_fd(t_redir *redir, t_command *cmd, int pipe_fds[2], int next_out)
+{
+	char	*last_file;
+
+	last_file = NULL;
+	close_prev_open(redir, cmd->redirections);
+	last_file = last_fd_type(redir->type, cmd, cmd->redirections, pipe_fds);
+	if (redir->type == REDIR_IN)
+		redir->fd = read_or_write(READ, redir);
+	else if (redir->type == REDIR_OUT || redir->type == REDIR_APPEND)
+		redir->fd = read_or_write(WRITE, redir);
+	if (redir->fd == -1)
+		{
+			verif_and_close(&pipe_fds[0]);
+			verif_and_close(&pipe_fds[1]);
+			verif_and_close(&next_out);
+			ft_error("minishell", 1, g_exit_code);
+		}
+	if (last_file && ft_strcmp(redir->file, last_file))
+		verif_and_close(&redir->fd);
+}
+
 void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2], int next_out)
 {
 	t_redir	*current;
@@ -66,17 +102,8 @@ void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2], int next_out)
 	current = cmd->redirections;
 	while (current)
 	{
-		if (current->type == REDIR_IN)
-			current->fd = read_or_write(READ, current);
-		else if (current->type == REDIR_OUT || current->type == REDIR_APPEND)
-			current->fd = read_or_write(WRITE, current);
-		if (current->fd == -1)
-		{
-			verif_and_close(&pipe_fds[0]);
-			verif_and_close(&pipe_fds[1]);
-			verif_and_close(&next_out);
-			ft_error("minishell", 1, g_exit_code);
-		}
+		keep_fd(current, cmd, pipe_fds, next_out);
+		print_open_fds("in redirect");
 		current = current->next;
 	}
 	pipe_redir(cmd, *exec, pipe_fds);
@@ -85,7 +112,25 @@ void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2], int next_out)
 	last_fd_type(REDIR_APPEND, cmd, cmd->redirections, pipe_fds);
 }
 
-int	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
+void	restore_std(int save_or_restore)
+{
+	static int	std[2];
+
+	if (save_or_restore == SAVE)
+	{
+		std[0] = dup(STDIN_FILENO);
+		std[1] = dup(STDOUT_FILENO);
+	}
+	else if (save_or_restore == RESTORE)
+	{
+		dup2(STDIN_FILENO, std[0]);
+		dup2(STDOUT_FILENO, std[1]);
+		verif_and_close(&std[0]);
+		verif_and_close(&std[1]);
+	}
+}
+
+void	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 {
 	t_builtin	*htable;
 	char		**path;
@@ -94,34 +139,44 @@ int	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 	if (htable && exec->cmd_nbr == 1)
 	{
 		redirect(cmd, exec, pipe_fds, next_out);
+		restore_std(SAVE);
+		if (cmd->fd_in != -1)
+			dup2(cmd->fd_in, STDIN_FILENO);
+		if (cmd->fd_out != -1)
+			dup2(cmd->fd_out, STDOUT_FILENO);
+		verif_and_close(&cmd->fd_in);
+		verif_and_close(&cmd->fd_out);
 		htable->builtin_func(cmd, exec);
-		return (0);
+		restore_std(RESTORE);
+		print_open_fds("builtins process");
 	}
-	path = ft_split(get_value(exec->env, "PATH"), ':');
-	cmd->path = this_is_the_path(path, cmd->argv[0]);
-	gc_tab_free(path);
-	fork_init(exec);
-	if (ft_lstlast(exec->pid)->data == 0)
+	else
 	{
-		redirect(cmd, exec, pipe_fds, next_out);
-		// dprintf(2, "enfant cmd nbr : %d\n", cmd->index);
-		child(exec, cmd, next_out);
+		path = ft_split(get_value(exec->env, "PATH"), ':');
+		cmd->path = this_is_the_path(path, cmd->argv[0]);
+		gc_tab_free(path);
+		fork_init(exec);
+		if (ft_lstlast(exec->pid)->data == 0)
+		{
+			redirect(cmd, exec, pipe_fds, next_out);
+			dprintf(2, "enfant cmd nbr : %d\n", cmd->index);
+			child(exec, cmd, next_out);
+		}
 	}
-	return (0);
 }
 
-// void print_open_fds(const char *where)
-// {
-// 	int	fd;
+void print_open_fds(const char *where)
+{
+	int	fd;
 
-// 	fd = 0;
-// 	while (fd < 10)
-// 	{
-// 		if (fcntl(fd, F_GETFD) != -1) 
-// 			dprintf(2, "%s - FD %d is open (PID: %d)\n", where, fd, getpid());
-// 		fd++;
-// 	}
-// }
+	fd = 0;
+	while (fd < 10)
+	{
+		if (fcntl(fd, F_GETFD) != -1) 
+			dprintf(2, "%s - FD %d is open (PID: %d)\n", where, fd, getpid());
+		fd++;
+	}
+}
 
 void	child(t_exec *exec, t_command *cmd, int next_out)
 {
@@ -129,20 +184,16 @@ void	child(t_exec *exec, t_command *cmd, int next_out)
 	t_builtin	*htable;
 
 	env = lst_to_array(exec->env);
-	// dprintf(2, "fd_in = %d, fd_out = %d, next_out = %d\n", cmd->fd_in, cmd->fd_out, next_out);
+	dprintf(2, "fd_in = %d, fd_out = %d, next_out = %d\n", cmd->fd_in, cmd->fd_out, next_out);
 	if (cmd->fd_in != -1)
 		dup2(cmd->fd_in, STDIN_FILENO);
 	if (cmd->fd_out != -1)
 		dup2(cmd->fd_out, STDOUT_FILENO);
-	if (cmd->redirections)
-		close_all(cmd);
 	verif_and_close(&cmd->fd_in);
 	verif_and_close(&cmd->fd_out);
 	verif_and_close(&next_out);
 	htable = htable_get(cmd->argv[0], ft_strlen(cmd->argv[0]));
-	// print_open_fds("child process");
-	free_cmd_exec(exec, cmd);
-	free_env(exec->env);
+	print_open_fds("child process");
 	if (htable)
 	{
 		g_exit_code = htable->builtin_func(cmd, exec);

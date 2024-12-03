@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:59:30 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 11:59:30 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:15:47 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	read_or_write(int read_or_write, t_redir *redir)
 		fd = open(redir->file, O_RDONLY);
 	else
 		fd = open(redir->file, O_WRONLY | O_CREAT | flag, 0644);
-	// dprintf(2, "le fd de la redirection %s est %d\n", redir->file, fd);
+	dprintf(2, "le fd de la redirection %s est %d\n", redir->file, fd);
 	return (fd);
 }
 

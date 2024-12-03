@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/30 01:07:05 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:19:22 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ do \
 	close(fd); \
 } while (0)*/
 
-/*#define pipe(pipefd) \
+# define pipe(pipefd) \
 ({ \
 	int ret = pipe(pipefd); \
 	if (ret == -1) \
@@ -118,7 +118,7 @@ do \
 			fd1, fd2, __FILE__, __LINE__); \
 	 if (dup2(fd1, fd2) == -1) \
 	 	perror("dup2"); \
-} while (0)*/
+} while (0)
 
 void		print_open_fds(const char *where);
 void		free_cmd_exec(t_exec *exec, t_command *to_keep);
@@ -130,7 +130,7 @@ int			lst_size(t_env *env);
 char		*this_is_the_path(char **path, char *cmd);
 void		close_all(t_command *cmd);
 void		double_array_free(char **strs);
-int			runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out);
+void		runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out);
 void		fork_init(t_exec *exec);
 int			struct_init(t_exec *exec, t_command *cmd);
 void		child(t_exec *exec, t_command *cmd, int next_out);
