@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/04 16:19:22 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:19:59 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ do \
 	close(fd); \
 } while (0)*/
 
-# define pipe(pipefd) \
+/*# define pipe(pipefd) \
 ({ \
 	int ret = pipe(pipefd); \
 	if (ret == -1) \
@@ -111,6 +111,16 @@ do \
 	ret; \
 })
 
+# define dup(fd) \
+({ \
+	int ret = dup(fd); \
+	fprintf(stderr, "dup(%d) = %d at %s:%d\n", \
+			fd, ret, __FILE__, __LINE__); \
+	 if (ret == -1) \
+	 	perror("dup"); \
+	ret; \
+})
+
 # define dup2(fd1, fd2) \
 do \
 { \
@@ -118,7 +128,7 @@ do \
 			fd1, fd2, __FILE__, __LINE__); \
 	 if (dup2(fd1, fd2) == -1) \
 	 	perror("dup2"); \
-} while (0)
+} while (0)*/
 
 void		print_open_fds(const char *where);
 void		free_cmd_exec(t_exec *exec, t_command *to_keep);
@@ -128,7 +138,8 @@ void		ft_error(char *message, int which, int status);
 void		free_lst(t_list *lst);
 int			lst_size(t_env *env);
 char		*this_is_the_path(char **path, char *cmd);
-void		close_all(t_command *cmd);
+void		redirect(t_command *cmd, t_exec *exec, int pipe_fds[2], int next_out);
+char		*last_fd_type(int type, t_command *cmd, t_redir *redir, int pipe_fds[2]);
 void		double_array_free(char **strs);
 void		runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out);
 void		fork_init(t_exec *exec);
@@ -160,7 +171,10 @@ char		*ft_strsjoin(int str_nbr, ...);
 int			name_and_value(char *var, t_env *env);
 void		del_env(t_env *env);
 char		*get_value(t_env *env, char *name);
-
+void		redirect_builtin(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out);
+void		close_prev_open(t_redir *to_comp, t_redir *redir);
+void		keep_fd(t_redir *redir, t_command *cmd, int pipe_fds[2], int next_out);
+void		restore_std(int save_or_restore);
 void		set_signal(void);
 
 #endif
