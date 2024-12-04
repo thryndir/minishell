@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/04 16:12:15 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:37:33 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	main(int argc, char **argv, char **env)
 		struct_init(&exec, exec.cmd);
 		loop_env_swapper(exec.cmd, exec.env);
 		print_cmd(exec.cmd);
-		struct_init(&exec, exec.cmd, env);
 		parent(exec.cmd, &exec, 0);
 		main_free_function(&exec, splitted_input, input);
 	}
