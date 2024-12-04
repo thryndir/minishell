@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/04 16:19:59 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/04 23:51:34 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,5 +176,6 @@ void		close_prev_open(t_redir *to_comp, t_redir *redir);
 void		keep_fd(t_redir *redir, t_command *cmd, int pipe_fds[2], int next_out);
 void		restore_std(int save_or_restore);
 void		set_signal(void);
+void		error_message(char *message, int exit_code);
 
 #endif
