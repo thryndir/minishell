@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:49:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/04 16:20:02 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/05 00:22:18 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ int	echo_builtin(t_command *cmd, t_exec *exec)
 	bool	newline;
 
 	i = 1;
-	write(1, "tatoo\n", 6);
 	(void)exec;
 	newline = 1;
-	if (is_only_c(cmd->argv[i] + 1, 'n'))
+	if (cmd->argv[i] && is_only_c(cmd->argv[i] + 1, 'n'))
 	{
 		newline = 0;
 		i = 2;
