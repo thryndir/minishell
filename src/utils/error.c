@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:59:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/21 17:18:47 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/04 23:49:58 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executing.h"
+
+void	error_message(char *message, int exit_code)
+{
+	dprintf(2, "%s\n", message);
+	g_exit_code = exit_code;
+}
 
 void	ft_error(char *message, int which, int status)
 {

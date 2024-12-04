@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:51:49 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/04 00:07:19 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/04 23:34:42 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,31 +57,52 @@ int	mini_strnbr(const char *str)
 	return (result);
 }
 
+
+static int	count_quoted(const char *str, int *i, char quote)
+{
+	int	len;
+
+	len = 0;
+	(*i)++;
+	while (str[*i] && str[*i] != quote)
+	{
+		len++;
+		(*i)++;
+	}
+	(*i)++;
+	return (len);
+}
+
 /**
  * This function give back the number of char before specific
  * requirements (quote search).
 */
 int	mini_charnbr(const char *str)
 {
+	int		len;
 	int		i;
 	char	quote;
 
+	len = 0;
 	i = 0;
-	if (is_double_symbol(str, 0))
-		return (2);
-	if (is_symbol(str[0]) && !is_quote(str[0]))
-		return (1);
-	if (is_quote(str[0]))
+	while (str[i])
 	{
-		quote = str[0];
-		i++;
-		while (str[i] && str[i] != quote)
+		if (is_quote(str[i]))
+		{
+			quote = str[i];
+			len += count_quoted(str, &i, quote);
+			if (str[i] && is_quote(str[i]))
+				continue ;
+		}
+		else if (!is_symbol(str[i]) && !ft_isspace(str[i]))
+		{
+			len++;
 			i++;
-		return (i + 1);
+		}
+		else
+			break ;
 	}
-	while (str[i] && !is_symbol(str[i]) && !ft_isspace(str[i]))
-		i++;
-	return (i);
+	return (len);
 }
 
 /**
@@ -98,44 +119,4 @@ void	mini_malloc_fail(char **strs, int j)
 		i++;
 	}
 	gc_tab_free(strs);
-}
-
-/*
-void	remove_quotes_from_argv(char **argv)
-{
-	int	i;
-
-	i = 0;
-	while (argv[i])
-	{
-		if (is_quote(argv[i][0])
-			&& is_quote(argv[i][ft_strlen(argv[i]) - 1]))
-		{
-			argv[i]++;
-			argv[i][ft_strlen(argv[i]) - 1] = '\0';
-		}
-		i++;
-	}
-}
-*/
-
-void	remove_quotes_from_argv(char **argv)
-{
-	int		i;
-	char	*new_str;
-	int		len;
-
-	i = 0;
-	while (argv[i])
-	{
-		len = ft_strlen(argv[i]);
-		if (len > 1 && is_quote(argv[i][0]) && is_quote(argv[i][len - 1]))
-		{
-			new_str = gc_malloc(len - 1);
-			ft_strlcpy(new_str, argv[i] + 1, len - 1);
-			gc_free(argv[i]);
-			argv[i] = new_str;
-		}
-		i++;
-	}
 }

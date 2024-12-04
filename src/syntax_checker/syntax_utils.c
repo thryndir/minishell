@@ -6,11 +6,12 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:43:19 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/27 01:19:13 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/04 23:52:03 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "executing.h"
 
 /**
  * This function check the input character to see whether it's a
@@ -65,22 +66,22 @@ int	syntax_error_message(const char *input)
 {
 	if (check_invalid_redirection(input))
 	{
-		printf("minishell: syntax error invalid redirections\n");
+		error_message("minishell: syntax error invalid redirections", 1);
 		return (1);
 	}
 	if (misplaced_operators(input))
 	{
-		printf("minishell: syntax error misplaced operators\n");
+		error_message("minishell: syntax error misplaced operators", 1);
 		return (1);
 	}
 	if (unclosed_quotes(input))
 	{
-		printf("minishell: syntax error unclosed quotes\n");
+		error_message("minishell: syntax error unclosed quotes", 1);
 		return (1);
 	}
 	if (invalid_operators(input))
 	{
-		printf("minishell: syntax error invalid operators\n");
+		error_message("minishell: syntax error invalid operators", 1);
 		return (1);
 	}
 	return (0);
