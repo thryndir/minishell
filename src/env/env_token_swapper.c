@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:58:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/05 01:28:21 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/05 23:46:36 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	swap_arg(char **arg, t_env *env)
 			*arg = expanded;
 		}
 	}
-	else if (*arg && ft_strchr(*arg, '$'))
+	else if (*arg && ft_strchr(*arg, '$')
+		&& (!ft_strncmp(*arg, "'$", 2) || !ft_strncmp(*arg, "\"$", 2)))
 	{
 		expanded = swap_vars(*arg, env);
 		if (expanded)
@@ -104,16 +105,16 @@ void	swap_arg(char **arg, t_env *env)
 	}
 }
 
-void	loop_env_swapper(t_command *cmd, t_env *env)
+void	loop_env_swapper(char **splitted, t_env *env)
 {
 	int	i;
 
 	i = 0;
-	if (!cmd || !cmd->argv)
+	if (!splitted)
 		return ;
-	while (i < cmd->argc)
+	while (splitted[i])
 	{
-		swap_arg(&cmd->argv[i], env);
+		swap_arg(&splitted[i], env);
 		i++;
 	}
 }
