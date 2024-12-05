@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/03 23:28:04 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/05 23:40:56 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ int					get_var_len(char *str, int *i, t_env *env);
 int					get_expanded_len(char *str, t_env *env);
 char				*swap_vars(char *str, t_env *env);
 void				swap_arg(char **arg, t_env *env);
-void				loop_env_swapper(t_command *cmd, t_env *env);
+void				loop_env_swapper(char **splitted, t_env *env);
 
 #endif
