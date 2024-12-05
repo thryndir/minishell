@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:51:49 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/05 19:26:00 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/06 00:31:09 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,28 +79,28 @@ static int	count_quoted(const char *str, int *i, char quote)
 */
 int	mini_charnbr(const char *str)
 {
-   int	len;
-   int	i;
-   
-   i = 0;
-   len = 0;
-   if (is_double_symbol(str, 0))
-	   return (2);
-   if (is_symbol(str[0]) && !is_quote(str[0]))
-	   return (1); 
-   while (str[i] && (!is_symbol(str[i]) || is_quote(str[i])))
-   {
-	   if (is_quote(str[i]))
-		   len += count_quoted(str, &i, str[i]);
-	   else if (!ft_isspace(str[i]))
-	   {
-		   len++;
-		   i++;
-	   }
-	   else
-		   break ;
-   }
-   return (len);
+	int	len;
+	int	i;
+
+	i = 0;
+	len = 0;
+	if (is_double_symbol(str, 0))
+		return (2);
+	if (is_symbol(str[0]) && !is_quote(str[0]))
+		return (1); 
+	while (str[i] && (!is_symbol(str[i]) || is_quote(str[i])))
+	{
+		if (is_quote(str[i]))
+			len += count_quoted(str, &i, str[i]);
+		else if (!ft_isspace(str[i]))
+		{
+			len++;
+			i++;
+		}
+		else
+			break ;
+	}
+	return (len);
 }
 
 /**
