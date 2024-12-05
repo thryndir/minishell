@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:58:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/29 23:35:37 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/05 01:28:21 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,16 @@ void	swap_arg(char **arg, t_env *env)
 {
 	char	*expanded;
 
-	if (*arg && ft_strchr(*arg, '$'))
+	if (*arg && !ft_strncmp(*arg, "$?", 2))
+	{
+		expanded = mini_itoa(g_exit_code);
+		if (expanded)
+		{
+			gc_free(*arg);
+			*arg = expanded;
+		}
+	}
+	else if (*arg && ft_strchr(*arg, '$'))
 	{
 		expanded = swap_vars(*arg, env);
 		if (expanded)
