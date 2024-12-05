@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/04 17:37:33 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/05 01:16:37 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	main_free_function(t_exec *exec, char **tab, char *input)
 	gc_tab_free(tab);
 	gc_free(input);
 }
-
+/*
 void	print_cmd(t_command *cmd)
 {
 	t_command	*current;
@@ -44,6 +44,55 @@ void	print_cmd(t_command *cmd)
 			redir = redir->next;
 		}
 		current = current->next;
+	}
+}
+*/
+
+void	print_redirection(t_redir *redir)
+{
+	while (redir)
+	{
+		printf("    Redirection:\n");
+		printf("      Type: ");
+		if (redir->type == REDIR_IN)
+		{
+			printf("REDIR_IN (<)\n");
+		}
+		if (redir->type == REDIR_OUT)
+		{
+			printf("REDIR_OUT (>)\n");
+		}
+		if (redir->type == REDIR_APPEND)
+		{
+			printf("REDIR_APPEND (>>)\n");
+		}
+		if (redir->type == REDIR_HEREDOC)
+		{
+			printf("REDIR_HEREDOC (<<)\n");
+		}
+		printf("      File: %s\n", redir->file);
+		printf("      FD: %d\n", redir->fd);
+		redir = redir->next;
+	}
+}
+
+void	print_command(t_command *cmd)
+{
+	printf("Command %d:\n", cmd->index);
+	printf("  Path: %s\n", cmd->path ? cmd->path : "NULL");
+	printf("  FD in: %d\n", cmd->fd_in);
+	printf("  FD out: %d\n", cmd->fd_out);
+	printf("  Arguments (%d):\n", cmd->argc);
+	if (cmd->argv)
+	{
+		for (int i = 0; cmd->argv[i]; i++)
+		{
+			printf("    arg[%d]: %s\n", i, cmd->argv[i]);
+		}
+	}
+	if (cmd->redirections)
+	{
+		print_redirection(cmd->redirections);
 	}
 }
 
@@ -70,7 +119,13 @@ int	main(int argc, char **argv, char **env)
 		exec.cmd = parse_input(splitted_input);
 		struct_init(&exec, exec.cmd);
 		loop_env_swapper(exec.cmd, exec.env);
-		print_cmd(exec.cmd);
+
+		t_command *current = exec.cmd;
+		while (current)
+		{
+			print_command(current);
+			current = current->next;
+		}
 		parent(exec.cmd, &exec, 0);
 		main_free_function(&exec, splitted_input, input);
 	}
