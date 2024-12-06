@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:18:40 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/02 14:16:36 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:02:59 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,24 @@ char	**lst_to_array(t_env *env)
 	return (result);
 }
 
-void	execve_fail(char *path, int status)
+void	execve_fail(t_command *cmd)
 {
-	if (!access(path, X_OK))
+    if (errno == ENOENT)
+        print_error(cmd->argv[0], "command not found", 127);
+    else if (errno == EACCES)
+        print_error(cmd->argv[0], "permission denied", 126);
+    else
+        print_error(cmd->argv[0], strerror(errno), 1);
+}
+
+char	*check_path(char *cmd)
+{
+	if (access(cmd, F_OK) || access(cmd, X_OK))
 	{
-		dprintf(2, "%s %s\n", strerror(errno), path);
-		exit (status);
+		print_error("path", strerror(errno), errno);
+		exit(g_exit_code);
 	}
-	else if (!access(path, F_OK))
-	{
-		dprintf(2, "command not found : %s\n", path);
-		exit(127);
-	}
+	return (ft_strdup(cmd));
 }
 
 char	*this_is_the_path(char **path, char *cmd)
@@ -49,21 +55,19 @@ char	*this_is_the_path(char **path, char *cmd)
 	int		i;
 
 	i = 0;
-	if (cmd == NULL)
-		return (NULL);
 	if (ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
-	while (path[i])
+		return (check_path(cmd));
+	while (path && path[i])
 	{
 		cmd_path = ft_strsjoin(3, path[i], "/", cmd);
-		if (cmd_path == NULL)
-			return (NULL);
-		if (access(cmd_path, X_OK) == 0)
+		if (!access(cmd_path, X_OK) && !access(cmd_path, F_OK))
 			return (cmd_path);
 		else
 			gc_free(cmd_path);
 		i++;
 	}
+	print_error("minishell", "command not found", 127);
+	exit(g_exit_code);
 	return (NULL);
 }
 
@@ -72,5 +76,8 @@ void	fork_init(t_exec *exec)
 	ft_lstadd_back(&(exec->pid), ft_lstnew(-1));
 	ft_lstlast(exec->pid)->data = fork();
 	if (ft_lstlast(exec->pid)->data == -1)
-		ft_error("problem with the fork: ", 1, g_exit_code);
+	{
+		print_error("problem with the fork", strerror(errno), g_exit_code);
+		exit(g_exit_code);
+	}		
 }

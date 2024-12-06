@@ -37,10 +37,10 @@ void	keep_fd(t_redir *redir, t_command *cmd, int pipe_fds[2], int next_out)
 		redir->fd = read_or_write(WRITE, redir);
 	if (redir->fd == -1)
 		{
+			print_error("minishell", strerror(errno), g_exit_code);
 			verif_and_close(&pipe_fds[0]);
 			verif_and_close(&pipe_fds[1]);
 			verif_and_close(&next_out);
-			ft_error("minishell", 1, g_exit_code);
 		}
 	if (last_file && ft_strcmp(redir->file, last_file))
 		verif_and_close(&redir->fd);

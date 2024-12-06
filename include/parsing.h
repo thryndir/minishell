@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/03 23:28:04 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/05 12:09:41 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ bool				is_redirect(const char *str);
 enum e_redir_type	get_redir_type(const char *str);
 t_command			*parse_command(char **input, int *index);
 t_command			*parse_input(char **input);
+void				set_signal(void);
+void				error_message(char *message, int exit_code);
+char				*mini_itoa(int nbr);
 
 /**
  * Env swapper

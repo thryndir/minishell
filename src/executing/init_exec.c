@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:56:47 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/30 01:07:52 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:23:14 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	here_doc(t_redir *redir)
 	lim = redir->file;
 	fd = read_or_write(WRITE, redir);
 	if (fd == -1)
-		ft_error("here_doc failed to open tmpfile in /tmp: ", 1, g_exit_code);
+		print_error("here_doc failed", strerror(errno), errno);
 	redir->file = "/tmp/temp";
 	redir->type = REDIR_IN;
 	while (1)

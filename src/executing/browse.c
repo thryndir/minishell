@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:53:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/03 21:29:54 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:07:51 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	parent(t_command *cmd, t_exec *exec, int depth)
 	pipe_fds[0] = 0;
 	if (exec->cmd_nbr > 1)
 		if (pipe(pipe_fds) == -1)
-			ft_error("problem with a pipe", 1, g_exit_code);
+			print_error("problem with a pipe", strerror(errno), errno);
 	if (cmd->next && !has_redir_type(cmd->redirections, REDIR_OUT)
 		&& !has_redir_type(cmd->next->redirections, REDIR_IN))
 		dup2(next_out, pipe_fds[1]);
