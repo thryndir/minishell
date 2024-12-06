@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/06 11:35:25 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/06 13:36:21 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int	main(int argc, char **argv, char **env)
 		loop_env_swapper(splitted_input, exec.env);
 		remove_quotes_from_argv(splitted_input);
 		exec.cmd = parse_input(splitted_input);
+		print_command(exec.cmd);
 		struct_init(&exec, exec.cmd);
-		loop_env_swapper(exec.cmd, exec.env);
 		print_command(exec.cmd);
 		parent(exec.cmd, &exec, 0);
 		main_free_function(&exec, splitted_input, input);

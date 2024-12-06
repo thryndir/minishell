@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:33 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/06 11:07:03 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:21:04 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,11 @@ void	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 	htable = htable_get(cmd->argv[0], ft_strlen(cmd->argv[0]));
 	if (htable && exec->cmd_nbr == 1)
 	{
-		redirect_builtin(cmd, exec, pipe_fds, next_out);
+		if (cmd->redirections)
+			redirect_builtin(cmd, exec, pipe_fds, next_out);
 		htable->builtin_func(cmd, exec);
-		restore_std(RESTORE);
+		if (cmd->redirections)
+			restore_std(RESTORE);
 	}
 	else
 	{
@@ -136,8 +138,8 @@ void	child(t_exec *exec, t_command *cmd, int next_out)
 	// print_open_fds("child process");
 	if (htable)
 	{
-		g_exit_code = htable->builtin_func(cmd, exec);
-		return ;
+		htable->builtin_func(cmd, exec);
+		exit(g_exit_code);
 	}
 	else
 		execve(cmd->path, cmd->argv, env);

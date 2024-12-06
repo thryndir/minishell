@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:18:40 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/06 11:02:59 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/06 13:11:53 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*this_is_the_path(char **path, char *cmd)
 			gc_free(cmd_path);
 		i++;
 	}
-	print_error("minishell", "command not found", 127);
+	print_error(cmd, "command not found", 127);
 	exit(g_exit_code);
 	return (NULL);
 }

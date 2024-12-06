@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:59:34 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/04 17:39:08 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:53:10 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct exec
 typedef struct s_builtin
 {
 	const char	*key;
-	int			(*builtin_func)(t_command *, t_exec *);
+	void		(*builtin_func)(t_command *, t_exec *);
 }	t_builtin;
 
 typedef struct s_expansion

@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/05 13:10:21 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:50:28 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,13 +151,13 @@ void		here_doc(t_redir *redir);
 int			read_or_write(int read_or_write, t_redir *redir);
 void		hold_on(t_list *lst);
 t_builtin	*htable_get(const char *str, size_t len);
-int			echo_builtin(t_command *cmd, t_exec *exec);
-int			cd_builtin(t_command *cmd, t_exec *exec);
-int			env_builtin(t_command *cmd, t_exec *exec);
-int			exit_builtin(t_command *cmd, t_exec *exec);
-int			export_builtin(t_command *cmd, t_exec *exec);
-int			pwd_builtin(t_command *cmd, t_exec *exec);
-int			unset_builtin(t_command *cmd, t_exec *exec);
+void		echo_builtin(t_command *cmd, t_exec *exec);
+void		cd_builtin(t_command *cmd, t_exec *exec);
+void		env_builtin(t_command *cmd, t_exec *exec);
+void		exit_builtin(t_command *cmd, t_exec *exec);
+void		export_builtin(t_command *cmd, t_exec *exec);
+void		pwd_builtin(t_command *cmd, t_exec *exec);
+void		unset_builtin(t_command *cmd, t_exec *exec);
 void		free_env(t_env *env);
 int			env_init(char **envp, t_exec *exec);
 int			pos_in_str(char *str, char to_search);

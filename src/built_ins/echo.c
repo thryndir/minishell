@@ -3,30 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:49:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/05 02:01:53 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:48:39 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executing.h"
 #include "parsing.h"
 
-int	echo_builtin(t_command *cmd, t_exec *exec)
+void	echo_builtin(t_command *cmd, t_exec *exec)
 {
 	int		i;
-	bool	newline;
+	int		j;
 
 	i = 1;
+	j = 2;
 	(void)exec;
-	newline = 1;
-	if (cmd->argv[i] && !ft_strcmp(cmd->argv[i], "-n"))
+	if (cmd->argv[i] && !ft_strncmp(cmd->argv[i], "-n", 2))
 	{
-		newline = 0;
-		i = 2;
-		while (!ft_strcmp(cmd->argv[i], "-n"))
-			i++;
+		while (cmd->argv[1][j] && !ft_strncmp(&cmd->argv[1][j], "n", 1))
+			j++;
+		if (j == (int)ft_strlen(cmd->argv[1]))
+		{
+			j = 0;
+			i = 2;
+		}
 	}
 	while (cmd->argv[i])
 	{
@@ -34,7 +37,6 @@ int	echo_builtin(t_command *cmd, t_exec *exec)
 		if (cmd->argv[i] && cmd->argv[i + 1] == NULL)
 			printf("%s", cmd->argv[i++]);
 	}
-	if (newline)
+	if (j)
 		printf("\n");
-	return (0);
 }
