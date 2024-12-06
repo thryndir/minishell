@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:54:06 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/04 04:56:56 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/07 00:22:44 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ char	*extract_quoted_word(const char *str, int *i, int len)
 		quote = str[*i];
 		if (is_quote(quote))
 		{
-			(*i)++;
+			word[k++] = str[(*i)++];
 			while (str[*i] && str[*i] != quote)
 				word[k++] = str[(*i)++];
-			(*i)++;
+			word[k++] = str[(*i)++];
 			if (str[*i] && is_quote(str[*i]))
 				continue ;
 		}
