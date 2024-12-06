@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:43:19 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/04 23:52:03 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:18:45 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,22 @@ int	syntax_error_message(const char *input)
 {
 	if (check_invalid_redirection(input))
 	{
-		error_message("minishell: syntax error invalid redirections", 1);
+		print_error("minishell", "syntax error invalid redirections", 1);
 		return (1);
 	}
 	if (misplaced_operators(input))
 	{
-		error_message("minishell: syntax error misplaced operators", 1);
+		print_error("minishell", "syntax error misplaced operators", 1);
 		return (1);
 	}
 	if (unclosed_quotes(input))
 	{
-		error_message("minishell: syntax error unclosed quotes", 1);
+		print_error("minishell", "syntax error unclosed quotes", 1);
 		return (1);
 	}
 	if (invalid_operators(input))
 	{
-		error_message("minishell: syntax error invalid operators", 1);
+		print_error("minishell", "syntax error invalid operators", 1);
 		return (1);
 	}
 	return (0);

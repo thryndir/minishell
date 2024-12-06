@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:33 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/03 21:28:35 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:07:03 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,14 @@ void	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 	}
 	else
 	{
-		path = ft_split(get_value(exec->env, "PATH"), ':');
-		cmd->path = this_is_the_path(path, cmd->argv[0]);
-		gc_tab_free(path);
 		fork_init(exec);
 		if (ft_lstlast(exec->pid)->data == 0)
 		{
+			path = ft_split(get_value(exec->env, "PATH"), ':');
+			cmd->path = this_is_the_path(path, cmd->argv[0]);
+			gc_tab_free(path);
 			redirect(cmd, exec, pipe_fds, next_out);
-			dprintf(2, "enfant cmd nbr : %d\n", cmd->index);
+			// dprintf(2, "enfant cmd nbr : %d\n", cmd->index);
 			child(exec, cmd, next_out);
 		}
 	}
@@ -124,7 +124,7 @@ void	child(t_exec *exec, t_command *cmd, int next_out)
 	t_builtin	*htable;
 
 	env = lst_to_array(exec->env);
-	dprintf(2, "fd_in = %d, fd_out = %d, next_out = %d\n", cmd->fd_in, cmd->fd_out, next_out);
+	// dprintf(2, "fd_in = %d, fd_out = %d, next_out = %d\n", cmd->fd_in, cmd->fd_out, next_out);
 	if (cmd->fd_in != -1)
 		dup2(cmd->fd_in, STDIN_FILENO);
 	if (cmd->fd_out != -1)
@@ -140,6 +140,6 @@ void	child(t_exec *exec, t_command *cmd, int next_out)
 		return ;
 	}
 	else
-		g_exit_code = execve(cmd->path, cmd->argv, env);
-	execve_fail(cmd->path, g_exit_code);
+		execve(cmd->path, cmd->argv, env);
+	execve_fail(cmd);
 }

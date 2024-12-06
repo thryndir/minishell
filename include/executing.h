@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/05 01:25:36 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:10:21 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void		print_open_fds(const char *where);
 void		free_cmd_exec(t_exec *exec, t_command *to_keep);
 void		parent(t_command *cmd, t_exec *exec, int depth);
 int			verif_and_close(int *fd);
-void		ft_error(char *message, int which, int status);
+void		print_error(char *msg, char *detail, int exit_code);
 void		free_lst(t_list *lst);
 int			lst_size(t_env *env);
 char		*this_is_the_path(char **path, char *cmd);
@@ -145,7 +145,7 @@ void		runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out);
 void		fork_init(t_exec *exec);
 int			struct_init(t_exec *exec, t_command *cmd);
 void		child(t_exec *exec, t_command *cmd, int next_out);
-void		execve_fail(char *path, int status);
+void		execve_fail(t_command *cmd);
 char		**lst_to_array(t_env *env);
 void		here_doc(t_redir *redir);
 int			read_or_write(int read_or_write, t_redir *redir);
@@ -175,8 +175,5 @@ void		redirect_builtin(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out
 void		close_prev_open(t_redir *to_comp, t_redir *redir);
 void		keep_fd(t_redir *redir, t_command *cmd, int pipe_fds[2], int next_out);
 void		restore_std(int save_or_restore);
-void		set_signal(void);
-void		error_message(char *message, int exit_code);
-char		*mini_itoa(int nbr);
 
 #endif

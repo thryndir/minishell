@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/05 23:39:32 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:35:25 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,79 +20,59 @@ void	main_free_function(t_exec *exec, char **tab, char *input)
 	gc_tab_free(tab);
 	gc_free(input);
 }
-/*
-void	print_cmd(t_command *cmd)
-{
-	t_command	*current;
-	t_redir		*redir;
-	int			i;
-
-	current = cmd;
-	i = 0;
-	while (current)
-	{
-		ft_printf("Le node nbr %d a pour commande %s\n", current->index, current->argv[0]);
-		while (current->argv[i])
-		{
-			ft_printf("l'argument nbr %d de la commande %s est %s\n", i, current->argv[0], current->argv[i]);
-			i++;
-		}
-		redir = current->redirections;
-		while (redir)
-		{
-			ft_printf("Les redirections qui lui sont associees ont pour file %s et comme type %d\n", redir->file, redir->type);
-			redir = redir->next;
-		}
-		current = current->next;
-	}
-}
-*/
 
 void	print_redirection(t_redir *redir)
 {
 	while (redir)
 	{
-		printf("    Redirection:\n");
-		printf("      Type: ");
+		ft_printf("    Redirection:\n");
+		ft_printf("      Type: ");
 		if (redir->type == REDIR_IN)
 		{
-			printf("REDIR_IN (<)\n");
+			ft_printf("REDIR_IN (<)\n");
 		}
 		if (redir->type == REDIR_OUT)
 		{
-			printf("REDIR_OUT (>)\n");
+			ft_printf("REDIR_OUT (>)\n");
 		}
 		if (redir->type == REDIR_APPEND)
 		{
-			printf("REDIR_APPEND (>>)\n");
+			ft_printf("REDIR_APPEND (>>)\n");
 		}
 		if (redir->type == REDIR_HEREDOC)
 		{
-			printf("REDIR_HEREDOC (<<)\n");
+			ft_printf("REDIR_HEREDOC (<<)\n");
 		}
-		printf("      File: %s\n", redir->file);
-		printf("      FD: %d\n", redir->fd);
+		ft_printf("      File: %s\n", redir->file);
+		ft_printf("      FD: %d\n", redir->fd);
 		redir = redir->next;
 	}
 }
 
 void	print_command(t_command *cmd)
 {
-	printf("Command %d:\n", cmd->index);
-	printf("  Path: %s\n", cmd->path ? cmd->path : "NULL");
-	printf("  FD in: %d\n", cmd->fd_in);
-	printf("  FD out: %d\n", cmd->fd_out);
-	printf("  Arguments (%d):\n", cmd->argc);
-	if (cmd->argv)
+	t_command *current;
+	
+	current = cmd;
+	while (current)
 	{
-		for (int i = 0; cmd->argv[i]; i++)
+		ft_printf("Command %d:\n", cmd->index);
+		ft_printf("  Path: %s\n", cmd->path ? cmd->path : "NULL");
+		ft_printf("  FD in: %d\n", cmd->fd_in);
+		ft_printf("  FD out: %d\n", cmd->fd_out);
+		ft_printf("  Arguments (%d):\n", cmd->argc);
+		if (cmd->argv)
 		{
-			printf("    arg[%d]: %s\n", i, cmd->argv[i]);
+			for (int i = 0; cmd->argv[i]; i++)
+			{
+				ft_printf("    arg[%d]: %s\n", i, cmd->argv[i]);
+			}
 		}
-	}
-	if (cmd->redirections)
-	{
-		print_redirection(cmd->redirections);
+		if (cmd->redirections)
+		{
+			print_redirection(cmd->redirections);
+		}
+		current = current->next;
 	}
 }
 
@@ -119,14 +99,8 @@ int	main(int argc, char **argv, char **env)
 		remove_quotes_from_argv(splitted_input);
 		exec.cmd = parse_input(splitted_input);
 		struct_init(&exec, exec.cmd);
-
-
-		t_command *current = exec.cmd;
-		while (current)
-		{
-			print_command(current);
-			current = current->next;
-		}
+		loop_env_swapper(exec.cmd, exec.env);
+		print_command(exec.cmd);
 		parent(exec.cmd, &exec, 0);
 		main_free_function(&exec, splitted_input, input);
 	}
