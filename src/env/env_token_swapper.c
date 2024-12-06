@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:58:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/05 23:46:36 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/07 00:22:33 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,7 @@ void	swap_arg(char **arg, t_env *env)
 			*arg = expanded;
 		}
 	}
-	else if (*arg && ft_strchr(*arg, '$')
-		&& (!ft_strncmp(*arg, "'$", 2) || !ft_strncmp(*arg, "\"$", 2)))
+	else if (*arg && ft_strchr(*arg, '$') && *arg[0] != '"')
 	{
 		expanded = swap_vars(*arg, env);
 		if (expanded)
