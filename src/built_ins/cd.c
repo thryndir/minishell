@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:49:45 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/05 01:03:14 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:21:05 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	cd_builtin(t_command *cmd, t_exec *exec)
 	to_free = 0;
 	if (chdir(cmd->argv[1]) != 0 || is_forbidden_symbol(cmd->argv[1]))
 	{
-		error_message("cd: No such file or directory", 2);
+		print_error("cd", "No such file or directory", ENOENT);
 		return (1);
 	}
 	if (cmd->argv[1] && (cmd->argv[1][0] == '~'
