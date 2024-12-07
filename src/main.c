@@ -12,8 +12,12 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/12/07 00:22:54 by jgerbaul         ###   ########.fr       */
 >>>>>>> 8db8136 (fixed env with without quote)
+=======
+/*   Updated: 2024/12/07 00:47:45 by jgerbaul         ###   ########.fr       */
+>>>>>>> e64259f ('re're)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +107,16 @@ int	main(int argc, char **argv, char **env)
 		if (syntax_errors(input))
 			continue ;
 		splitted_input = ft_mini_split(input);
+		for (int i = 0; splitted_input[i]; i++)
+		{
+			printf("%s\n", splitted_input[i]);
+		}
 		loop_env_swapper(splitted_input, exec.env);
-		remove_quotes_from_argv(splitted_input);
+//		remove_quotes_from_argv(splitted_input);
+		for (int i = 0; splitted_input[i]; i++)
+		{
+			printf("%s\n", splitted_input[i]);
+		}
 		exec.cmd = parse_input(splitted_input);
 		// print_command(exec.cmd);
 		struct_init(&exec, exec.cmd);
