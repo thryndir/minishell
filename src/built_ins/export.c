@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:51:33 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/06 14:53:37 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:35:05 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ void	export_builtin(t_command *cmd, t_exec *exec)
 {
 	t_env	*copy;
 	t_env	*temp;
+	int		i;
 
 	temp = NULL;
+	i = 1;
 	copy = env_copy(exec->env);
 	if (cmd->argv[1] == NULL)
 	{
@@ -74,9 +76,14 @@ void	export_builtin(t_command *cmd, t_exec *exec)
 	}
 	else
 	{
-		temp = ft_envnew(cmd->argv[1]);
-		add_in_env(exec->env, temp->name, temp->value);
+		while (cmd->argv[i])
+		{
+			temp = ft_envnew(cmd->argv[i]);
+			add_in_env(exec->env, temp->name, temp->value);
+			i++;
+		}
 	}
 	del_env(temp);
 	del_env(copy);
+	g_exit_code = 0;
 }

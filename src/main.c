@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/06 13:36:21 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:09:16 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	main(int argc, char **argv, char **env)
 	env_init(env, &exec);
 	while (1)
 	{
+		// dprintf(1, "la var globale vaut : %d au debut du main\n", g_exit_code);
 		input = readline(">> ");
 		if (!input)
 			return (0);
@@ -98,11 +99,12 @@ int	main(int argc, char **argv, char **env)
 		loop_env_swapper(splitted_input, exec.env);
 		remove_quotes_from_argv(splitted_input);
 		exec.cmd = parse_input(splitted_input);
-		print_command(exec.cmd);
+		// print_command(exec.cmd);
 		struct_init(&exec, exec.cmd);
-		print_command(exec.cmd);
+		// print_command(exec.cmd);
 		parent(exec.cmd, &exec, 0);
 		main_free_function(&exec, splitted_input, input);
+		// dprintf(1, "la var globale vaut : %d a la fin du main\n", g_exit_code);
 	}
 	free_env(exec.env);
 }

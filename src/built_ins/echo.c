@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:49:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/06 14:48:39 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:02:09 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@ void	echo_builtin(t_command *cmd, t_exec *exec)
 	}
 	if (j)
 		printf("\n");
+	g_exit_code = 0;
 }

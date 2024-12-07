@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:59:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/06 10:35:29 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:09:31 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void	print_error(char *msg, char *detail, int exit_code)
 void	hold_on(t_list *lst)
 {
 	waitpid(lst->data, &g_exit_code, 0);
-	lst = lst->next;
 	g_exit_code = WEXITSTATUS(g_exit_code);
+	// dprintf(1, "la var globale vaut : %d apres avoir recup le status\n", g_exit_code);
+	lst = lst->next;
 	while (lst)
 	{
 		waitpid(lst->data, NULL, 0);
