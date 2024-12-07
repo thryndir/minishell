@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/06 11:34:22 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:54:54 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ enum e_redir_type	get_redir_type(const char *str);
 t_command			*parse_command(char **input, int *index);
 t_command			*parse_input(char **input);
 void				set_signal(void);
-void				error_message(char *message, int exit_code);
 char				*mini_itoa(int nbr);
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:18:40 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/06 13:11:53 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:21:28 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,20 @@ char	**lst_to_array(t_env *env)
 void	execve_fail(t_command *cmd)
 {
     if (errno == ENOENT)
+	{
         print_error(cmd->argv[0], "command not found", 127);
+		exit(g_exit_code);
+	}
     else if (errno == EACCES)
+	{
         print_error(cmd->argv[0], "permission denied", 126);
+		exit(g_exit_code);
+	}
     else
+	{
         print_error(cmd->argv[0], strerror(errno), 1);
+		exit(g_exit_code);
+	}
 }
 
 char	*check_path(char *cmd)
@@ -44,6 +53,7 @@ char	*check_path(char *cmd)
 	if (access(cmd, F_OK) || access(cmd, X_OK))
 	{
 		print_error("path", strerror(errno), errno);
+		// dprintf(1, "la var globale vaut : %d au debut du path\n", g_exit_code);
 		exit(g_exit_code);
 	}
 	return (ft_strdup(cmd));
@@ -67,6 +77,7 @@ char	*this_is_the_path(char **path, char *cmd)
 		i++;
 	}
 	print_error(cmd, "command not found", 127);
+	// dprintf(1, "la var globale vaut : %d a la fin du path\n", g_exit_code);
 	exit(g_exit_code);
 	return (NULL);
 }
