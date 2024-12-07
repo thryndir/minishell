@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:54:54 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/28 01:41:44 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/07 02:01:21 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	is_quote(char c)
 */
 bool	is_symbol(char c)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '"' || c == '\'')
+	if (c == '|' || c == '<' || c == '>')
 		return (true);
 	else
 		return (false);
@@ -53,14 +53,16 @@ bool	is_double_symbol(const char *str, int i)
 */
 bool	count_quoted_word(const char *str, int *i)
 {
-	char	quote;
+	int	simple_q;
+	int	double_q;
 
-	quote = str[*i];
-	(*i)++;
-	while (str[*i] && str[*i] != quote)
+	while (str[*i] && !ft_isspace(str[*i]))
+	{
+		quote_count(str[*i], &simple_q, &double_q);
+		if (!(simple_q % 2) && !(double_q % 2) && is_symbol(str[*i]))
+			break ;
 		(*i)++;
-	if (str[*i])
-		(*i)++;
+	}
 	return (true);
 }
 

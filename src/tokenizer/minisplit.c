@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:54:06 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/07 00:22:44 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/07 02:03:49 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,39 @@
 /**
  * This function extract a word between quotes in the input string.
 */
+int		count_quote_nbr(const char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (is_quote(str[i]))
+			j++;
+		i++;
+	}
+	return (j);
+}
+
 char	*extract_quoted_word(const char *str, int *i, int len)
 {
 	int		k;
 	char	*word;
-	char	quote;
+	int		simple_q;
+	int		double_q;
 
 	k = 0;
 	word = (char *)gc_malloc((len + 1) * sizeof(char));
 	if (word == NULL)
 		return (NULL);
-	while (str[*i])
+	while (str[*i] && !ft_isspace(str[*i]))
 	{
-		quote = str[*i];
-		if (is_quote(quote))
-		{
-			word[k++] = str[(*i)++];
-			while (str[*i] && str[*i] != quote)
-				word[k++] = str[(*i)++];
-			word[k++] = str[(*i)++];
-			if (str[*i] && is_quote(str[*i]))
-				continue ;
-		}
-		break ;
+		quote_count(str[*i], &simple_q, &double_q);
+		if (!(simple_q % 2) && !(double_q % 2) && is_symbol(str[*i]))
+			break ;
+		word[k++] = str[(*i)++];
 	}
 	word[k] = '\0';
 	return (word);
