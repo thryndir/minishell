@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/07 17:09:16 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:17:40 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,25 @@ void	print_redirection(t_redir *redir)
 void	print_command(t_command *cmd)
 {
 	t_command *current;
-	
+
 	current = cmd;
 	while (current)
 	{
-		ft_printf("Command %d:\n", cmd->index);
-		ft_printf("  Path: %s\n", cmd->path ? cmd->path : "NULL");
-		ft_printf("  FD in: %d\n", cmd->fd_in);
-		ft_printf("  FD out: %d\n", cmd->fd_out);
-		ft_printf("  Arguments (%d):\n", cmd->argc);
-		if (cmd->argv)
+		ft_printf("Command %d:\n", current->index);
+		ft_printf("  Path: %s\n", current->path ? cmd->path : "NULL");
+		ft_printf("  FD in: %d\n", current->fd_in);
+		ft_printf("  FD out: %d\n", current->fd_out);
+		ft_printf("  Arguments (%d):\n", current->argc);
+		if (current->argv)
 		{
-			for (int i = 0; cmd->argv[i]; i++)
+			for (int i = 0; current->argv[i]; i++)
 			{
-				ft_printf("    arg[%d]: %s\n", i, cmd->argv[i]);
+				ft_printf("    arg[%d]: %s\n", i, current->argv[i]);
 			}
 		}
-		if (cmd->redirections)
+		if (current->redirections)
 		{
-			print_redirection(cmd->redirections);
+			print_redirection(current->redirections);
 		}
 		current = current->next;
 	}
@@ -97,11 +97,10 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		splitted_input = ft_mini_split(input);
 		loop_env_swapper(splitted_input, exec.env);
-		remove_quotes_from_argv(splitted_input);
 		exec.cmd = parse_input(splitted_input);
-		// print_command(exec.cmd);
+		loop_quote_handler(exec.cmd);
 		struct_init(&exec, exec.cmd);
-		// print_command(exec.cmd);
+		print_command(exec.cmd);
 		parent(exec.cmd, &exec, 0);
 		main_free_function(&exec, splitted_input, input);
 		// dprintf(1, "la var globale vaut : %d a la fin du main\n", g_exit_code);

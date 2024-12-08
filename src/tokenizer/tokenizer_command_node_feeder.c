@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 23:20:02 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/29 00:18:56 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/07 00:52:17 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	handle_argv(t_command *cmd, char **input, int start, int count)
 	argv_index = 0;
 	while (i < count)
 	{
-		if (is_redirect(input[start + i]))
+		if (is_redirect(input[start + i]) && input[start + i][0] != '"')
 			i += 2;
 		else
 		{

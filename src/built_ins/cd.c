@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:49:45 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/07 17:01:26 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:09:57 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	verif_dir(char *args)
 	return (0);
 }
 
-char *revtrim(char *str, char *to_trim)
+char	*revtrim(char *str, char *to_trim)
 {
 	int		start;
 	int		size;

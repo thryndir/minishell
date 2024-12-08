@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/07 15:54:54 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:06:37 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char				*extract_regular_word(const char *str, int *i, int len);
 char				*extract_word(const char *str, int *i, int *status);
 char				**mini_str_to_array(char **strs, const char *str);
 char				**ft_mini_split(char const *str);
+char				*remove_quotes_from_file(char *str);
 
 void				free_redirs(t_redir *redir);
 void				free_command_argv(char **argv);
@@ -89,5 +90,8 @@ int					get_expanded_len(char *str, t_env *env);
 char				*swap_vars(char *str, t_env *env);
 void				swap_arg(char **arg, t_env *env);
 void				loop_env_swapper(char **splitted, t_env *env);
+
+char				*remove_quotes_from_string(char *str);
+void				loop_quote_handler(t_command *cmd);
 
 #endif
