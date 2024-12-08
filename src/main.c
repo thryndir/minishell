@@ -12,12 +12,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/07 00:22:54 by jgerbaul         ###   ########.fr       */
->>>>>>> 8db8136 (fixed env with without quote)
-=======
-/*   Updated: 2024/12/07 00:47:45 by jgerbaul         ###   ########.fr       */
->>>>>>> e64259f ('re're)
+/*   Updated: 2024/12/08 18:31:06 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +62,21 @@ void	print_command(t_command *cmd)
 	current = cmd;
 	while (current)
 	{
-		ft_printf("Command %d:\n", cmd->index);
-		ft_printf("  Path: %s\n", cmd->path ? cmd->path : "NULL");
-		ft_printf("  FD in: %d\n", cmd->fd_in);
-		ft_printf("  FD out: %d\n", cmd->fd_out);
-		ft_printf("  Arguments (%d):\n", cmd->argc);
-		if (cmd->argv)
+		ft_printf("Command %d:\n", current->index);
+		ft_printf("  Path: %s\n", current->path ? cmd->path : "NULL");
+		ft_printf("  FD in: %d\n", current->fd_in);
+		ft_printf("  FD out: %d\n", current->fd_out);
+		ft_printf("  Arguments (%d):\n", current->argc);
+		if (current->argv)
 		{
-			for (int i = 0; cmd->argv[i]; i++)
+			for (int i = 0; current->argv[i]; i++)
 			{
-				ft_printf("    arg[%d]: %s\n", i, cmd->argv[i]);
+				ft_printf("    arg[%d]: %s\n", i, current->argv[i]);
 			}
 		}
-		if (cmd->redirections)
+		if (current->redirections)
 		{
-			print_redirection(cmd->redirections);
+			print_redirection(current->redirections);
 		}
 		current = current->next;
 	}
@@ -107,16 +102,7 @@ int	main(int argc, char **argv, char **env)
 		if (syntax_errors(input))
 			continue ;
 		splitted_input = ft_mini_split(input);
-		for (int i = 0; splitted_input[i]; i++)
-		{
-			printf("%s\n", splitted_input[i]);
-		}
 		loop_env_swapper(splitted_input, exec.env);
-//		remove_quotes_from_argv(splitted_input);
-		for (int i = 0; splitted_input[i]; i++)
-		{
-			printf("%s\n", splitted_input[i]);
-		}
 		exec.cmd = parse_input(splitted_input);
 		// print_command(exec.cmd);
 		struct_init(&exec, exec.cmd);
