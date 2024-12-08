@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 02:09:07 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/29 22:38:36 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:26:39 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,33 @@ char	*mini_strdup(const char *src)
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+void	loop_quote_handler(t_command *cmd)
+{
+	t_command	*current;
+	int			i;
+	char		*str;
+
+	current = cmd;
+	while (current)
+	{
+		i = 0;
+		while (current->argv[i])
+		{
+			str = NULL;
+			if ((ft_strchr(current->argv[i], '\''))
+				|| (ft_strchr(current->argv[i], '"')))
+			{
+				str = remove_quotes_from_string(current->argv[i]);
+				if (str)
+				{
+					gc_free(current->argv[i]);
+					current->argv[i] = str;
+				}
+			}
+			i++;
+		}
+		current = current->next;
+	}
 }
