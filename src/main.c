@@ -3,16 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/07 17:09:16 by thryndir         ###   ########.fr       */
-=======
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/08 18:34:15 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:17:40 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +52,7 @@ void	print_redirection(t_redir *redir)
 void	print_command(t_command *cmd)
 {
 	t_command *current;
-	
+
 	current = cmd;
 	while (current)
 	{
@@ -106,11 +100,7 @@ int	main(int argc, char **argv, char **env)
 		exec.cmd = parse_input(splitted_input);
 		loop_quote_handler(exec.cmd);
 		struct_init(&exec, exec.cmd);
-<<<<<<< HEAD
-		// print_command(exec.cmd);
-=======
 		print_command(exec.cmd);
->>>>>>> 8db8136 (fixed env with without quote)
 		parent(exec.cmd, &exec, 0);
 		main_free_function(&exec, splitted_input, input);
 		// dprintf(1, "la var globale vaut : %d a la fin du main\n", g_exit_code);
