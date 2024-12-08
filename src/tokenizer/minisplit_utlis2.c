@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:51:49 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/07 01:42:27 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:16:42 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,14 @@ static int	count_quoted(const char *str, int *i, char quote)
 {
 	int	len;
 
-	len = 0;
+	len = 1;
 	(*i)++;
 	while (str[*i] && str[*i] != quote)
 	{
 		len++;
 		(*i)++;
 	}
+	len += 1;
 	(*i)++;
 	return (len);
 }

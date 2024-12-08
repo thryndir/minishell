@@ -12,7 +12,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/08 18:31:06 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/08 18:34:15 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	main(int argc, char **argv, char **env)
 		splitted_input = ft_mini_split(input);
 		loop_env_swapper(splitted_input, exec.env);
 		exec.cmd = parse_input(splitted_input);
-		// print_command(exec.cmd);
+		loop_quote_handler(exec.cmd);
 		struct_init(&exec, exec.cmd);
 <<<<<<< HEAD
 		// print_command(exec.cmd);
