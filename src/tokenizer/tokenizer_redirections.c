@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:59:24 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/15 23:11:58 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:55:12 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	process_one_redirection(t_command *cmd, char **input, int *i, int start)
 	redir = create_redir(input[start + *i], input[start + *i + 1]);
 	if (!redir)
 		return (0);
+	if (redir->file && (redir->file[0] == '\'' || redir->file[0] == '"'))
+		redir->file = remove_quotes_from_file(redir->file);
 	if (!add_redir(cmd, redir))
 		return (0);
 	*i += 2;
@@ -75,4 +77,22 @@ int	process_redirections(t_command *cmd, char **input, int start, int count)
 			i++;
 	}
 	return (1);
+}
+
+char	*remove_quotes_from_file(char *str)
+{
+	int		i;
+	char	*new_str;
+	int		len;
+
+	i = 0;
+	new_str = NULL;
+	len = ft_strlen(str);
+	if (len > 1 && is_quote(str[0]) && is_quote(str[len - 1]))
+	{
+		new_str = gc_malloc(len - 1);
+		ft_strlcpy(new_str, &str[1], len - 1);
+		gc_free(str);
+	}
+	return (new_str);
 }
