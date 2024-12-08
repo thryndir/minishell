@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 00:02:12 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/08 19:26:15 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:46:28 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*remove_quotes_from_string(char *str)
 	int		len;
 
 	len = ft_strlen(str);
-	new_str = malloc(len + 1);
+	new_str = gc_malloc(len + 1);
 	if (!new_str)
 		return (NULL);
 	process_string(str, new_str);
