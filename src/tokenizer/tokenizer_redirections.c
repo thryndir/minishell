@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 23:59:24 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/08 19:55:12 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/08 23:10:35 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,9 @@ int	process_redirections(t_command *cmd, char **input, int start, int count)
 
 char	*remove_quotes_from_file(char *str)
 {
-	int		i;
 	char	*new_str;
 	int		len;
 
-	i = 0;
 	new_str = NULL;
 	len = ft_strlen(str);
 	if (len > 1 && is_quote(str[0]) && is_quote(str[len - 1]))
