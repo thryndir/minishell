@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:51:49 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/08 19:16:42 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:55:19 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	mini_strnbr(const char *str)
 	return (result);
 }
 
-
 static int	count_quoted(const char *str, int *i, char quote)
 {
 	int	len;
@@ -88,7 +87,7 @@ int	mini_charnbr(const char *str)
 	if (is_double_symbol(str, 0))
 		return (2);
 	if (is_symbol(str[0]) && !is_quote(str[0]))
-		return (1); 
+		return (1);
 	while (str[i] && (!is_symbol(str[i]) || is_quote(str[i])))
 	{
 		if (is_quote(str[i]))

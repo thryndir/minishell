@@ -6,13 +6,12 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 02:09:07 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/08 19:46:39 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:55:29 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "gcmalloc.h"
-
 
 /**
  * This function is an enum selector for the type of
