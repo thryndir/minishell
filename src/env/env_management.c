@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_management.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:39 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 12:02:39 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:39:25 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,17 @@ void	del_in_env(t_env **env, t_env *to_delete)
 void	add_in_env(t_env *env, char *name, char *value)
 {
 	t_env	*current;
+	char	*temp;
 	char	*var;
 
 	current = env;
 	while (current)
 	{
-		if (!ft_strcmp(current->name, name) && ft_strcmp(current->value, value))
+		if (!ft_strcmp(current->name, name))
 		{
+			temp = current->value;
 			current->value = ft_strdup(value);
+			gc_free(temp);
 			return ;
 		}
 		current = current->next;
