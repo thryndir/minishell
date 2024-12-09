@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:54:54 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/07 02:01:21 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:40:31 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ bool	count_quoted_word(const char *str, int *i)
 	int	simple_q;
 	int	double_q;
 
-	while (str[*i] && !ft_isspace(str[*i]))
+	while (str[*i])
 	{
 		quote_count(str[*i], &simple_q, &double_q);
-		if (!(simple_q % 2) && !(double_q % 2) && is_symbol(str[*i]))
+		if (!(simple_q % 2) && !(double_q % 2)
+			&& (is_symbol(str[*i]) || ft_isspace(str[*i])))
 			break ;
 		(*i)++;
 	}
