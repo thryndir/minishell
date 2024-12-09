@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/08 20:17:40 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:42:17 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	main(int argc, char **argv, char **env)
 	env_init(env, &exec);
 	while (1)
 	{
-		// dprintf(1, "la var globale vaut : %d au debut du main\n", g_exit_code);
 		input = readline(">> ");
 		if (!input)
 			return (0);
@@ -103,7 +102,6 @@ int	main(int argc, char **argv, char **env)
 		print_command(exec.cmd);
 		parent(exec.cmd, &exec, 0);
 		main_free_function(&exec, splitted_input, input);
-		// dprintf(1, "la var globale vaut : %d a la fin du main\n", g_exit_code);
 	}
 	free_env(exec.env);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:49:45 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/08 20:09:57 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/09 12:54:04 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char *transform_symbols(char *symbol, t_exec *exec)
 		result = ft_strdup(result);
 		result[ft_strlen(result) - 1] = '\0';
 	}
-	if (result != symbol)
+	if (result == symbol)
 		result = ft_strdup(symbol);
 	return (result);
 }

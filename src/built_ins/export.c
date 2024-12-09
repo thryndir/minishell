@@ -6,7 +6,7 @@
 /*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:51:33 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/07 17:35:05 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:02:10 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	sort_env(t_env *env)
 	char	*tmp;
 
 	i = env;
-	while (i->next)
+	while (i)
 	{
 		j = i->next;
-		while (j->next)
+		while (j)
 		{
 			if (ft_strcmp(i->name, j->name) > 0)
 			{
@@ -67,9 +67,9 @@ void	export_builtin(t_command *cmd, t_exec *exec)
 	int		i;
 
 	temp = NULL;
-	i = 1;
 	copy = env_copy(exec->env);
-	if (cmd->argv[1] == NULL)
+	i = 1;
+	if (cmd->argc <= 1)
 	{
 		sort_env(copy);
 		print_lst(copy);
