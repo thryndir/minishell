@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child_utils_2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 16:12:38 by thryndir          #+#    #+#             */
+/*   Updated: 2024/12/09 16:15:23 by thryndir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "executing.h"
 
-void    redirect_builtin(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
+void	redirect_builtin(t_command *cmd, t_exec *exec, int *pipe_fds
+	, int next_out)
 {
 	redirect(cmd, exec, pipe_fds, next_out);
 	restore_std(SAVE);
@@ -12,10 +25,11 @@ void    redirect_builtin(t_command *cmd, t_exec *exec, int *pipe_fds, int next_o
 	verif_and_close(&cmd->fd_out);
 }
 
-void		close_prev_open(t_redir *to_comp, t_redir *redir)
+void	close_prev_open(t_redir *to_comp, t_redir *redir)
 {
-	t_redir *current = redir;
-	
+	t_redir	*current;
+
+	current = redir;	
 	while (current)
 	{
 		if (!ft_strcmp(current->file, to_comp->file) && current->fd != -1)
@@ -36,12 +50,12 @@ void	keep_fd(t_redir *redir, t_command *cmd, int pipe_fds[2], int next_out)
 	else if (redir->type == REDIR_OUT || redir->type == REDIR_APPEND)
 		redir->fd = read_or_write(WRITE, redir);
 	if (redir->fd == -1)
-		{
-			print_error("minishell", strerror(errno), g_exit_code);
-			verif_and_close(&pipe_fds[0]);
-			verif_and_close(&pipe_fds[1]);
-			verif_and_close(&next_out);
-		}
+	{
+		print_error("minishell", strerror(errno), g_exit_code);
+		verif_and_close(&pipe_fds[0]);
+		verif_and_close(&pipe_fds[1]);
+		verif_and_close(&next_out);
+	}
 	if (last_file && ft_strcmp(redir->file, last_file))
 		verif_and_close(&redir->fd);
 }

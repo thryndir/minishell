@@ -6,7 +6,7 @@
 /*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:18:40 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/07 17:21:28 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:17:06 by thryndir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ char	**lst_to_array(t_env *env)
 
 void	execve_fail(t_command *cmd)
 {
-    if (errno == ENOENT)
+	if (errno == ENOENT)
 	{
-        print_error(cmd->argv[0], "command not found", 127);
+		print_error(cmd->argv[0], "command not found", 127);
 		exit(g_exit_code);
 	}
-    else if (errno == EACCES)
+	else if (errno == EACCES)
 	{
-        print_error(cmd->argv[0], "permission denied", 126);
+		print_error(cmd->argv[0], "permission denied", 126);
 		exit(g_exit_code);
 	}
-    else
+	else
 	{
-        print_error(cmd->argv[0], strerror(errno), 1);
+		print_error(cmd->argv[0], strerror(errno), 1);
 		exit(g_exit_code);
 	}
 }
