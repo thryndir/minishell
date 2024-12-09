@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 22:54:06 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/09 16:47:48 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:54:38 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * This function extract a word between quotes in the input string.
 */
-int		count_quote_nbr(const char *str)
+int	count_quote_nbr(const char *str)
 {
 	int	i;
 	int	j;
@@ -29,31 +29,6 @@ int		count_quote_nbr(const char *str)
 		i++;
 	}
 	return (j);
-}
-
-char	*extract_quoted_word(const char *str, int *i, int len)
-{
-	int		k;
-	char	*word;
-	int		simple_q;
-	int		double_q;
-
-	k = 0;
-	simple_q = 0;
-	double_q = 0;
-	word = (char *)gc_malloc((len + 1) * sizeof(char));
-	if (word == NULL)
-		return (NULL);
-	while (str[*i])
-	{
-		quote_count(str[*i], &simple_q, &double_q);
-		if (!(simple_q % 2) && !(double_q % 2)
-			&& (is_symbol(str[*i]) || ft_isspace(str[*i])))
-			break ;
-		word[k++] = str[(*i)++];
-	}
-	word[k] = '\0';
-	return (word);
 }
 
 /**
