@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:49:57 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/07 17:02:09 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:45:08 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,9 @@ void	echo_builtin(t_command *cmd, t_exec *exec)
 	(void)exec;
 	if (cmd->argv[i] && !ft_strncmp(cmd->argv[i], "-n", 2))
 	{
-		while (cmd->argv[1][j] && !ft_strncmp(&cmd->argv[1][j], "n", 1))
-			j++;
-		if (j == (int)ft_strlen(cmd->argv[1]))
-		{
-			j = 0;
-			i = 2;
-		}
+		while (cmd->argv[i] && !ft_strcmp(cmd->argv[i], "-n"))
+			i++;
+		j = 0;
 	}
 	while (cmd->argv[i])
 	{

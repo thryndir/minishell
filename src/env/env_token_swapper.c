@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:58:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/09 15:23:48 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:45:23 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	swap_arg(char **arg, t_env *env)
 {
 	char	*expanded;
 
-	if (*arg && !ft_strncmp(*arg, "$?", 2))
+	if (*arg && found_dollar_qm(*arg)
+		&& ((*arg[0] != '\'') || !ft_strcmp(*arg, "\'\'$?\'\'")))
 	{
 		expanded = mini_itoa(g_exit_code);
 		if (expanded)

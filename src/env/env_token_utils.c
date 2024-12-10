@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 01:22:59 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/05 01:25:07 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:45:34 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,18 @@ char	*mini_itoa(int nbr)
 		str = mini_nbr_is_positive(str, nbr, len);
 	str[len + 1] = '\0';
 	return (str);
+}
+
+int	found_dollar_qm(const char *string)
+{
+	int	i;
+
+	i = 0;
+	while (string[i])
+	{
+		if (string[i] == '$' && (string[i + 1]) == '?')
+			return (1);
+		i++;
+	}
+	return (0);
 }

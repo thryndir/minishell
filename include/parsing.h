@@ -6,7 +6,7 @@
 /*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 21:46:43 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/08 20:06:37 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:45:53 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ t_command			*parse_command(char **input, int *index);
 t_command			*parse_input(char **input);
 void				set_signal(void);
 char				*mini_itoa(int nbr);
+int					found_dollar_qm(const char *string);
 
 /**
  * Env swapper
