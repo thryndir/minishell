@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:12:38 by thryndir          #+#    #+#             */
-/*   Updated: 2024/12/10 16:43:29 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:58:40 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	keep_fd(t_redir *redir, t_command *cmd, int pipe_fds[2], int next_out)
 		verif_and_close(&pipe_fds[0]);
 		verif_and_close(&pipe_fds[1]);
 		verif_and_close(&next_out);
+		gc_free_all();
+		exit(g_exit_code);
 	}
 	if (last_file && ft_strcmp(redir->file, last_file))
 		verif_and_close(&redir->fd);
