@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:51:33 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/09 16:02:10 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:33:56 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executing.h"
+
+void	print_lst(t_env *env)
+{
+	t_env	*curr;
+	char	*var;
+
+	curr = env;
+	while (curr)
+	{
+		var = ft_strsjoin(3, curr->name, "=", curr->value);
+		printf("%s\n", var);
+		gc_free(var);
+		curr = curr->next;
+	}
+}
 
 void	sort_env(t_env *env)
 {

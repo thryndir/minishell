@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:56:47 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/09 14:15:59 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:31:22 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	here_doc(t_redir *redir)
 
 	lim = redir->file;
 	redir->file = "/tmp/temp";
+	redir->type = REDIR_IN;
 	fd = read_or_write(WRITE, redir);
 	if (fd == -1)
 		print_error("here_doc failed", strerror(errno), errno);
-	redir->type = REDIR_IN;
 	while (1)
 	{
 		str = readline("heredoc :");
