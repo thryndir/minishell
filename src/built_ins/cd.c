@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:49:45 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/10 15:57:14 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:32:33 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	cd_builtin(t_command *cmd, t_exec *exec)
 		if (verif_dir(cmd->argv[1]))
 			return ;
 		pwd = getcwd(NULL, 0);
-	} 
+	}
 	add_in_env(exec->env, "OLDPWD", get_value(exec->env, "PWD"));
 	add_in_env(exec->env, "PWD", pwd);
 	if (ft_strcmp(pwd, get_value(exec->env, "HOME")))

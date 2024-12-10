@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:12:38 by thryndir          #+#    #+#             */
-/*   Updated: 2024/12/09 16:15:23 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:43:29 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	close_prev_open(t_redir *to_comp, t_redir *redir)
 {
 	t_redir	*current;
 
-	current = redir;	
+	current = redir;
 	while (current)
 	{
 		if (!ft_strcmp(current->file, to_comp->file) && current->fd != -1)

@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:18:40 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/10 16:21:41 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:44:44 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,5 @@ void	fork_init(t_exec *exec)
 	{
 		print_error("problem with the fork", strerror(errno), g_exit_code);
 		exit(g_exit_code);
-	}		
+	}
 }

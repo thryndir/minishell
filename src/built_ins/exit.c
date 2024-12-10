@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:51:27 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/09 16:17:41 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:32:06 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	is_only_digit(char *str)
 void	exit_builtin(t_command *cmd, t_exec *exec)
 {
 	long	arg;
-	(void)exec;
 
+	(void)exec;
 	arg = ft_atoull(cmd->argv[1]);
 	if (cmd->argc > 2 && is_only_digit(cmd->argv[1]))
 	{
