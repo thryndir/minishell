@@ -4,4 +4,4 @@
 --track-fds=yes
 --track-origins=yes
  --trace-children=yes
---suppressions=ignore_readline.supp
+--suppressions=readline.supp

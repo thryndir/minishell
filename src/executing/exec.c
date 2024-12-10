@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thryndir <thryndir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:33 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/09 14:06:10 by thryndir         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:12:37 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void	child(t_exec *exec, t_command *cmd, int next_out)
 	if (htable)
 	{
 		htable->builtin_func(cmd, exec);
+		gc_free_all();
 		exit(g_exit_code);
 	}
 	else
