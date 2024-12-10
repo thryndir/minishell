@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:36 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/11/20 12:02:36 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:35:32 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	pos_in_str(char *str, char to_search)
 		i++;
 	if (str[i] == to_search)
 		return (i);
-	return (0);
+	return (i);
 }
 
 int	name_and_value(char *var, t_env *env)

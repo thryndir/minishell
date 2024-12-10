@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:59:30 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/06 14:33:00 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:14:49 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	read_or_write(int read_or_write, t_redir *redir)
 		fd = open(redir->file, O_RDONLY);
 	else
 		fd = open(redir->file, O_WRONLY | O_CREAT | flag, 0644);
-	dprintf(2, "le fd de la redirection %s est %d\n", redir->file, fd);
 	return (fd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:18:40 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/10 16:44:44 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:18:11 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,5 @@ void	fork_init(t_exec *exec)
 	ft_lstadd_back(&(exec->pid), ft_lstnew(-1));
 	ft_lstlast(exec->pid)->data = fork();
 	if (ft_lstlast(exec->pid)->data == -1)
-	{
 		print_error("problem with the fork", strerror(errno), g_exit_code);
-		exit(g_exit_code);
-	}
 }
