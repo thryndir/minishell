@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 16:39:29 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/01/01 15:35:43 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:09:05 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_next_line(int fd)
 	ssize_t		n;
 
 	n = BUFFER_SIZE;
-	str = malloc(ft_strlen(buffer) + 1);
+	str = gc_malloc(ft_strlen(buffer) + 1);
 	if (str == NULL)
 		return (NULL);
 	str[0] = '\0';

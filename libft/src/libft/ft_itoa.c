@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:37:30 by lgalloux          #+#    #+#             */
-/*   Updated: 2023/11/11 18:20:31 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:09:15 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_itoa(int nbr)
 	if (nbr == -2147483648)
 		return (ft_strdup("-2147483648"));
 	len = ft_nbr_count(nbr);
-	str = malloc(len + 2 * sizeof(char));
+	str = gc_malloc(len + 2 * sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	if (nbr < 0)

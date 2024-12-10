@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 14:06:35 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/02/15 18:28:54 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:09:10 by jgerbaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_backjoin(const char *str1, const char *str2)
 	str1_len = ft_strlen(str1);
 	str2_len = ft_strlen(str2);
 	strs_len = str1_len + str2_len;
-	result = malloc((strs_len + 1));
+	result = gc_malloc((strs_len + 1));
 	if (result == NULL)
 		return (NULL);
 	ft_strlcpy(result, str1, str1_len + 1);
