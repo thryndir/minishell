@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:56:47 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/10 16:37:01 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:42:34 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ int	get_cmd_nbr(t_command *cmd)
 	while (current)
 	{
 		redir = current->redirections;
-		if (redir && redir->type == REDIR_HEREDOC)
-			here_doc(redir);
+		while (redir)
+		{
+			if (redir && redir->type == REDIR_HEREDOC)
+				here_doc(redir);
+			redir = redir->next;
+		}
 		current->index = cmd_nbr;
 		current = current->next;
 		cmd_nbr++;

@@ -6,38 +6,27 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:33 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/11 10:34:55 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:46:14 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executing.h"	
 
-char	*last_fd_type(int type, t_command *cmd, t_redir *redir, int pipe_fds[2])
+void	set_cmd_fd(int type, t_command *cmd, t_redir *redir, int pipe_fds[2])
 {
-	t_redir	*current;
-	t_redir	*last_redir;
+	t_redir	*last;
 
-	current = redir;
-	last_redir = NULL;
-	while (current)
+	last = last_redir_type(type, redir);
+	if (type == REDIR_IN && last)
 	{
-		if ((int)(current->type) == type)
-			last_redir = current;
-		current = current->next;
-	}
-	if (type == REDIR_IN && last_redir)
-	{
-		cmd->fd_in = last_redir->fd;
+		cmd->fd_in = last->fd;
 		verif_and_close(&pipe_fds[0]);
 	}
-	else if ((type == REDIR_OUT || type == REDIR_APPEND) && last_redir)
+	else if ((type == REDIR_OUT || type == REDIR_APPEND) && last)
 	{
-		cmd->fd_out = last_redir->fd;
+		cmd->fd_out = last->fd;
 		verif_and_close(&pipe_fds[1]);
 	}
-	if (!last_redir)
-		return (NULL);
-	return (last_redir->file);
 }
 
 void	pipe_redir(t_command *cmd, t_exec exec, int pipe_fds[2])
@@ -72,9 +61,8 @@ void	redirect(t_command *cmd, t_exec *exec, int pipe_fds[2], int next_out)
 		current = current->next;
 	}
 	pipe_redir(cmd, *exec, pipe_fds);
-	last_fd_type(REDIR_IN, cmd, cmd->redirections, pipe_fds);
-	last_fd_type(REDIR_OUT, cmd, cmd->redirections, pipe_fds);
-	last_fd_type(REDIR_APPEND, cmd, cmd->redirections, pipe_fds);
+	set_cmd_fd(REDIR_IN, cmd, cmd->redirections, pipe_fds);
+	set_cmd_fd(REDIR_OUT, cmd, cmd->redirections, pipe_fds);
 }
 
 void	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)

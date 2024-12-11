@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/11 10:34:41 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:35:31 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int			lst_size(t_env *env);
 char		*find_path(char **path, char *cmd, int *pipe_fds, int next_out);
 void		redirect(t_command *cmd, t_exec *exec, int pipe_fds[2],
 				int next_out);
-char		*last_fd_type(int type, t_command *cmd, t_redir *redir,
+t_redir		*last_redir_type(int type, t_redir *redir);
+void		set_cmd_fd(int type, t_command *cmd, t_redir *redir,
 				int pipe_fds[2]);
 void		double_array_free(char **strs);
 void		runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out);
