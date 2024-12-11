@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/10 17:00:32 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/11 10:52:11 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ int	main(int argc, char **argv, char **env)
 		main_free_function(&exec, splitted_input, input);
 	}
 	free_env(exec.env);
+	rl_clear_history();
 }

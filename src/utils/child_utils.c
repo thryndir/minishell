@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:18:40 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/10 17:18:11 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/11 10:34:34 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*check_path(char *cmd)
 	return (ft_strdup(cmd));
 }
 
-char	*this_is_the_path(char **path, char *cmd)
+char	*find_path(char **path, char *cmd, int *pipe_fds, int next_out)
 {
 	char	*cmd_path;
 	int		i;
@@ -79,9 +79,10 @@ char	*this_is_the_path(char **path, char *cmd)
 			gc_free(cmd_path);
 		i++;
 	}
-	print_error(cmd, "command not found", 127);
-	gc_free_all();
-	exit(g_exit_code);
+	verif_and_close(&pipe_fds[0]);
+	verif_and_close(&pipe_fds[1]);
+	verif_and_close(&next_out);
+	error_and_quit(cmd, "command not found", 127);
 	return (NULL);
 }
 

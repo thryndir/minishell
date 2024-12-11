@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:30:43 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/10 16:47:15 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/11 10:34:41 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ void		free_cmd_exec(t_exec *exec, t_command *to_keep);
 void		parent(t_command *cmd, t_exec *exec, int depth);
 int			verif_and_close(int *fd);
 void		print_error(char *msg, char *detail, int exit_code);
+void		error_and_quit(char *msg, char *detail, int exit_code);
 void		free_lst(t_list *lst);
 int			lst_size(t_env *env);
-char		*this_is_the_path(char **path, char *cmd);
+char		*find_path(char **path, char *cmd, int *pipe_fds, int next_out);
 void		redirect(t_command *cmd, t_exec *exec, int pipe_fds[2],
 				int next_out);
 char		*last_fd_type(int type, t_command *cmd, t_redir *redir,

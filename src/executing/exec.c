@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:33 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/10 16:42:59 by lgalloux         ###   ########.fr       */
+/*   Updated: 2024/12/11 10:34:55 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ void	runner(t_command *cmd, t_exec *exec, int *pipe_fds, int next_out)
 		if (ft_lstlast(exec->pid)->data == 0)
 		{
 			path = ft_split(get_value(exec->env, "PATH"), ':');
-			cmd->path = this_is_the_path(path, cmd->argv[0]);
+			if (!htable)
+				cmd->path = find_path(path, cmd->argv[0], pipe_fds, next_out);
 			gc_tab_free(path);
 			redirect(cmd, exec, pipe_fds, next_out);
 			child(exec, cmd, next_out);
