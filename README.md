@@ -1,6 +1,6 @@
 # Minishell
 
-the goal of this project is to recreate a simplified version of bash implemented in C during the 42 school curriculum. to do it, some external functions were authorised like printf, chdir or getcwd apart from those functions and few others any external functions is unauthorized. For our project we decided to make only the mandatory part which consist of handling the redirections '< >' but not '&>' or '2>'. We also had to handle '<<' '>>', commands with pipe and some builtins like cd echo or exit.
+The goal of this project is to recreate a simplified version of *bash* implemented in C during the *42 school curriculum*. to do it, some external functions were authorised like printf, chdir or getcwd apart from those functions and few others any external functions is unauthorized. For our project we decided to make only the mandatory part which consist of handling the redirections '< >' but not '&>' or '2>'. We also had to handle '<<' '>>', commands with pipe and some builtins like cd echo or exit.
 
 
 ## Demo
