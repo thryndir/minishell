@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:12:38 by thryndir          #+#    #+#             */
-/*   Updated: 2024/12/11 14:46:09 by lgalloux         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:45:54 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,9 @@ t_redir	*last_redir_type(int type, t_redir *redir)
 	return (last);
 }
 
-void	redirect_builtin(t_command *cmd, t_exec *exec, int *pipe_fds
-	, int next_out)
+void	redirect_builtin(t_command *cmd, t_exec *exec, int *pipe_and_next)
 {
-	redirect(cmd, exec, pipe_fds, next_out);
+	redirect(cmd, exec, pipe_and_next);
 	restore_std(SAVE);
 	if (cmd->fd_in != -1)
 		dup2(cmd->fd_in, STDIN_FILENO);
@@ -63,7 +62,7 @@ void	close_prev_open(t_redir *to_comp, t_redir *redir)
 	}
 }
 
-void	keep_fd(t_redir *redir, t_command *cmd, int pipe_fds[2], int next_out)
+void	keep_fd(t_redir *redir, t_command *cmd, int *pipe_and_next)
 {
 	t_redir	*last;
 
@@ -76,9 +75,9 @@ void	keep_fd(t_redir *redir, t_command *cmd, int pipe_fds[2], int next_out)
 	if (redir->fd == -1)
 	{
 		print_error("minishell", strerror(errno), g_exit_code);
-		verif_and_close(&pipe_fds[0]);
-		verif_and_close(&pipe_fds[1]);
-		verif_and_close(&next_out);
+		verif_and_close(&pipe_and_next[IN]);
+		verif_and_close(&pipe_and_next[OUT]);
+		verif_and_close(&pipe_and_next[NEXT]);
 		gc_free_all();
 		exit(g_exit_code);
 	}
@@ -92,14 +91,14 @@ void	restore_std(int save_or_restore)
 
 	if (save_or_restore == SAVE)
 	{
-		std[0] = dup(STDIN_FILENO);
-		std[1] = dup(STDOUT_FILENO);
+		std[IN] = dup(STDIN_FILENO);
+		std[OUT] = dup(STDOUT_FILENO);
 	}
 	else if (save_or_restore == RESTORE)
 	{
-		dup2(std[0], STDIN_FILENO);
-		dup2(std[1], STDOUT_FILENO);
-		verif_and_close(&std[0]);
-		verif_and_close(&std[1]);
+		dup2(std[IN], STDIN_FILENO);
+		dup2(std[OUT], STDOUT_FILENO);
+		verif_and_close(&std[IN]);
+		verif_and_close(&std[OUT]);
 	}
 }

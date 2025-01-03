@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgerbaul <jgerbaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 00:40:38 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/11/26 23:12:33 by jgerbaul         ###   ########.fr       */
+/*   Updated: 2025/01/03 13:31:47 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executing.h"
-#include <readline/readline.h>
-#include <stdio.h>
+#include <signal.h>
 
 void	control_c_function(int temp)
 {

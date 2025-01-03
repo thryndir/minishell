@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:59:34 by jgerbaul          #+#    #+#             */
-/*   Updated: 2024/12/06 14:53:10 by lgalloux         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:12:02 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ typedef enum e_redir_type
 	REDIR_APPEND,
 	REDIR_HEREDOC,
 }	t_redir_type;
+
+typedef enum e_in_out_or_next
+{
+	IN,
+	OUT,
+	NEXT
+}	t_in_out_or_next;
 
 typedef enum e_read_or_write
 {

@@ -6,7 +6,7 @@
 /*   By: lgalloux <lgalloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 20:44:38 by lgalloux          #+#    #+#             */
-/*   Updated: 2024/12/11 10:52:11 by lgalloux         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:37:00 by lgalloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,41 @@ void	main_functions(t_exec *exec, char **tab, char *str)
 	parent(exec->cmd, exec, 0);
 }
 
-int	main(int argc, char **argv, char **env)
+void	main_loop(t_exec *exec)
 {
-	t_exec	exec;
 	char	*input;
 	char	**splitted_input;
 
 	splitted_input = NULL;
-	(void)argc;
-	(void)argv;
-	set_signal();
-	env_init(env, &exec);
 	while (1)
 	{
 		input = readline(">> ");
 		if (!input)
 		{
 			gc_free_all();
-			return (0);
+			exit(0);
 		}
 		add_history(input);
 		if (syntax_errors(input))
 			continue ;
-		main_functions(&exec, splitted_input, input);
-		main_free_function(&exec, splitted_input, input);
+		main_functions(exec, splitted_input, input);
+		main_free_function(exec, splitted_input, input);
 	}
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	t_exec	exec;
+
+	(void)argv;
+	if (argc > 1)
+	{
+		print_error("wrong number of arguments", NULL, 1);
+		return (1);
+	}
+	set_signal();
+	env_init(env, &exec);
+	main_loop(&exec);
 	free_env(exec.env);
 	rl_clear_history();
 }
